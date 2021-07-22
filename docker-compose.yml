@@ -20,4 +20,4 @@ services:
     volumes:
       - ./frontend:/frontend/src/app
     tty: true
-    #command: sh -c "yarn start"
+    #command: sh -c "yarn dev"
