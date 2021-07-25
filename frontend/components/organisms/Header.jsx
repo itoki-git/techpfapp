@@ -1,5 +1,6 @@
 import Nav from "../molecules/Nav";
 import Image from "next/image";
+import Link from "next/link";
 
 // ヘッダー
 const Header = (props) => {
@@ -11,7 +12,9 @@ const Header = (props) => {
   return (
     <div className="header-wrap">
       <div className="logo">
-        <Image src="/TriPoon.png" width={200} height={200} />
+        <Link href="">
+          <Image src="/TriPoon.png" width={200} height={200} />
+        </Link>
       </div>
       <Nav menus={menus} />
       <style jsx>
