@@ -1,3 +1,7 @@
+import Link from "next/link";
+import Button from "../atoms/Button";
+
+// ナビメニュー
 const Nav = (props) => {
   const { menus } = props;
   console.log(menus);
@@ -5,24 +9,26 @@ const Nav = (props) => {
     <ul className="nav">
       {menus.map((menu, i) => (
         <li className="nav-menu" key={i}>
-          {menu.displayName}
+          <Link href={menu.to}>
+            <a>{menu.displayName}</a>
+          </Link>
         </li>
       ))}
       <style jsx>
         {`
           .nav {
+            list-style: none;
             display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
           }
           .nav-menu {
-            display: flex;
-            flex-direction: column;
-            padding: 10px 0;
-            font-weight: 700;
             text-align: center;
-            color: #053e62;
-            font-size: 13px;
+            margin-right: 0.1rem;
+          }
+          .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            padding: 2rem;
           }
         `}
       </style>
