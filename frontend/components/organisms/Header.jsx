@@ -2,6 +2,8 @@ import Nav from "../molecules/Nav";
 import Image from "next/image";
 import Link from "next/link";
 
+import styles from "../../styles/Header.module.scss";
+
 // ヘッダー
 const Header = (props) => {
   const menus = [
@@ -10,27 +12,13 @@ const Header = (props) => {
     { displayName: "Create", to: "/create" },
   ];
   return (
-    <div className="header-wrap">
-      <div className="logo">
+    <div className={styles.header}>
+      <div className={styles.logo}>
         <Link href="">
           <Image src="/TriPoon.png" width={200} height={200} />
         </Link>
       </div>
       <Nav menus={menus} />
-      <style jsx>
-        {`
-          .header-wrap {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-          }
-          .logo img {
-            display: block;
-            max-width: 100%;
-          }
-        `}
-      </style>
     </div>
   );
 };

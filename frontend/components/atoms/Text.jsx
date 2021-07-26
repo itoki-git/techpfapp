@@ -1,7 +1,9 @@
+import styles from "../../styles/Text.module.scss";
+
 // テキスト
 const Text = (props) => {
   return (
-    <p className="text">
+    <p className={styles.text}>
       {props.content}
       <style jsx>
         {`

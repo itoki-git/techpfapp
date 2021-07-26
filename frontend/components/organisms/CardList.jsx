@@ -3,6 +3,8 @@ import Card from "../molecules/Card";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 
+import styles from "../../styles/CardList.module.scss";
+
 // カードリスト
 const CardList = (props) => {
   const items = [
@@ -15,9 +17,9 @@ const CardList = (props) => {
     { title: "Create", to: "#" },
   ];
   return (
-    <div className="card-list">
+    <div className={styles.cardlist}>
       <Container>
-        <Grid container spacing={3} className="card-grid">
+        <Grid container spacing={3} className={styles.cardgrid}>
           {items.map((item, i) => (
             <Grid
               item
@@ -26,7 +28,7 @@ const CardList = (props) => {
               md={6}
               lg={4}
               xl={4}
-              className="card-item"
+              className={styles.carditem}
               key={item.id}
             >
               <Link href={item.to}>
@@ -38,25 +40,6 @@ const CardList = (props) => {
           ))}
         </Grid>
       </Container>
-
-      <style jsx>
-        {`
-          .card-list {
-            width: 100%;
-            height: 100%;
-            min-height: 100vh;
-          }
-          .card-grid {
-            list-style: none;
-            display: flex;
-            flex-wrap: wrap;
-          }
-          .card-item {
-            position: relative;
-            width: 33.3%;
-          }
-        `}
-      </style>
     </div>
   );
 };
