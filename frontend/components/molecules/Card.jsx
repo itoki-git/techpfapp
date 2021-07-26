@@ -6,14 +6,12 @@ import Text from "../atoms/Text";
 const Card = (props) => {
   return (
     <div className="card" id="card">
-      <Link href="">
-        <div className="card-item">
-          <img className="thumbnail" src="/TriPoon.png" />
-          <div className="card-title">
-            <Text content="aaaaa" />
-          </div>
+      <div className="card-item">
+        <img className="thumbnail" src="/DSC_9314.JPG" />
+        <div className="card-title">
+          <Text content={props.title} />
         </div>
-      </Link>
+      </div>
 
       <style jsx>
         {`
@@ -36,7 +34,7 @@ const Card = (props) => {
             border-radius: 1rem;
           }
           .thumbnail {
-            filter: brightness(80%);
+            filter: brightness(75%) saturate(200%);
             object-fit: cover;
             position: absolute;
             width: 100%;
@@ -44,7 +42,7 @@ const Card = (props) => {
             border-radius: 1rem;
           }
           .card-title {
-            color: #333;
+            color: #fff;
             font-size: 2em;
             font-weight: 700;
             position: absolute;
