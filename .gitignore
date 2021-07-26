@@ -33,3 +33,5 @@ frontend/.env.production.local
 # vercel
 frontend/.vercel
 .DS_Store
+
+frontend/public/
