@@ -1,6 +1,10 @@
 import styles from "../../styles/Button.module.scss";
 
 const Button = (props) => {
-  return <a className={styles.button}>{props.displayName}</a>;
+  return (
+    <a className={`${styles.button} ${styles[props.style]}`}>
+      {props.displayName}
+    </a>
+  );
 };
 export default Button;
