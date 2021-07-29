@@ -1,6 +1,9 @@
 import Nav from "../molecules/Nav";
 import Image from "next/image";
 import Link from "next/link";
+import Hidden from "@material-ui/core/Hidden";
+import MenuIcon from "@material-ui/icons/Menu";
+import IconButton from "@material-ui/core/IconButton";
 
 import styles from "../../styles/Header.module.scss";
 
@@ -14,11 +17,16 @@ const Header = (props) => {
   return (
     <div className={styles.header}>
       <div className={styles.logo}>
-        <Link href="">
-          <Image src="/TriPoon.png" width={200} height={200} />
-        </Link>
+        <Link href="">TriPoon</Link>
       </div>
-      <Nav menus={menus} />
+      <Hidden smDown>
+        <Nav menus={menus} />
+      </Hidden>
+      <Hidden mdUp>
+        <IconButton>
+          <MenuIcon fontSize="large" />
+        </IconButton>
+      </Hidden>
     </div>
   );
 };
