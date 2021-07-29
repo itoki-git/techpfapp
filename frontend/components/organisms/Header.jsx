@@ -16,15 +16,13 @@ const Header = (props) => {
   ];
   return (
     <div className={styles.header}>
-      <div className={styles.logo}>
-        <Link href="">TriPoon</Link>
-      </div>
+      <div className={styles.logo}>TriPoon</div>
       <Hidden smDown>
         <Nav menus={menus} />
       </Hidden>
       <Hidden mdUp>
         <IconButton>
-          <MenuIcon fontSize="large" />
+          <MenuIcon className={styles.icon} fontSize="large" />
         </IconButton>
       </Hidden>
     </div>
