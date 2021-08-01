@@ -1,5 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
+import styles from "../../styles/Layout.module.scss";
+import Header from "../organisms/Header";
 
 const Layout = (props) => {
   const { title, children } = props;
@@ -12,8 +14,8 @@ const Layout = (props) => {
         <link rel="icon" href="/fabicon.ico" />
       </Head>
 
-      <div className="parent">
-        <div className="children">{children}</div>
+      <div className={styles.parent}>
+        <div className={styles.children}>{children}</div>
       </div>
     </div>
   );
