@@ -6,17 +6,18 @@ import styles from "../../styles/Nav.module.scss";
 // ナビメニュー
 const Nav = (props) => {
   const { menus } = props;
-  console.log(menus);
   return (
-    <ul className={styles.nav}>
-      {menus.map((menu, i) => (
-        <Link href={menu.to}>
-          <li className={styles.navmenu} key={i}>
-            <Button displayName={menu.displayName} />
-          </li>
-        </Link>
-      ))}
-    </ul>
+    <nav className={`${styles[props.style]} ${styles[props.active]}`}>
+      <ul className={styles.ul}>
+        {menus.map((menu, i) => (
+          <Link href={menu.to}>
+            <li className={styles.navmenu} key={i}>
+              <Button displayName={menu.displayName} style={props.button} />
+            </li>
+          </Link>
+        ))}
+      </ul>
+    </nav>
   );
 };
 export default Nav;

@@ -1,8 +1,43 @@
 .nav {
+  margin: 0 0 0 auto;
+}
+.ul {
   list-style: none;
+  margin: 0;
   display: flex;
 }
 .navmenu {
-  text-align: center;
-  margin-right: 0.1rem;
+  margin: 0 0 0 15px;
+}
+
+.smallNav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: block;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  transform: translateY(-100%);
+  transition: all 0.3s ease-in-out;
+  .ul {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  .li {
+    margin: 0;
+    padding: 10;
+    display: block;
+  }
+  &.active {
+    transform: translateY(0);
+    opacity: 1;
+    height: 100vh;
+  }
 }
