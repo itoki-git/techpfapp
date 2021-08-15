@@ -13,8 +13,12 @@ const CardList = (props) => {
       to: "/logoput",
     },
     { title: "日本の暑い夏は...　暑さをずらして涼しく楽しむズラ！", to: "#" },
-    { title: "Create", to: "#" },
-    { title: "Create", to: "#" },
+    { title: "# なぜ日本人は「ずらし旅」が苦手なのか", to: "#" },
+    {
+      title:
+        "# 神社×温泉・サウナでデトックスずらし旅ひなんちゅ流 ずらし旅のつくり方",
+      to: "#",
+    },
   ];
   return (
     <div className={styles.cardlist}>
