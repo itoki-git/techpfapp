@@ -5,56 +5,30 @@ import NotesIcon from "@material-ui/icons/Notes";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import styles from "../../styles/Sidebar.module.scss";
 import { style } from "@material-ui/system";
+import Menu from "../molecules/Menu";
 
 const Sidebar = (props) => {
   const menus = [
-    { displayName: "Grid" },
-    { displayName: "Image Gallery" },
-    { displayName: "Split" },
-    { displayName: "Text" },
-    { displayName: "Text on Image" },
+    { displayName: "HTML & CSS" },
+    { displayName: "JavaScript" },
+    { displayName: "PHP & MySQL" },
+    { displayName: "Golang" },
   ];
   return (
     <div className={`${styles["sidebar"]} ${styles["close"]}`}>
       <ul className={styles.navlinks}>
         <li className={styles.navname}>
-          <ul className={`${styles["submenu"]} ${styles["blank"]}`}>
-            <li>
-              <a className={styles.linkname} href="#">
-                Category
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li className={styles.navname}>
           <div className={styles.iconlink}>
             <a className={styles.link} href="#">
-              <i className={styles.iconname}>C</i>
+              <NotesIcon className={styles.iconname} />
               <span className={styles.linkname}>Category</span>
             </a>
             <ExpandMoreIcon className={styles.arrow} />
           </div>
           <ul className={styles.submenu}>
-            <li className={styles.navname}>
-              <a className={`${styles["link"]} ${styles["linkname"]}`} href="#">
-                Category
-              </a>
-            </li>
-            <li className={styles.navname}>
-              <a className={`${styles["link"]} ${styles["menu"]}`} href="#">
-                HTML & CSS
-              </a>
-            </li>
-            <li className={styles.navname}>
-              <a className={`${styles["link"]} ${styles["menu"]}`} href="#">
-                JavaScript
-              </a>
-            </li>
-            <li className={styles.navname}>
-              <a className={`${styles["link"]} ${styles["menu"]}`} href="#">
-                PHP & MySQL
-              </a>
-            </li>
+            {menus.map((item, i) => (
+              <Menu displayName={item.displayName} id={i} />
+            ))}
           </ul>
         </li>
       </ul>

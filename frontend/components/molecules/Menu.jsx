@@ -1,17 +1,12 @@
-import { ListItem } from "@material-ui/core";
 import styles from "../../styles/Menu.module.scss";
 
 const Menu = (props) => {
   return (
-    <ul className={styles.submenu}>
-      {props.menuItem.map((item, i) => {
-        <li className={styles.navname}>
-          <a className={`${styles["link"]} ${styles["linkname"]}`} href="#">
-            {item.displayName}
-          </a>
-        </li>;
-      })}
-    </ul>
+    <li className={styles.navname} key={props.id}>
+      <a className={`${styles["link"]} ${styles["menu"]}`} href="#">
+        {props.displayName}
+      </a>
+    </li>
   );
 };
 export default Menu;
