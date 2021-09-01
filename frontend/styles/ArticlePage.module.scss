@@ -1,0 +1,26 @@
+.createPage {
+  display: flex;
+}
+.flexitem {
+  width: 100%;
+  background-color: #f3f4ed;
+}
+.boxholder {
+  padding: 118px 210px 70px 210px;
+  .box {
+    width: 50em;
+    min-height: 20em;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 10px; /*角の丸み*/
+    .title {
+      font-size: 23.625px;
+      line-height: 29.25px;
+      font-weight: 700;
+      color: #e1e8eb;
+      letter-spacing: -0.4px;
+      text-align: center;
+      justify-content: center;
+    }
+  }
+}
