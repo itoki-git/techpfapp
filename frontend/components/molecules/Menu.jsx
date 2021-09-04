@@ -1,14 +1,15 @@
-import styles from "../../styles/Menu.module.scss";
+import styles from "../../styles/molecules/Menu.module.scss";
 import { useSetRecoilState, useRecoilState } from "recoil";
 
-import { menuState, menuListState } from "../../pages/api/create";
-import { useState } from "react";
+import { menuCountState, menuListState } from "../../pages/api/create";
 
 const Menu = (props) => {
   const [menu, setMenu] = useRecoilState(menuListState);
-  const [count, setCount] = useState(0);
   const addItem = (menuid) => {
-    setMenu(() => menu.concat({ id: count, component: menuid }));
+    console.log(menu);
+    setMenu(() =>
+      menu.concat({ id: menu.length.toString(), component: menuid })
+    );
   };
 
   return (
@@ -16,7 +17,7 @@ const Menu = (props) => {
       <a
         className={`${styles["link"]} ${styles["menu"]}`}
         href="#"
-        onClick={() => (addItem(props.id), setCount(count + 1))}
+        onClick={() => addItem(props.id)}
       >
         {props.displayName}
       </a>

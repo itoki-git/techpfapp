@@ -1,4 +1,4 @@
-import styles from "../../styles/Button.module.scss";
+import styles from "../../styles/atoms/Button.module.scss";
 
 const Button = (props) => {
   return (

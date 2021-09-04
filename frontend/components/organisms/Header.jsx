@@ -6,7 +6,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
 
-import styles from "../../styles/Header.module.scss";
+import styles from "../../styles/organisms/Header.module.scss";
 import { useState } from "react";
 
 // ヘッダー

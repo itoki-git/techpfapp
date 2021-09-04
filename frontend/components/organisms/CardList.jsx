@@ -3,7 +3,7 @@ import Card from "../molecules/Card";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 
-import styles from "../../styles/CardList.module.scss";
+import styles from "../../styles/organisms/CardList.module.scss";
 
 // カードリスト
 const CardList = (props) => {

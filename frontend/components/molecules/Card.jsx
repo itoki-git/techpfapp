@@ -2,14 +2,19 @@ import Link from "next/link";
 import Image from "next/image";
 import Text from "../atoms/Text";
 
-import styles from "../../styles/Card.module.scss";
+import styles from "../../styles/molecules/Card.module.scss";
 
 // カード
 const Card = (props) => {
   return (
     <div className={styles.card} id="card">
       <div className={styles.carditem}>
-        <img className={styles.thumbnail} src="/DSC_9314.JPG" />
+        <Image
+          className={styles.thumbnail}
+          src="/DSC_9314.JPG"
+          width={400}
+          height={400}
+        />
         <div className={styles.cardtitle}>
           <Text content={props.title} />
         </div>

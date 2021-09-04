@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Button from "../atoms/Button";
 
-import styles from "../../styles/Nav.module.scss";
+import styles from "../../styles/molecules/Nav.module.scss";
 
 // ナビメニュー
 const Nav = (props) => {
