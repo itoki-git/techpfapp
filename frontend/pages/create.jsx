@@ -2,15 +2,12 @@ import Layout from "../components/templates/Layout";
 import Header from "../components/organisms/Header";
 import Sidebar from "../components/organisms/Sidebar";
 import styles from "../styles/ArticlePage.module.scss";
-import {
-  RecoilRoot,
-  useRecoilState,
-  useRecoilValue,
-  useRecoilSet,
-} from "recoil";
+import { RecoilRoot, useRecoilState } from "recoil";
+import Grid from "@material-ui/core/Grid";
 
-import { component, menuListState, menuState } from "./api/create";
-import { useEffect } from "react";
+import { menuListState, menuState } from "./api/createStore";
+import { component } from "./api/createComponent";
+import { SideButton } from "./api/createComponent";
 
 const CreatePage = () => {
   return (
@@ -27,8 +24,8 @@ export default CreatePage;
 const Create = () => {
   const [menuList, setMenuLisr] = useRecoilState(menuListState);
 
-  const Item = (value) => {
-    return component(value.value);
+  const Item = ({ value }) => {
+    return component(value);
   };
 
   return (
@@ -36,15 +33,24 @@ const Create = () => {
       <Sidebar />
       <div className={styles.flexitem}>
         <div className={styles.boxholder}>
-          <div className={styles.box}>
-            <p className={styles.title}>New Block</p>
-          </div>
+          <Grid
+            container
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+          >
+            {menuList.map((item) => (
+              <Grid
+                alignItems="center"
+                container
+                className={`${styles["item"]}`}
+              >
+                <Item value={item} />
+                <SideButton deleteID={item.id} />
+              </Grid>
+            ))}
+          </Grid>
         </div>
-        <ul>
-          {menuList.map((item) => (
-            <Item value={item.component} />
-          ))}
-        </ul>
       </div>
     </div>
   );
