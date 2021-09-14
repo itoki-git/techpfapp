@@ -3,34 +3,33 @@ import VerticalSplitIcon from "@material-ui/icons/VerticalSplit";
 import HorizontalSplitIcon from "@material-ui/icons/HorizontalSplit";
 import NotesIcon from "@material-ui/icons/Notes";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import styles from "../../styles/Sidebar.module.scss";
-import { style } from "@material-ui/system";
+import styles from "../../styles/organisms/Sidebar.module.scss";
 import Menu from "../molecules/Menu";
+import { menuOpenState } from "../../pages/api/createStore";
+import { useSetRecoilState, useRecoilState } from "recoil";
 
 const Sidebar = (props) => {
+  const [open, setOpen] = useRecoilState(menuOpenState);
   const menus = [
-    { displayName: "HTML & CSS" },
-    { displayName: "JavaScript" },
-    { displayName: "PHP & MySQL" },
-    { displayName: "Golang" },
+    { displayName: "タイトル" },
+    { displayName: "本文" },
+    { displayName: "小見出し" },
+    { displayName: "カード" },
   ];
+
   return (
-    <div className={`${styles["sidebar"]} ${styles["close"]}`}>
-      <ul className={styles.navlinks}>
-        <li className={styles.navname}>
-          <div className={styles.iconlink}>
-            <a className={styles.link} href="#">
-              <NotesIcon className={styles.iconname} />
-              <span className={styles.linkname}>Category</span>
-            </a>
-            <ExpandMoreIcon className={styles.arrow} />
-          </div>
-          <ul className={styles.submenu}>
-            {menus.map((item, i) => (
-              <Menu displayName={item.displayName} id={i} />
-            ))}
-          </ul>
-        </li>
+    <div className={`${styles["sidebar"]} ${styles[open ? "open" : ""]}`}>
+      <div
+        className={`${styles["logo"]} ${styles["btn"]}`}
+        onClick={() => setOpen(!open)}
+      >
+        <div className={styles.logoName}>Component</div>
+        <NotesIcon className={`${styles["icon"]} ${styles["btn"]}`} />
+      </div>
+      <ul className={styles.navlist}>
+        {menus.map((item, num) => (
+          <Menu displayName={item.displayName} id={num.toString()} />
+        ))}
       </ul>
     </div>
   );
