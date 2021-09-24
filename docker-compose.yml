@@ -6,7 +6,7 @@ services:
       dockerfile: ./docker/backend/Dockerfile
     tty: true # ②コンテナの永続化
     volumes:
-      - ./app:/go/src/app
+      - ./backend:/go/src/app
     ports:
       - 8080:8080
 
@@ -21,3 +21,14 @@ services:
       - ./frontend:/frontend/src/app
     tty: true
     #command: sh -c "yarn dev"
+  webServer:
+    image: nginx
+    depends_on:
+      - backend
+    container_name: webServer
+    ports:
+      - 80:80
+    environment:
+      - TZ=Asia/***REMOVED***
+    volumes:
+      - ./etc/nginx/nginx.conf:/etc/nginx/nginx.conf
