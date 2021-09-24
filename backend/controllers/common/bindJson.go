@@ -1,8 +1,9 @@
 package common
 
 import (
-	"app/models/entity"
 	"net/http"
+
+	"github.com/itoki-git/tripApp/backend/models/entity"
 
 	"github.com/gin-gonic/gin"
 )

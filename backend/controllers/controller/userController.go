@@ -4,12 +4,13 @@ import (
 
 	// Gin
 
-	"app/controllers/common"
-	db "app/models/db"
-	"app/models/entity"
 	"encoding/json"
 	"fmt"
 	"strconv"
+
+	"github.com/itoki-git/tripApp/backend/controllers/common"
+	db "github.com/itoki-git/tripApp/backend/models/db"
+	"github.com/itoki-git/tripApp/backend/models/entity"
 
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"

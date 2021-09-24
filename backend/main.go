@@ -1,8 +1,14 @@
 package main
 
 import (
-	"github.com/gin-contrib/cors"
+	controller "github.com/itoki-git/tripApp/backend/controllers/controller"
+	// middleware
+	// Gin
 	"github.com/gin-gonic/gin"
+	// MySQL用ドライバ
+	_ "github.com/jinzhu/gorm/dialects/mysql"
+	// cors
+	"github.com/gin-contrib/cors"
 )
 
 func main() {

@@ -37,3 +37,4 @@ frontend/.vercel
 frontend/public/
 
 backend/data
+backend/.env

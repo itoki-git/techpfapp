@@ -10,12 +10,13 @@ import (
 	// エンティティ(DBのテーブルの行に対応)
 
 	// DBアクセス用モジュール
-	common "app/controllers/common"
-	db "app/models/db"
-	"app/models/entity"
 	"math/rand"
 	"net/http"
 	"time"
+
+	common "github.com/itoki-git/tripApp/backend/controllers/common"
+	db "github.com/itoki-git/tripApp/backend/models/db"
+	"github.com/itoki-git/tripApp/backend/models/entity"
 
 	"github.com/oklog/ulid"
 )
