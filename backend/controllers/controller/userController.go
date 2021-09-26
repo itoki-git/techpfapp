@@ -4,13 +4,12 @@ import (
 
 	// Gin
 
+	common "app/controllers/common"
+	db "app/models/db"
+	"app/models/entity"
 	"encoding/json"
 	"fmt"
 	"strconv"
-
-	"github.com/itoki-git/tripApp/backend/controllers/common"
-	db "github.com/itoki-git/tripApp/backend/models/db"
-	"github.com/itoki-git/tripApp/backend/models/entity"
 
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
@@ -38,10 +37,11 @@ func SignupUser(ctx *gin.Context) {
 		Email:    register.Email,
 		Password: string(password),
 	}
+	fmt.Println(user.Password, user.Name)
 	if checkName := db.CheckNameDuplicate(&user, ""); checkName != 0 {
 		fmt.Println("checkName")
 		fmt.Println(checkName)
-		ctx.JSON(http.StatusMultipleChoices, gin.H{"message": "name"})
+		ctx.JSON(http.StatusBadRequest, gin.H{"message": "name"})
 		return
 	} else if checkEmail := db.CheckEmailDuplicate(&user, ""); checkEmail != 0 {
 		fmt.Println("checkEmail")
@@ -55,7 +55,7 @@ func SignupUser(ctx *gin.Context) {
 		// 記事を保管するフォルダを作成する
 		userID := strconv.Itoa(int(user.ID))
 		registerPath := "../app/data/article/" + userID
-		CreateFolder(registerPath)
+		common.CreateFolder(registerPath)
 
 		ctx.JSON(http.StatusOK, user)
 		return
@@ -217,7 +217,7 @@ func UpdateProfile(ctx *gin.Context) {
 	// プロフィールをjsonに変換する
 	jsonData, _ := json.Marshal(profileData)
 	// json書き込み
-	if err := FileWrite(registerPath, string(jsonData)); err != nil {
+	if err := common.FileWrite(registerPath, string(jsonData)); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -231,7 +231,7 @@ func UpdateProfile(ctx *gin.Context) {
 func GetProfileData(profilePath string) entity.Profile {
 	var profile entity.Profile
 
-	if jsonFromFile, err := FileRead(profilePath); err != nil {
+	if jsonFromFile, err := common.FileRead(profilePath); err != nil {
 		//ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	} else {
 		if err := json.Unmarshal([]byte(jsonFromFile), &profile); err != nil {
@@ -250,10 +250,10 @@ func RemoveAccount(ctx *gin.Context) {
 	db.DeleteArticleAll(userID)
 	// ユーザーが作成した記事を全て削除する
 	removePath := "../app/data/article/" + userID
-	RemoveFolder(removePath)
+	common.RemoveFolder(removePath)
 	// ユーザーのプロフィールデータを削除する
 	removeProfile := "../app/data/profile/" + userID + ".json"
-	RemoveFile(removeProfile)
+	common.RemoveFile(removeProfile)
 	// cookieの削除
 	ctx.SetCookie("jwt", "", -60*60*24, "/", "localhost", false, true)
 	ctx.JSON(http.StatusOK, gin.H{"message": "success"})
@@ -272,4 +272,10 @@ func GetIDFromJwt(ctx *gin.Context) string {
 	claims := token.Claims.(*jwt.StandardClaims)
 	userID := claims.Issuer
 	return userID
+}
+
+// Sample jwtからユーザーIDを取得する
+func Sample(ctx *gin.Context) {
+	fmt.Println("AAAA")
+	ctx.JSON(http.StatusOK, gin.H{"message": "sample!!"})
 }

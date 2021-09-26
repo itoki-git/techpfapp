@@ -1,7 +1,9 @@
 package main
 
 import (
-	controller "github.com/itoki-git/tripApp/backend/controllers/controller"
+	common "app/controllers/common"
+	controller "app/controllers/controller"
+
 	// middleware
 	// Gin
 	"github.com/gin-gonic/gin"
@@ -62,7 +64,7 @@ func server() {
 	// アカウント削除
 	router.POST("/removeAccount", controller.RemoveAccount)
 	// 画像アップロード・保存
-	router.POST("/upload", controller.UploadFile)
+	router.POST("/upload", common.UploadFile)
 
 	// 全ての記事情報のJSONを返す
 	router.GET("/getAllArticle", controller.GetAllArticle)
@@ -78,6 +80,8 @@ func server() {
 	router.POST("/getCreator", controller.GetCreatorInformation)
 	// 記事を削除する
 	router.POST("/removeArticle", controller.RemoveArticle)
+	// 記事を削除する
+	router.GET("/sample", controller.Sample)
 
-	router.Run(":8082")
+	router.Run(":8080")
 }

@@ -10,13 +10,12 @@ import (
 	// エンティティ(DBのテーブルの行に対応)
 
 	// DBアクセス用モジュール
+	common "app/controllers/common"
+	db "app/models/db"
+	"app/models/entity"
 	"math/rand"
 	"net/http"
 	"time"
-
-	common "github.com/itoki-git/tripApp/backend/controllers/common"
-	db "github.com/itoki-git/tripApp/backend/models/db"
-	"github.com/itoki-git/tripApp/backend/models/entity"
 
 	"github.com/oklog/ulid"
 )
@@ -77,7 +76,7 @@ func GetUserArticle(ctx *gin.Context) {
 func GetArticle(articleID string) entity.PostData {
 	var postData entity.PostData
 	result := db.FindArticle(articleID)
-	if jsonFromFile, err := FileRead(result.Data); err != nil {
+	if jsonFromFile, err := common.FileRead(result.Data); err != nil {
 		//ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	} else {
 		if err := json.Unmarshal([]byte(jsonFromFile), &postData); err != nil {
@@ -131,7 +130,7 @@ func RegisterArticle(ctx *gin.Context) {
 	// jsonに変換
 	jsonData, _ := json.Marshal(articleData)
 	// json書き込み
-	if err := FileWrite(registerPath, string(jsonData)); err != nil {
+	if err := common.FileWrite(registerPath, string(jsonData)); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -160,7 +159,7 @@ func UpadateArticle(ctx *gin.Context) {
 	// jsonに変換
 	jsonData, _ := json.Marshal(articleData)
 	// json書き込み
-	if err := FileWrite(registerPath, string(jsonData)); err != nil {
+	if err := common.FileWrite(registerPath, string(jsonData)); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -176,7 +175,7 @@ func RemoveArticle(ctx *gin.Context) {
 	db.DeleteTargetArticle(article.ArticleID)
 	// 記事を削除する
 	removeArticle := "../app/data/article/" + author.UserID + "/" + article.ArticleID + ".json"
-	RemoveFile(removeArticle)
+	common.RemoveFile(removeArticle)
 
 	ctx.JSON(http.StatusOK, gin.H{"message": "success"})
 

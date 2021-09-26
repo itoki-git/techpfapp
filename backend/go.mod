@@ -1,4 +1,4 @@
-module github.com/itoki-git/tripApp/backend
+module app
 
 go 1.15
 

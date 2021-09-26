@@ -1,9 +1,9 @@
 package common
 
 import (
+	"app/models/entity"
+	"fmt"
 	"net/http"
-
-	"github.com/itoki-git/tripApp/backend/models/entity"
 
 	"github.com/gin-gonic/gin"
 )
@@ -35,7 +35,9 @@ func BindUpdateArticle(articleData *entity.UpdateArticle, ctx *gin.Context) {
 // BindUser UserエンティティのJSONをBindする
 func BindUser(user *entity.User, ctx *gin.Context) {
 	if err := ctx.ShouldBindJSON(&user); err != nil {
+		fmt.Println(err.Error())
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		ctx.AbortWithStatus(http.StatusBadRequest)
 		return
 	}
 }

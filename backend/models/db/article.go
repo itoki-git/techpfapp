@@ -1,7 +1,7 @@
 package db
 
 import (
-	entity "github.com/itoki-git/tripApp/backend/models/entity"
+	entity "app/models/entity"
 
 	"github.com/jinzhu/gorm"
 )
