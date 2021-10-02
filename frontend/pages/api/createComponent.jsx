@@ -1,9 +1,9 @@
-import IconButton from "@material-ui/core/IconButton";
-import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
-import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
-import ClearIcon from "@material-ui/icons/Clear";
-import Grid from "@material-ui/core/Grid";
-import Tooltip from "@material-ui/core/Tooltip";
+import IconButton from "@mui/material/IconButton";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ClearIcon from "@mui/icons-material/Clear";
+import Grid from "@mui/material/Grid";
+import Tooltip from "@mui/material/Tooltip";
 import { useSetRecoilState, useRecoilState, useRecoilValue } from "recoil";
 
 import { Textarea } from "../../components/atoms/Textarea";
@@ -76,21 +76,21 @@ export const component = (menu) => {
   switch (component) {
     case "0":
       return (
-        <Grid item xs={11} className={`${styles["title1"]}`}>
+        <div className={`${styles["title1"]}`}>
           <Textarea id={id} row={2} placeholder="タイトル" component="title1" />
-        </Grid>
+        </div>
       );
     case "1":
       return (
-        <Grid item xs={11} className={`${styles["title2"]}`}>
+        <div className={`${styles["title2"]}`}>
           <Textarea id={id} row={4} placeholder="本文" component="textBody" />
-        </Grid>
+        </div>
       );
     case "2":
       return (
-        <Grid item xs={11} className={`${styles["title2"]}`}>
+        <div className={`${styles["title2"]}`}>
           <Input id={id} placeholder="小見出し" size="large" bold="bold" />
-        </Grid>
+        </div>
       );
     case "3":
       return (

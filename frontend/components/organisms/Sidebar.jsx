@@ -1,36 +1,50 @@
-import GridOnIcon from "@material-ui/icons/GridOn";
-import VerticalSplitIcon from "@material-ui/icons/VerticalSplit";
-import HorizontalSplitIcon from "@material-ui/icons/HorizontalSplit";
-import NotesIcon from "@material-ui/icons/Notes";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import styles from "../../styles/organisms/Sidebar.module.scss";
 import Menu from "../molecules/Menu";
 import { menuOpenState } from "../../pages/api/createStore";
 import { useSetRecoilState, useRecoilState } from "recoil";
+import { useState } from "react";
 
 const Sidebar = (props) => {
-  const [open, setOpen] = useRecoilState(menuOpenState);
+  const [selected, setSelected] = useRecoilState(menuOpenState);
+  const [page, setPage] = useState("");
   const menus = [
-    { displayName: "タイトル" },
-    { displayName: "本文" },
-    { displayName: "小見出し" },
-    { displayName: "カード" },
+    { page: "1", displayName: "タイトル" },
+    { page: "2", displayName: "本文" },
+    { page: "3", displayName: "小見出し" },
+    { page: "4", displayName: "カード" },
   ];
+  const subMenu = [
+    { page: "1", image: "/header_1_sm.jpeg", item: "0" },
+    { page: "1", image: "/header_1_sm.jpeg", item: "1" },
+    { page: "2", image: "/content_1_sm.jpeg", item: "2" },
+  ];
+  const match = subMenu.filter((value) => value.page === page);
 
   return (
-    <div className={`${styles["sidebar"]} ${styles[open ? "open" : ""]}`}>
+    <div className={`${styles["sidebar"]}`}>
       <div
-        className={`${styles["logo"]} ${styles["btn"]}`}
-        onClick={() => setOpen(!open)}
+        className={styles.menu}
+        onMouseEnter={() => setSelected(false)}
+        onMouseLeave={() => setSelected(true)}
       >
-        <div className={styles.logoName}>Component</div>
-        <NotesIcon className={`${styles["icon"]} ${styles["btn"]}`} />
+        <ul className={styles.menuList}>
+          {menus.map((item, num) => (
+            <li
+              className={`${styles["menuItem"]}`}
+              onMouseEnter={() => setPage(item.page)}
+            >
+              <a className={styles.menuName}>{item.displayName}</a>
+            </li>
+          ))}
+        </ul>
+        <div
+          className={`${styles["subMenu"]} ${
+            styles[selected ? "hidden" : "selected"]
+          }`}
+        >
+          <Menu menuContent={match} />
+        </div>
       </div>
-      <ul className={styles.navlist}>
-        {menus.map((item, num) => (
-          <Menu displayName={item.displayName} id={num.toString()} />
-        ))}
-      </ul>
     </div>
   );
 };

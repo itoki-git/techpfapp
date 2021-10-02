@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Card from "../molecules/Card";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
 
 import styles from "../../styles/organisms/CardList.module.scss";
 
@@ -35,7 +35,7 @@ const CardList = (props) => {
               className={styles.carditem}
               key={item.id}
             >
-              <Link href={item.to}>
+              <Link href={`/article/${item.to}`}>
                 <a>
                   <Card title={item.title} />
                 </a>

@@ -1,10 +1,10 @@
 import Nav from "../molecules/Nav";
 import Image from "next/image";
 import Link from "next/link";
-import Hidden from "@material-ui/core/Hidden";
-import MenuIcon from "@material-ui/icons/Menu";
-import CloseIcon from "@material-ui/icons/Close";
-import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import CloseIcon from "@mui/icons-material/Close";
+import IconButton from "@mui/material/IconButton";
+import Box from "@mui/material/Box";
 
 import styles from "../../styles/organisms/Header.module.scss";
 import { useState } from "react";
@@ -12,18 +12,34 @@ import { useState } from "react";
 // ヘッダー
 const Header = (props) => {
   const [click, setClick] = useState(false);
-  const menus = [
-    { displayName: "Logout", to: "/logout" },
-    { displayName: "Article", to: "/article" },
-    { displayName: "Create", to: "/create" },
-  ];
+
   return (
     <div className={styles.header}>
       <div className={styles.logo}>TriPoon</div>
-      <Hidden smDown>
-        <Nav menus={menus} style="nav" button="navInActive" />
-      </Hidden>
-      <Hidden mdUp>
+      <Box
+        sx={{
+          display: {
+            xs: "none",
+            sm: "none",
+            md: "block",
+            lg: "block",
+            xl: "block",
+          },
+        }}
+      >
+        <Nav menus={props.menus} style="nav" button="navInActive" />
+      </Box>
+      <Box
+        sx={{
+          display: {
+            xs: "block",
+            sm: "block",
+            md: "none",
+            lg: "none",
+            xl: "none",
+          },
+        }}
+      >
         <IconButton onClick={() => setClick(!click)}>
           {click ? (
             <CloseIcon className={styles.close} fontSize="large" />
@@ -32,12 +48,12 @@ const Header = (props) => {
           )}
         </IconButton>
         <Nav
-          menus={menus}
+          menus={props.menus}
           style="smallNav"
           active={click ? "active" : ""}
           button={click ? "navActive" : "navInActive"}
         />
-      </Hidden>
+      </Box>
     </div>
   );
 };
