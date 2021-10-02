@@ -1,8 +1,8 @@
 FROM golang:1.15.2-alpine
 
-RUN apk update && apk add git
+COPY ./backend /go/src/app
 
-RUN mkdir /go/src/app
+RUN apk update && apk add git
 
 WORKDIR /go/src/app
 ADD . /go/src/app
