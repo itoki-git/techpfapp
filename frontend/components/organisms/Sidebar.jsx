@@ -14,9 +14,9 @@ const Sidebar = (props) => {
     { page: "4", displayName: "カード" },
   ];
   const subMenu = [
-    { page: "1", image: "/header_1_sm.jpeg", item: "0" },
-    { page: "1", image: "/header_1_sm.jpeg", item: "1" },
-    { page: "2", image: "/content_1_sm.jpeg", item: "2" },
+    { id: "0", page: "1", image: "/header_1_sm.jpeg" },
+    { id: "1", page: "1", image: "/header_1_sm.jpeg" },
+    { id: "2", page: "2", image: "/content_1_sm.jpeg" },
   ];
   const match = subMenu.filter((value) => value.page === page);
 
@@ -32,6 +32,7 @@ const Sidebar = (props) => {
             <li
               className={`${styles["menuItem"]}`}
               onMouseEnter={() => setPage(item.page)}
+              key={num}
             >
               <a className={styles.menuName}>{item.displayName}</a>
             </li>

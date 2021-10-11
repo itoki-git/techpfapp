@@ -1,6 +1,6 @@
 import styles from "../../styles/molecules/Menu.module.scss";
 import { useSetRecoilState, useRecoilState } from "recoil";
-import HorizontalSplitIcon from "@material-ui/icons/HorizontalSplit";
+import Image from "next/image";
 
 import {
   menuCountState,
@@ -10,30 +10,32 @@ import {
 
 const Menu = (props) => {
   const [menu, setMenu] = useRecoilState(menuListState);
-  const [open, setOpen] = useRecoilState(menuOpenState);
+  const [selected, setSelected] = useRecoilState(menuOpenState);
   const addItem = (menuid) => {
     setMenu(() =>
       menu.concat({ id: menu.length.toString(), component: menuid })
     );
   };
-
   return (
-    <li
-      className={`${styles["navname"]} ${styles[open ? "open" : ""]}`}
-      key={props.id}
-    >
-      <a
-        className={`${styles["link"]}`}
-        href="#"
-        onClick={() => addItem(props.id)}
-      >
-        <div className={styles.linkItem}>
-          <HorizontalSplitIcon className={styles.icon} fontSize="small" />
-          <span className={`${styles["linkname"]}`}>{props.displayName}</span>
-        </div>
-      </a>
-      <span className={styles.tooltip}>{props.displayName}</span>
-    </li>
+    <div className={styles.subMenu}>
+      <div className={styles.content}>
+        <ul>
+          {props.menuContent.map((item) => (
+            <li className={styles.item} key={item.id}>
+              <a onClick={() => addItem(item.id)}>
+                <Image
+                  className={styles.image}
+                  src={item.image}
+                  alt={i}
+                  width={400}
+                  height={200}
+                />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 };
 export default Menu;

@@ -12,6 +12,7 @@ const Card = (props) => {
         <Image
           className={styles.thumbnail}
           src="/DSC_9314.JPG"
+          alt={props.title}
           width={400}
           height={400}
         />

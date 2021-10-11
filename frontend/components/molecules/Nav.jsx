@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Button from "../atoms/Button";
-
+import axios from "axios";
 import styles from "../../styles/molecules/Nav.module.scss";
 
 // ナビメニュー
@@ -9,12 +9,14 @@ const Nav = (props) => {
   return (
     <nav className={`${styles[props.style]} ${styles[props.active]}`}>
       <ul className={styles.ul}>
-        {menus.map((menu, i) => (
-          <Link href={menu.to}>
-            <li className={styles.navmenu} key={i}>
-              <Button displayName={menu.displayName} style={props.button} />
-            </li>
-          </Link>
+        {menus.map((menu) => (
+          <li className={styles.navmenu} key={menu.id}>
+            <Link href={menu.to}>
+              <a className={`${styles[props.button]} ${styles["link"]}`}>
+                {menu.displayName}
+              </a>
+            </Link>
+          </li>
         ))}
       </ul>
     </nav>
