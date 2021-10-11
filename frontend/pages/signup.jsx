@@ -1,14 +1,14 @@
 import Layout from "../components/templates/Layout";
 import Header from "../components/organisms/Header";
-import Login from "../components/organisms/Login";
+import Signup from "../components/organisms/Signup";
 import Container from "@mui/material/Container";
-import { RecoilRoot, useRecoilState } from "recoil";
+import { RecoilRoot } from "recoil";
 
 const LoginPage = () => {
   return (
-    <Layout title="login">
+    <Layout title="signup">
       <Container maxWidth="sm">
-        <Login />
+        <Signup />
       </Container>
     </Layout>
   );
