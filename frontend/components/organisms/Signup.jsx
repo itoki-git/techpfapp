@@ -4,28 +4,28 @@ import { Input } from "../atoms/Input";
 import { textStateFamily } from "../../pages/api/createStore";
 
 import styles from "../../styles/organisms/Login.module.scss";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { loginState } from "../state/currentUser";
+import { useRecoilValue } from "recoil";
 
-const Login = (props) => {
+const Signup = (props) => {
+  const name = useRecoilValue(textStateFamily("name"));
   const email = useRecoilValue(textStateFamily("email"));
   const password = useRecoilValue(textStateFamily("password"));
-  const [isLogin, setLoginState] = useRecoilState(loginState);
 
-  const login = async (e) => {
-    const data = { email: email, password: password };
+  const signup = async (e) => {
+    const data = { name: name, email: email, password: password };
     e.preventDefault();
-    await axios
-      .post("/api/login", data, {
-        withCredentials: true,
-      })
-      .then((res) => console.log("LOGIN"), setLoginState(true))
-      .catch((err) => setLoginState(false));
+    await axios.post("/api/signup", data).then((res) => {
+      console.log("signup");
+    });
   };
   return (
     <div className={styles.wrapper}>
-      <div className={styles.title}>Login</div>
-      <form onSubmit={login}>
+      <div className={styles.title}>Signup</div>
+      <form onSubmit={signup}>
+        <div className={styles.field}>
+          <label>Name</label>
+          <Input id="name" component="auth" type="text" />
+        </div>
         <div className={styles.field}>
           <label>Email</label>
           <Input id="email" component="auth" type="text" />
@@ -35,13 +35,13 @@ const Login = (props) => {
           <Input id="password" component="auth" type="password" />
         </div>
         <div className={styles.field}>
-          <input className={styles.submit} type="submit" value="Login" />
+          <input className={styles.submit} type="submit" value="Sign UP" />
         </div>
         <div className={styles.signup}>
-          Not a member? <Link href="/signup">Signup now</Link>
+          a member? <Link href="/login">Login now</Link>
         </div>
       </form>
     </div>
   );
 };
-export default Login;
+export default Signup;
