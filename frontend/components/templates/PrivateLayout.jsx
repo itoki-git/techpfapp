@@ -1,35 +1,28 @@
 import Head from "next/head";
-import Link from "next/link";
+import Router from "next/router";
 import axios from "axios";
 import useSWR from "swr";
-import { RecoilRoot, useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import Header from "../organisms/Header";
 import { loginState } from "../state/currentUser";
 import styles from "../../styles/Layout.module.scss";
-import {
-  headerMenuState,
-  headerValueState,
-} from "../../pages/api/componentStore";
+import { headerMenuState } from "../state/componentStore";
+import { url, api } from "../../pages/api/utility";
 
 const PrivateLayout = (props) => {
   const { title, children } = props;
   const siteTile = "Tripoon";
   const [isLogin, setLoginState] = useRecoilState(loginState);
   const fetcher = (url) => axios.post(url).then((res) => res.data);
-  const { data, error } = useSWR("/api/user", fetcher);
+  const { data, error } = useSWR(api.user, fetcher);
   const header = useRecoilValue(headerMenuState);
 
   if (!data || error) {
     setLoginState(false);
-    return (
-      <Link href="/login">
-        <a>こちら</a>
-      </Link>
-    );
+    Router.push(url.login);
   } else {
     setLoginState(true);
   }
-  console.log("private:" + isLogin);
   return (
     <div className="page">
       <Head>

@@ -1,10 +1,11 @@
 import axios from "axios";
 import Link from "next/link";
 import { Input } from "../atoms/Input";
-import { textStateFamily } from "../../pages/api/createStore";
+import { textStateFamily } from "../state/createStore";
 
 import styles from "../../styles/organisms/Login.module.scss";
 import { useRecoilValue } from "recoil";
+import { api, url } from "../../pages/api/utility";
 
 const Signup = (props) => {
   const name = useRecoilValue(textStateFamily("name"));
@@ -14,7 +15,7 @@ const Signup = (props) => {
   const signup = async (e) => {
     const data = { name: name, email: email, password: password };
     e.preventDefault();
-    await axios.post("/api/signup", data).then((res) => {
+    await axios.post(api.signup, data).then((res) => {
       console.log("signup");
     });
   };
@@ -38,7 +39,7 @@ const Signup = (props) => {
           <input className={styles.submit} type="submit" value="Sign UP" />
         </div>
         <div className={styles.signup}>
-          a member? <Link href="/login">Login now</Link>
+          a member? <Link href={url.login}>Login now</Link>
         </div>
       </form>
     </div>
