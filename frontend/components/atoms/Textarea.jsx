@@ -1,6 +1,6 @@
 import styles from "../../styles/atoms/Textarea.module.scss";
 import { RecoilRoot, atomFamily, useRecoilState } from "recoil";
-import { textStateFamily } from "../../pages/api/create";
+import { textStateFamily } from "../state/createStore";
 
 // テキストエリア
 export const Textarea = (props) => {

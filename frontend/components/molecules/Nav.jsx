@@ -1,6 +1,4 @@
 import Link from "next/link";
-import Button from "../atoms/Button";
-import axios from "axios";
 import styles from "../../styles/molecules/Nav.module.scss";
 
 // ナビメニュー

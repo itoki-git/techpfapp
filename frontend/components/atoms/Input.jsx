@@ -1,6 +1,6 @@
 import styles from "../../styles/atoms/Input.module.scss";
 import { RecoilRoot, atomFamily, useRecoilState } from "recoil";
-import { textStateFamily } from "../../pages/api/createStore";
+import { textStateFamily } from "../state/createStore";
 
 // 入力ボックス
 export const Input = (props) => {
