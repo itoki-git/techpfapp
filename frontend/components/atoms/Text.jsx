@@ -1,4 +1,4 @@
-import styles from "../../styles/atoms/Text.module.scss";
+import styles from '../../styles/atoms/Text.module.scss';
 
 // テキスト
 const Text = (props) => {

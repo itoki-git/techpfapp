@@ -1,6 +1,6 @@
-import Head from "next/head";
-import styles from "../styles/Home.module.css";
-import Link from "next/link";
+import Head from 'next/head';
+import styles from '../styles/Home.module.css';
+import Link from 'next/link';
 
 export default function ISRDemo(props) {
   return (
@@ -16,7 +16,7 @@ export default function ISRDemo(props) {
         <p>What time is it now?</p>
         <p>It&apos;s {props.nowDate}.</p>
         <p className={styles.description}>
-          <Link href={"/"}>
+          <Link href={'/'}>
             <a>Go back</a>
           </Link>
         </p>
@@ -28,7 +28,7 @@ export const getStaticProps = async (context) => {
   return {
     props: {
       nowDate: new Date().toLocaleString(),
-      pageTitle: "ISR Demo",
+      pageTitle: 'ISR Demo',
     },
     revalidate: 5, // ISR settings
   };

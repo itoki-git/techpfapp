@@ -1,22 +1,18 @@
-import Head from "next/head";
-import { useRouter } from "next/router";
-import axios from "axios";
-import useSWR from "swr";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import Header from "../organisms/Header";
-import { loginState } from "../state/currentUser";
-import styles from "../../styles/Layout.module.scss";
-import {
-  headerMenuState,
-  fetchState,
-  loadState,
-} from "../state/componentStore";
-import { url, api } from "../../pages/api/utility";
-import Loading from "../organisms/Load";
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+import axios from 'axios';
+import useSWR from 'swr';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import Header from '../organisms/Header';
+import { loginState } from '../state/currentUser';
+import styles from '../../styles/Layout.module.scss';
+import { headerMenuState, fetchState, loadState } from '../state/componentStore';
+import { url, api } from '../../pages/api/utility';
+import Loading from '../organisms/Load';
 
 const PrivateLayout = (props) => {
   const { title, children } = props;
-  const siteTile = "Tripoon";
+  const siteTile = 'Tripoon';
   const [isLogin, setLoginState] = useRecoilState(loginState);
   const fetcher = (url) => axios.post(url).then((res) => res.data);
   const { data, error } = useSWR(api.user, fetcher);

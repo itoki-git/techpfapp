@@ -1,16 +1,16 @@
-import IconButton from "@mui/material/IconButton";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import ClearIcon from "@mui/icons-material/Clear";
-import Grid from "@mui/material/Grid";
-import Tooltip from "@mui/material/Tooltip";
-import { useSetRecoilState, useRecoilState, useRecoilValue } from "recoil";
+import IconButton from '@mui/material/IconButton';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ClearIcon from '@mui/icons-material/Clear';
+import Grid from '@mui/material/Grid';
+import Tooltip from '@mui/material/Tooltip';
+import { useRecoilState } from 'recoil';
 
-import { Textarea } from "../../components/atoms/Textarea";
-import { Input } from "../../components/atoms/Input";
-import { menuListState, itemID } from "./createStore";
+import { Textarea } from '../../components/atoms/Textarea';
+import { Input } from '../../components/atoms/Input';
+import { menuListState, itemID } from './createStore';
 
-import styles from "../../styles/Component.module.scss";
+import styles from '../../styles/Component.module.scss';
 
 export const SideButton = (props) => {
   const [menu, setMenu] = useRecoilState(menuListState);
@@ -42,12 +42,7 @@ export const SideButton = (props) => {
 
   return (
     <Grid item xs={1}>
-      <Grid
-        container
-        direction="column"
-        justifyContent="flex-start"
-        alignItems="flex-end"
-      >
+      <Grid container direction="column" justifyContent="flex-start" alignItems="flex-end">
         <Tooltip title="削除" placement="right-end">
           <IconButton onClick={() => deleteItem()}>
             <ClearIcon fontSize="small" />
@@ -74,27 +69,15 @@ export const component = (menu) => {
   const id = menu.id;
   const component = menu.component;
   switch (component) {
-    case "0":
+    case '0':
+      return <div className={`${styles['title1']}`} onClick={console.log(id)}></div>;
+    case '1':
+      return <div className={`${styles['title2']}`}></div>;
+    case '2':
+      return <div className={`${styles['title2']}`}></div>;
+    case '3':
       return (
-        <div className={`${styles["title1"]}`}>
-          <Textarea id={id} row={2} placeholder="タイトル" component="title1" />
-        </div>
-      );
-    case "1":
-      return (
-        <div className={`${styles["title2"]}`}>
-          <Textarea id={id} row={4} placeholder="本文" component="textBody" />
-        </div>
-      );
-    case "2":
-      return (
-        <div className={`${styles["title2"]}`}>
-          <Input id={id} placeholder="小見出し" size="large" bold="bold" />
-        </div>
-      );
-    case "3":
-      return (
-        <Grid item xs={11} className={`${styles["title2"]}`}>
+        <Grid item xs={11} className={`${styles['title2']}`}>
           <Input id={id} placeholder="小見出し" size="large" bold="bold" />
           <Input id={id} placeholder="小見出し" size="large" bold="bold" />
           <Input id={id} placeholder="小見出し" size="large" bold="bold" />

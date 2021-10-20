@@ -1,12 +1,12 @@
-import styles from "../../styles/atoms/Textarea.module.scss";
-import { RecoilRoot, atomFamily, useRecoilState } from "recoil";
-import { textStateFamily } from "../state/createStore";
+import styles from '../../styles/atoms/Textarea.module.scss';
+import { RecoilRoot, atomFamily, useRecoilState } from 'recoil';
+import { textStateFamily } from '../state/createStore';
 
 // テキストエリア
 export const Textarea = (props) => {
   const [text, setText] = useRecoilState(textStateFamily(props.id));
   const calcTextAreaHeight = () => {
-    let rowsNum = text.split("\n").length;
+    let rowsNum = text.split('\n').length;
     if (props.row > rowsNum) {
       return props.row;
     } else {
@@ -15,7 +15,7 @@ export const Textarea = (props) => {
   };
   return (
     <textarea
-      className={`${styles["textarea"]} ${styles[props.component]}`}
+      className={`${styles['textarea']} ${styles[props.component]}`}
       defaultValue={text}
       placeholder={props.placeholder}
       rows={calcTextAreaHeight()}

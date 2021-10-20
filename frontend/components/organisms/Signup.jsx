@@ -1,22 +1,22 @@
-import axios from "axios";
-import Link from "next/link";
-import { Input } from "../atoms/Input";
-import { textStateFamily } from "../state/createStore";
+import axios from 'axios';
+import Link from 'next/link';
+import { Input } from '../atoms/Input';
+import { textStateFamily } from '../state/createStore';
 
-import styles from "../../styles/organisms/Login.module.scss";
-import { useRecoilValue } from "recoil";
-import { api, url } from "../../pages/api/utility";
+import styles from '../../styles/organisms/Login.module.scss';
+import { useRecoilValue } from 'recoil';
+import { api, url } from '../../pages/api/utility';
 
 const Signup = (props) => {
-  const name = useRecoilValue(textStateFamily("name"));
-  const email = useRecoilValue(textStateFamily("email"));
-  const password = useRecoilValue(textStateFamily("password"));
+  const name = useRecoilValue(textStateFamily('name'));
+  const email = useRecoilValue(textStateFamily('email'));
+  const password = useRecoilValue(textStateFamily('password'));
 
   const signup = async (e) => {
     const data = { name: name, email: email, password: password };
     e.preventDefault();
     await axios.post(api.signup, data).then((res) => {
-      console.log("signup");
+      console.log('signup');
     });
   };
   return (

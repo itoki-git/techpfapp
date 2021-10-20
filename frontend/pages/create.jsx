@@ -1,6 +1,6 @@
-import { RecoilRoot } from "recoil";
-import PrivateLayout from "../components/templates/PrivateLayout";
-import Create from "../components/organisms/Create";
+import { RecoilRoot } from 'recoil';
+import PrivateLayout from '../components/templates/PrivateLayout';
+import Create from '../components/organisms/Create';
 
 const CreatePage = () => {
   return (

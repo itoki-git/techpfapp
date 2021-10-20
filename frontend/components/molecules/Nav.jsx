@@ -1,5 +1,5 @@
-import Link from "next/link";
-import styles from "../../styles/molecules/Nav.module.scss";
+import Link from 'next/link';
+import styles from '../../styles/molecules/Nav.module.scss';
 
 // ナビメニュー
 const Nav = (props) => {
@@ -10,9 +10,7 @@ const Nav = (props) => {
         {menus.map((menu) => (
           <li className={styles.navmenu} key={menu.id}>
             <Link href={menu.to}>
-              <a className={`${styles[props.button]} ${styles["link"]}`}>
-                {menu.displayName}
-              </a>
+              <a className={`${styles[props.button]} ${styles['link']}`}>{menu.displayName}</a>
             </Link>
           </li>
         ))}

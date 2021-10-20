@@ -1,18 +1,20 @@
-import axios from "axios";
-import Link from "next/link";
-import Router from "next/router";
-import { Input } from "../atoms/Input";
-import { textStateFamily } from "../state/createStore";
+import axios from 'axios';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { Input } from '../atoms/Input';
+import { textStateFamily } from '../state/createStore';
 
-import styles from "../../styles/organisms/Login.module.scss";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { loginState } from "../state/currentUser";
-import { api, url } from "../../pages/api/utility";
+import styles from '../../styles/organisms/Login.module.scss';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { loginState } from '../state/currentUser';
+import { api, url } from '../../pages/api/utility';
+import Loading from './Load';
 
 const Login = (props) => {
-  const [email, setEmail] = useRecoilState(textStateFamily("email"));
-  const [password, setPswd] = useRecoilState(textStateFamily("password"));
+  const [email, setEmail] = useRecoilState(textStateFamily('email'));
+  const [password, setPswd] = useRecoilState(textStateFamily('password'));
   const [isLogin, setLoginState] = useRecoilState(loginState);
+  const router = useRouter();
 
   const login = async (e) => {
     const data = { email: email, password: password };
@@ -21,14 +23,14 @@ const Login = (props) => {
       .post(api.login, data, {
         withCredentials: true,
       })
-      .then((res) => console.log("LOGIN"), setLoginState(true), handler())
+      .then((res) => console.log('LOGIN'), setLoginState(true), handler())
       .catch((err) => setLoginState(false));
   };
   const handler = () => {
     setLoginState(true);
-    setEmail("");
-    setPswd("");
-    Router.push(url.article);
+    setEmail('');
+    setPswd('');
+    router.push(url.article);
   };
   return (
     <div className={styles.wrapper}>

@@ -1,14 +1,14 @@
-import Nav from "../molecules/Nav";
-import Image from "next/image";
-import Link from "next/link";
-import MenuIcon from "@mui/icons-material/Menu";
-import CloseIcon from "@mui/icons-material/Close";
-import IconButton from "@mui/material/IconButton";
-import Box from "@mui/material/Box";
+import Nav from '../molecules/Nav';
+import Image from 'next/image';
+import Link from 'next/link';
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
+import Box from '@mui/material/Box';
 
-import styles from "../../styles/organisms/Header.module.scss";
-import { useState } from "react";
-import { Avatar, Menu, MenuItem } from "@mui/material";
+import styles from '../../styles/organisms/Header.module.scss';
+import { useState } from 'react';
+import { Avatar, Menu, MenuItem } from '@mui/material';
 
 // ヘッダー
 const Header = (props) => {
@@ -23,11 +23,11 @@ const Header = (props) => {
         <Box
           sx={{
             display: {
-              xs: "none",
-              sm: "none",
-              md: "block",
-              lg: "block",
-              xl: "block",
+              xs: 'none',
+              sm: 'none',
+              md: 'block',
+              lg: 'block',
+              xl: 'block',
             },
           }}
         >
@@ -36,11 +36,11 @@ const Header = (props) => {
         <Box
           sx={{
             display: {
-              xs: "block",
-              sm: "block",
-              md: "none",
-              lg: "none",
-              xl: "none",
+              xs: 'block',
+              sm: 'block',
+              md: 'none',
+              lg: 'none',
+              xl: 'none',
             },
           }}
         >
@@ -54,14 +54,14 @@ const Header = (props) => {
           <Nav
             menus={props.menus}
             style="smallNav"
-            active={click ? "active" : ""}
-            button={click ? "navActive" : "navInActive"}
+            active={click ? 'active' : ''}
+            button={click ? 'navActive' : 'navInActive'}
           />
         </Box>
         <IconButton
           id="user-menu"
           aria-controls="basic-menu"
-          aria-expanded={open ? "true" : undefined}
+          aria-expanded={open ? 'true' : undefined}
           onClick={(e) => setAnchorEl(e.currentTarget)}
           size="small"
           sx={{ ml: 2 }}
@@ -74,7 +74,7 @@ const Header = (props) => {
           open={open}
           onClose={() => setAnchorEl(null)}
           MenuListProps={{
-            "aria-labelledby": "user-menu",
+            'aria-labelledby': 'user-menu',
           }}
         >
           <MenuItem onClick={() => setAnchorEl(null)}>Profile</MenuItem>
