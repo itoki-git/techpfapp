@@ -1,8 +1,8 @@
+import React, { useState } from 'react';
 import styles from '../../styles/organisms/Sidebar.module.scss';
 import Menu from '../molecules/Menu';
 import { menuOpenState } from '../state/createStore';
-import { useSetRecoilState, useRecoilState } from 'recoil';
-import { useState } from 'react';
+import { useRecoilState } from 'recoil';
 
 const Sidebar = (props) => {
   const [selected, setSelected] = useRecoilState(menuOpenState);

@@ -1,6 +1,5 @@
+import React from 'react';
 import Nav from '../molecules/Nav';
-import Image from 'next/image';
-import Link from 'next/link';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';

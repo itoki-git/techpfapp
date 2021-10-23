@@ -1,12 +1,12 @@
+import React from 'react';
 import styles from '../../styles/molecules/Menu.module.scss';
-import { useSetRecoilState, useRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import Image from 'next/image';
 
-import { menuListState, menuOpenState } from '../state/createStore';
+import { menuListState } from '../state/createStore';
 
 const Menu = (props) => {
   const [menu, setMenu] = useRecoilState(menuListState);
-  const [selected, setSelected] = useRecoilState(menuOpenState);
   const addItem = (menuid) => {
     setMenu(() => menu.concat({ id: menu.length.toString(), component: menuid }));
   };

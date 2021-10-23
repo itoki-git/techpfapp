@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "next start"
   },
   "dependencies": {
     "@emotion/react": "^11.4.1",
@@ -14,15 +13,15 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/react-fontawesome": "^0.1.14",
-    "@material-ui/core": "^5.0.0-beta.5",
-    "@material-ui/icons": "^4.11.2",
-    "@material-ui/styled-engine-sc": "^5.0.0-beta.5",
+    "@mui/icons-material": "^5.0.1",
+    "@mui/material": "^5.0.2",
     "@zeit/next-sass": "^1.0.1",
     "axios": "^0.21.4",
     "gray-matter": "^4.0.3",
     "next": "11.0.1",
     "node-sass": "4.14",
     "react": "17.0.2",
+    "react-color": "^2.19.3",
     "react-dom": "17.0.2",
     "react-scripts": "3.4.3",
     "recoil": "^0.4.0",
@@ -32,7 +31,10 @@
     "swr": "^1.0.1"
   },
   "devDependencies": {
-    "eslint": "7.31.0",
-    "eslint-config-next": "11.0.1"
+    "eslint": "^8.0.1",
+    "eslint-config-next": "11.0.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-react": "^7.26.1",
+    "prettier": "^2.4.1"
   }
 }

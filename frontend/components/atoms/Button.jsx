@@ -1,3 +1,4 @@
+import React from 'react';
 import styles from '../../styles/atoms/Button.module.scss';
 
 const Button = (props) => {

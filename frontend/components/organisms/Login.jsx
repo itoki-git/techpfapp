@@ -1,19 +1,18 @@
+import React from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Input } from '../atoms/Input';
 import { textStateFamily } from '../state/createStore';
-
 import styles from '../../styles/organisms/Login.module.scss';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import { loginState } from '../state/currentUser';
 import { api, url } from '../../pages/api/utility';
-import Loading from './Load';
 
 const Login = (props) => {
   const [email, setEmail] = useRecoilState(textStateFamily('email'));
   const [password, setPswd] = useRecoilState(textStateFamily('password'));
-  const [isLogin, setLoginState] = useRecoilState(loginState);
+  const setLoginState = useResetRecoilState(loginState);
   const router = useRouter();
 
   const login = async (e) => {

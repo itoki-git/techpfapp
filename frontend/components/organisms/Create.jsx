@@ -1,12 +1,10 @@
+import React from 'react';
 import Sidebar from './Sidebar';
 import styles from '../../styles/ArticlePage.module.scss';
 import { useRecoilValue } from 'recoil';
-import Grid from '@mui/material/Grid';
 import axios from 'axios';
-import { loginState } from '../state/currentUser';
-
 import { menuListState } from '../state/createStore';
-import { component, SideButton } from '../state/createComponent';
+import { component } from '../state/createComponent';
 import { api } from '../../pages/api/utility';
 import ToolBar from '../molecules/ToolBar';
 import { Button, Divider, Drawer } from '@mui/material';

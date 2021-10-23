@@ -1,6 +1,5 @@
-import { atom, atomFamily, selector } from 'recoil';
+import { selector } from 'recoil';
 import { url } from '../../pages/api/utility';
-import Loading from '../organisms/Load';
 import { loginState } from './currentUser';
 
 const privateMenu = [

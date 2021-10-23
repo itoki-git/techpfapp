@@ -1,4 +1,4 @@
-import { atom, atomFamily, selector } from 'recoil';
+import { atom } from 'recoil';
 
 export const loginState = atom({
   key: 'auth/loginState',

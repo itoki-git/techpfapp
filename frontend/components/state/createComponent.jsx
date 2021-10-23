@@ -1,3 +1,4 @@
+import React from 'react';
 import IconButton from '@mui/material/IconButton';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
@@ -5,10 +6,8 @@ import ClearIcon from '@mui/icons-material/Clear';
 import Grid from '@mui/material/Grid';
 import Tooltip from '@mui/material/Tooltip';
 import { useRecoilState } from 'recoil';
-
-import { Textarea } from '../../components/atoms/Textarea';
 import { Input } from '../../components/atoms/Input';
-import { menuListState, itemID } from './createStore';
+import { menuListState } from './createStore';
 
 import styles from '../../styles/Component.module.scss';
 

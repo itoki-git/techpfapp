@@ -1,3 +1,4 @@
+import React from 'react';
 import Link from 'next/link';
 import Card from '../molecules/Card';
 import Container from '@mui/material/Container';
