@@ -1,7 +1,14 @@
 import React from 'react';
-import styles from '../../styles/organisms/Load.module.scss';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
-const Loading = () => {
-  return <div className={styles.loader}>Loading...</div>;
+const Loading = (props) => {
+  return (
+    <div>
+      <Backdrop open={props.loading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    </div>
+  );
 };
 export default Loading;
