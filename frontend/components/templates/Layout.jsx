@@ -6,7 +6,7 @@ import { loginState } from '../state/currentUser';
 import { headerMenuState } from '../state/componentStore';
 import styles from '../../styles/Layout.module.scss';
 import Header from '../organisms/Header';
-import { api } from '../../pages/api/utility';
+import { api, publicMenu } from '../../pages/api/utility';
 
 const Layout = (props) => {
   const { title, children } = props;
@@ -14,7 +14,6 @@ const Layout = (props) => {
   const [isLogin, setLoginState] = useRecoilState(loginState);
   const fetcher = (url) => axios.post(url).then((res) => res.data);
   const { data, error } = useSWR(api.user, fetcher);
-  const header = useRecoilValue(headerMenuState);
 
   if (!data || error) {
     setLoginState(false);
@@ -31,7 +30,7 @@ const Layout = (props) => {
 
       <div className={styles.parent}>
         <div className={styles.header}>
-          <Header menus={header} />
+          <Header menus={publicMenu} />
         </div>
         <div className={styles.children}>{children}</div>
       </div>
