@@ -18,6 +18,7 @@ export const Textarea = (props) => {
     <textarea
       className={`${styles['textarea']} ${styles[props.component]}`}
       defaultValue={text}
+      id="editEl"
       placeholder={props.placeholder}
       rows={calcTextAreaHeight()}
       onChange={(e) => setText(e.target.value)}
