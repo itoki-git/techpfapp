@@ -9,6 +9,22 @@
 .navmenu {
   margin: 0 0 0 15px;
 }
+.link {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+// ナビバー
+.navActive {
+  font-size: 1.3em;
+  color: #fff;
+  display: block;
+  padding: 2rem 0;
+}
+.navInActive {
+  font-size: 1.3em;
+  color: #020202;
+}
 
 .smallNav {
   position: fixed;

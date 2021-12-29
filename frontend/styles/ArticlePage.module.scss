@@ -1,5 +1,10 @@
+$white: #ffffff;
+$baige: #ead4a3;
+
 .createPage {
   display: flex;
+  background-color: #f3f4ed;
+  height: 100vh;
 }
 .flexitem {
   width: 100%;
@@ -11,7 +16,7 @@
     width: 50em;
     min-height: 20em;
     margin: 0 auto;
-    background: #fff;
+    background: #eee;
     border-radius: 10px; /*角の丸み*/
     .title {
       font-size: 23.625px;
@@ -23,4 +28,19 @@
       justify-content: center;
     }
   }
+}
+.item {
+  width: 80%;
+  background-color: $white;
+  display: flex;
+  &:hover {
+    border: 3px solid $baige;
+  }
+  .itemArea {
+    width: 100%;
+  }
+}
+.title1 {
+  padding: 4em;
+  background-color: $white;
 }

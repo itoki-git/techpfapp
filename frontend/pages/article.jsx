@@ -1,12 +1,12 @@
 import React from 'react';
 import CardList from '../components/organisms/CardList';
-import Layout from '../components/templates/Layout';
+import PrivateLayout from '../components/templates/PrivateLayout';
 
 const ArticlePage = () => {
   return (
-    <Layout title="article">
+    <PrivateLayout title="article">
       <CardList />
-    </Layout>
+    </PrivateLayout>
   );
 };
 export default ArticlePage;

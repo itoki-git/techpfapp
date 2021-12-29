@@ -57,6 +57,16 @@ func SignupUser(ctx *gin.Context) {
 		registerPath := "../app/data/article/" + userID
 		common.CreateFolder(registerPath)
 
+		profilePath := "../app/data/profile/" + userID + ".json"
+
+		// プロフィールをjsonに変換する
+		jsonData, _ := json.Marshal("")
+		// json書き込み
+		if err := common.FileWrite(profilePath, string(jsonData)); err != nil {
+			ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
 		ctx.JSON(http.StatusOK, user)
 		return
 	}
@@ -66,7 +76,7 @@ func SignupUser(ctx *gin.Context) {
 // Login ユーザーlogin処理
 func Login(ctx *gin.Context) {
 	var loginUser entity.EmailLogin
-	var profile entity.Profile
+	//var profile entity.Profile
 
 	common.BindEmailLogin(&loginUser, ctx)
 
@@ -75,7 +85,7 @@ func Login(ctx *gin.Context) {
 		ctx.JSON(http.StatusNotFound, gin.H{"message": "user not found"})
 	}
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(loginUser.Password)); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"message": "incorrect password"})
+		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "incorrect password"})
 	} else {
 		claims := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.StandardClaims{
 			Issuer:    strconv.Itoa(int(user.ID)),
@@ -83,26 +93,46 @@ func Login(ctx *gin.Context) {
 		})
 		token, err := claims.SignedString([]byte(SecretKey))
 		if err != nil {
-			ctx.JSON(http.StatusInternalServerError, gin.H{"message": "could not login"})
+			ctx.JSON(http.StatusUnauthorized, gin.H{"message": "could not login"})
 		}
 		//maxAge := time.Now().Add(time.Hour * 24)
+		//ctx.SetCookie("jwt", token, 60*60*24, "/", "localhost", false, true)
 		ctx.SetCookie("jwt", token, 60*60*24, "/", "localhost", false, true)
-		profile = GetProfileData(user.ProfilePath)
-		ctx.JSON(http.StatusOK, gin.H{"messgae": "success", "name": user.Name, "email": user.Email,
-			"shortProfile": profile.ShortProfile, "profile": profile.Profile})
+		ctx.JSON(http.StatusOK, gin.H{"messgae": "success", "name": user.Name, "email": user.Email})
+		/*
+			if profile, err := GetProfileData(user.ProfilePath); err != nil {
+				fmt.Println(err)
+				ctx.JSON(http.StatusUnauthorized, gin.H{"message": "could not login"})
+			} else {
+				ctx.JSON(http.StatusOK, gin.H{"messgae": "success", "name": user.Name, "email": user.Email,
+					"shortProfile": profile.ShortProfile, "profile": profile.Profile})
+			}
+		*/
 	}
 }
 
 // User jwtからユーザー情報を取得する
 func User(ctx *gin.Context) {
-	var profile entity.Profile
+	//var profile entity.Profile
 	// cookieからuserIDを取得する
 	userID := GetIDFromJwt(ctx)
 
-	user := db.GetUser(userID)
-	profile = GetProfileData(user.ProfilePath)
-	ctx.JSON(http.StatusOK, gin.H{"messgae": "success", "name": user.Name, "email": user.Email,
-		"shortProfile": profile.ShortProfile, "profile": profile.Profile})
+	if user := db.GetUser(userID); user.Email != "" {
+		fmt.Println(user.Email)
+		ctx.JSON(http.StatusOK, gin.H{"messgae": "success", "name": user.Name, "email": user.Email})
+	} else {
+		fmt.Println("err")
+		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "could not login"})
+	}
+	/*
+		if profile, err := GetProfileData(user.ProfilePath); err != nil {
+			ctx.JSON(http.StatusUnauthorized, gin.H{"message": "could not login"})
+		} else {
+			ctx.JSON(http.StatusOK, gin.H{"messgae": "success", "name": user.Name, "email": user.Email,
+				"shortProfile": profile.ShortProfile, "profile": profile.Profile})
+		}
+	*/
+
 }
 
 // GetCreatorInformation 作成者の情報を取得する
@@ -111,15 +141,18 @@ func GetCreatorInformation(ctx *gin.Context) {
 
 	common.BindArticle(&article, ctx)
 
-	var profile entity.Profile
+	//var profile entity.Profile
 
 	userID := db.GetCreatorUserID(article.ArticleID)
 
 	user := db.GetUser(userID.UserID)
 
-	profile = GetProfileData(user.ProfilePath)
-	ctx.JSON(http.StatusOK, gin.H{"messgae": "success", "name": user.Name, "email": user.Email,
-		"shortProfile": profile.ShortProfile, "profile": profile.Profile})
+	if profile, err := GetProfileData(user.ProfilePath); err != nil {
+		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "could not login"})
+	} else {
+		ctx.JSON(http.StatusOK, gin.H{"messgae": "success", "name": user.Name, "email": user.Email,
+			"shortProfile": profile.ShortProfile, "profile": profile.Profile})
+	}
 
 }
 
@@ -133,7 +166,7 @@ func Logout(ctx *gin.Context) {
 // UpdateAccount アカウント名、Emailの更新処理
 func UpdateAccount(ctx *gin.Context) {
 	var updateAccount entity.User
-	var profile entity.Profile
+	//var profile entity.Profile
 
 	common.BindUser(&updateAccount, ctx)
 
@@ -157,9 +190,12 @@ func UpdateAccount(ctx *gin.Context) {
 		fmt.Println("UPDATE!!!!")
 		db.UpdateUser(userID, updateAccount.Name, updateAccount.Email)
 		user := db.GetUser(userID)
-		profile = GetProfileData(user.ProfilePath)
-		ctx.JSON(http.StatusOK, gin.H{"messgae": "success", "name": user.Name, "email": user.Email,
-			"shortProfile": profile.ShortProfile, "profile": profile.Profile})
+		if profile, err := GetProfileData(user.ProfilePath); err != nil {
+			ctx.JSON(http.StatusUnauthorized, gin.H{"message": "could not login"})
+		} else {
+			ctx.JSON(http.StatusOK, gin.H{"messgae": "success", "name": user.Name, "email": user.Email,
+				"shortProfile": profile.ShortProfile, "profile": profile.Profile})
+		}
 	}
 }
 
@@ -223,22 +259,25 @@ func UpdateProfile(ctx *gin.Context) {
 	}
 	// プロフィールの保存場所をUserに登録する
 	db.UpdateProfile(userID, registerPath)
-	profile = GetProfileData(user.ProfilePath)
-	ctx.JSON(http.StatusOK, gin.H{"messgae": "success", "shortProfile": profile.ShortProfile, "profile": profile.Profile})
+	if profile, err := GetProfileData(user.ProfilePath); err != nil {
+		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "could not login"})
+	} else {
+		ctx.JSON(http.StatusOK, gin.H{"messgae": "success", "shortProfile": profile.ShortProfile, "profile": profile.Profile})
+	}
 }
 
 // GetProfileData プロフィールの情報を取得する
-func GetProfileData(profilePath string) entity.Profile {
+func GetProfileData(profilePath string) (entity.Profile, error) {
 	var profile entity.Profile
 
 	if jsonFromFile, err := common.FileRead(profilePath); err != nil {
-		//ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return profile, err
 	} else {
 		if err := json.Unmarshal([]byte(jsonFromFile), &profile); err != nil {
-			//ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return profile, err
 		}
 	}
-	return profile
+	return profile, nil
 }
 
 // RemoveAccount アカウントを削除する

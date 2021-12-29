@@ -1,14 +1,26 @@
 import React from 'react';
 import styles from '../../styles/molecules/Menu.module.scss';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import Image from 'next/image';
 
-import { menuListState } from '../state/createStore';
+import { editID, menuListState, menuState } from '../state/createStore';
 
 const Menu = (props) => {
-  const [menu, setMenu] = useRecoilState(menuListState);
+  const [menuList, setMenuList] = useRecoilState(menuListState);
+  const [id, setID] = useRecoilState(editID);
+
   const addItem = (menuid) => {
-    setMenu(() => menu.concat({ id: menu.length.toString(), component: menuid }));
+    setMenuList(() => [
+      ...menuList,
+      {
+        id: id,
+        component: menuid,
+        background: '#ffffff',
+        color: '#000000',
+        format: [],
+      },
+    ]);
+    setID(id + 1);
   };
   return (
     <div className={styles.subMenu}>

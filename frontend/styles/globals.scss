@@ -3,9 +3,8 @@ body {
   padding: 0;
   margin: 0;
   height: 100%;
-  font-family: "Noto Sans JP", -apple-system, "Segoe UI", "Helvetica Neue",
-    "Hiragino Kaku Gothic ProN", メイリオ, meiryo, sans-serif;
-  color: #222;
+  font-family: 'Noto Sans JP', -apple-system, 'Segoe UI', 'Helvetica Neue', 'Hiragino Kaku Gothic ProN', メイリオ,
+    meiryo, sans-serif;
 }
 
 img,
@@ -19,10 +18,23 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: Montserrat, -apple-system, "Segoe UI", "Helvetica Neue",
-    "Hiragino Kaku Gothic ProN", メイリオ, meiryo, sans-serif;
+  font-family: Montserrat, -apple-system, 'Segoe UI', 'Helvetica Neue', 'Hiragino Kaku Gothic ProN', メイリオ, meiryo,
+    sans-serif;
 }
 
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+textarea {
+  resize: none;
+}
+:focus {
+  outline: none;
 }

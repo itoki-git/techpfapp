@@ -6,6 +6,6 @@ export const loginState = atom({
 });
 
 export const userState = atom({
-  key: 'menuCountState',
+  key: 'auth/menuCountState',
   default: { name: '' },
 });

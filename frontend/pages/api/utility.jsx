@@ -26,3 +26,10 @@ export const publicMenu = [
   { id: '1', displayName: 'Login', to: url.login },
   { id: '2', displayName: 'Article', to: url.article },
 ];
+
+export const config = {
+  bucketName: process.env.NEXT_PUBLIC_S3_BUCKET,
+  region: process.env.NEXT_PUBLIC_REGION,
+  accessKeyId: process.env.NEXT_PUBLIC_ACCESS_KEY,
+  secretAccessKey: process.env.NEXT_PUBLIC_SECRET_ACCESS_KEY,
+};

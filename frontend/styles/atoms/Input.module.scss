@@ -1,5 +1,46 @@
+$baige: #ead4a3;
+$black: #202221;
 .input {
-  display: block;
+  color: $black;
   width: 100%;
   border: none;
+  box-sizing: border-box;
+  letter-spacing: 0.05em;
+  &:hover {
+    border: 3px solid $baige;
+  }
+  &:focus {
+    outline: none;
+    border: 3px solid $baige;
+  }
+  &.small {
+    font-size: 1rem;
+  }
+  &.medium {
+    font-size: 1.5rem;
+  }
+  &.large {
+    font-size: 2rem;
+  }
+  &.bold {
+    font-weight: bolder;
+  }
+  &.title1 {
+    text-align: center;
+  }
+  &.auth {
+    height: 100%;
+    outline: none;
+    font-size: 17px;
+    padding-left: 20px;
+    border: 1px solid lightgrey;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    &:focus {
+      border-color: #4158d0;
+    }
+    &:valid {
+      border-color: #4158d0;
+    }
+  }
 }

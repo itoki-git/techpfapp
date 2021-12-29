@@ -1,15 +1,9 @@
 import React from 'react';
-import Sidebar from './Sidebar';
-import styles from '../../styles/ArticlePage.module.scss';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import axios from 'axios';
+import { useRecoilValue } from 'recoil';
 import { editState, textStateFamily } from '../state/createStore';
-import { component, editComponent } from '../state/createComponent';
 import { SideButton } from '../molecules/SideButton';
-import { api } from '../../pages/api/utility';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
-import { useState } from 'react';
 import { Editor } from '../molecules/Editor';
 import { Stack } from '@mui/material';
 import { Preview } from './Preview';
