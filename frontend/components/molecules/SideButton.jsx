@@ -55,7 +55,7 @@ export const SideButton = (props) => {
     setText(editorEl.value);
   };
   return (
-    <Stack direction="column" justifyContent="center" alignItems="center" spacing={4}>
+    <Stack direction={{ xs: 'row', sm: 'column' }} justifyContent="center" alignItems="center" spacing={4}>
       <Tooltip title={isEdit ? 'プレビュー' : '編集'} arrow>
         <Fab sx={fabColorStyle} aria-label="Expand" color="inherit" component="span" onClick={changeEditState}>
           {isEdit ? <PlayArrowIcon /> : <EditIcon />}

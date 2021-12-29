@@ -15,14 +15,19 @@ const Create = () => {
   return (
     <form>
       <Grid container direction="row" justifyContent="center" alignItems="flex-start" spacing={2}>
-        <Grid item xs={12} md={10}>
+        <div style={{ width: '100%' }}>
           <Container maxWidth="md">
-            <Stack direction="row" justifyContent="center" alignItems="center" spacing={5}>
+            <Stack
+              direction={{ xs: 'column', sm: 'row' }}
+              justifyContent="center"
+              alignItems="center"
+              spacing={{ xs: 1, sm: 1, md: 2 }}
+            >
               {isEdit ? <Editor id={id} /> : <Preview markdown={markdown} />}
               <SideButton id="create" />
             </Stack>
           </Container>
-        </Grid>
+        </div>
       </Grid>
     </form>
   );
