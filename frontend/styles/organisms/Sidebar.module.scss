@@ -1,59 +1,48 @@
 .sidebar {
   position: relative;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 78px;
-  background: #11101d;
+  user-select: none;
+  width: 250px;
   padding: 6px 14px;
   z-index: 99;
-  transition: all 0.5s ease;
-
-  &.open {
-    width: 250px;
-  }
-  .logo {
-    height: 60px;
-    display: flex;
-    align-items: center;
+  top: 60px;
+  left: 10px;
+  transition: all 0.25s cubic-bezier(0.39, 1.31, 0.28, 1);
+  .menu {
     position: relative;
+    width: 160px;
+    padding: 16px 13px;
+    background: #11101d;
+    border-radius: 10px;
+    z-index: 1;
+    transition: background 0.5s cubic-bezier(0.39, 1.31, 0.28, 1), left 0.5s;
+  }
+  .menuList {
+    margin: 0;
+    padding: 0;
+  }
 
-    .logoName {
-      color: #fff;
-      font-size: 20px;
-      font-weight: 600;
-      opacity: 0;
-      transition: all 0.5s ease;
-    }
-  }
-  &.open .logo {
-    .icon,
-    .logoName {
-      opacity: 1;
-    }
-  }
-  .logo .btn {
-    position: absolute;
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%);
-    font-size: 22px;
-    transition: all 0.4s ease;
-    font-size: 23px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.5s ease;
-  }
-  .icon {
+  .menuItem {
+    border-radius: 10px;
+    margin-top: 10px;
+    font-size: 20px;
+    line-height: 30px;
+    font-weight: 500;
+    letter-spacing: -0.1em;
     color: #fff;
-    height: 60px;
-    min-width: 50px;
-    font-size: 28px;
-    text-align: center;
-    line-height: 60px;
+    cursor: pointer;
+    transition: 0.25s;
+    &:hover {
+      background: rgba($color: #fff, $alpha: 0.3);
+    }
   }
-  .navlist {
-    margin-top: 20px;
-    height: 100%;
+  .menuName {
+    display: inline-block;
+    padding: 0 8px;
+    transition: 0.25s;
+  }
+  .subMenu {
+    &.hidden {
+      display: none;
+    }
   }
 }
