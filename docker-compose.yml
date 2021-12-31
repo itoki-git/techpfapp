@@ -43,7 +43,7 @@ services:
       MYSQL_PASSWORD: admin123
       TZ: "Asia/***REMOVED***"
     ports:
-      - 3306:3306
+      - 3302:3306
     expose:
       - 3306
     volumes:
