@@ -8,9 +8,9 @@ import { useRecoilValue } from 'recoil';
 import { api, url } from '../../pages/api/utility';
 
 const Signup = (props) => {
-  const name = useRecoilValue(textStateFamily('name'));
-  const email = useRecoilValue(textStateFamily('email'));
-  const password = useRecoilValue(textStateFamily('password'));
+  const name = useRecoilValue(textStateFamily('signupName'));
+  const email = useRecoilValue(textStateFamily('signupEmail'));
+  const password = useRecoilValue(textStateFamily('signupPassword'));
 
   const signup = async (e) => {
     const data = { name: name, email: email, password: password };
@@ -25,15 +25,15 @@ const Signup = (props) => {
       <form onSubmit={signup}>
         <div className={styles.field}>
           <label>Name</label>
-          <Input id="name" component="auth" type="text" />
+          <Input stateId="signupName" id="signupName" component="auth" type="text" />
         </div>
         <div className={styles.field}>
           <label>Email</label>
-          <Input id="email" component="auth" type="text" />
+          <Input stateId="signupEmail" id="signupEmail" component="auth" type="text" />
         </div>
         <div className={styles.field}>
           <label>Password</label>
-          <Input id="password" component="auth" type="password" />
+          <Input stateId="signupPassword" id="signupPassword" component="auth" type="password" />
         </div>
         <div className={styles.field}>
           <input className={styles.submit} type="submit" value="Sign UP" />

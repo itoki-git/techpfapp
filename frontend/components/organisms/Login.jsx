@@ -12,8 +12,8 @@ import { api, url } from '../../pages/api/utility';
 import { AuthContext } from '../state/AuthStore';
 
 const Login = (props) => {
-  const [email, setEmail] = useRecoilState(textStateFamily('email'));
-  const [password, setPswd] = useRecoilState(textStateFamily('password'));
+  const [email, setEmail] = useRecoilState(textStateFamily('loginEmail'));
+  const [password, setPswd] = useRecoilState(textStateFamily('loginPassword'));
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
   const [isAlertOpen, setIsAlertOpen] = useState(false);
@@ -86,11 +86,11 @@ const Login = (props) => {
         <form onSubmit={login}>
           <div className={styles.field}>
             <label>Email</label>
-            <Input id="email" component="auth" type="text" />
+            <Input stateId="loginEmail" id="loginEmail" component="auth" type="text" />
           </div>
           <div className={styles.field}>
             <label>Password</label>
-            <Input id="password" component="auth" type="password" />
+            <Input stateId="loginPassword" id="loginPassword" component="auth" type="password" />
           </div>
           <div className={styles.field}>
             <input className={styles.submit} type="submit" value="Login" />
