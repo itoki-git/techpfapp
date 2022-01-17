@@ -1,9 +1,10 @@
+import React from 'react';
 import Head from 'next/head';
 import axios from 'axios';
 import useSWR from 'swr';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import Container from '@mui/material/Container';
+import { useRecoilState } from 'recoil';
 import { loginState } from '../state/currentUser';
-import { headerMenuState } from '../state/componentStore';
 import styles from '../../styles/Layout.module.scss';
 import Header from '../organisms/Header';
 import { api, publicMenu } from '../../pages/api/utility';
@@ -29,10 +30,8 @@ const Layout = (props) => {
       </Head>
 
       <div className={styles.parent}>
-        <div className={styles.header}>
-          <Header menus={publicMenu} />
-        </div>
-        <div className={styles.children}>{children}</div>
+        <Header menus={publicMenu} />
+        <Container className={styles.children}>{children}</Container>
       </div>
     </div>
   );

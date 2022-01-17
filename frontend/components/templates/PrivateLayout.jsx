@@ -2,6 +2,7 @@ import React, { useEffect, useContext, useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import Container from '@mui/material/Container';
 import Header from '../organisms/Header';
 import styles from '../../styles/Layout.module.scss';
 import { url, api, privateMenu } from '../../pages/api/utility';
@@ -70,7 +71,7 @@ const PrivateLayout = (props) => {
   }
 
   return (
-    <div className="page">
+    <div className={styles.page}>
       <Head>
         <title>{title ? `${title} | ${siteTile}` : siteTile}</title>
         <link rel="icon" href="/fabicon.ico" />
@@ -78,7 +79,7 @@ const PrivateLayout = (props) => {
 
       <div className={styles.parent}>
         <Header menus={privateMenu} />
-        <div className={styles.children}>{children}</div>
+        <Container className={styles.children}>{children}</Container>
       </div>
     </div>
   );
