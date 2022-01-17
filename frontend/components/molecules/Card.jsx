@@ -1,20 +1,45 @@
-import React from 'react';
-import Image from 'next/image';
-import Text from '../atoms/Text';
+import React, { useState } from 'react';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import ShareIcon from '@mui/icons-material/Share';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import BookmarkAddOutlinedIcon from '@mui/icons-material/BookmarkAddOutlined';
+import Paper from '@mui/material/Paper';
+import IconButton from '@mui/material/IconButton';
+import Link from 'next/link';
 
 import styles from '../../styles/molecules/Card.module.scss';
 
 // カード
-const Card = (props) => {
+const Cards = (props) => {
+  const [isBookmark, setisBookmark] = useState(false);
   return (
-    <div className={styles.card} id="card">
-      <div className={styles.carditem}>
-        <Image className={styles.thumbnail} src="/DSC_9314.JPG" alt={props.title} width={400} height={400} />
-        <div className={styles.cardtitle}>
-          <Text content={props.title} />
-        </div>
-      </div>
-    </div>
+    <Paper className={styles.cardroot}>
+      <Card className={styles.cardContent}>
+        <CardContent>
+          <Typography variant="body2" component="span" className={styles.carddate}>
+            {props.item.createDay}
+          </Typography>
+          <Typography gutterBottom variant="h5" component="div" className={styles.cardtitle}>
+            <Link href="#">
+              <a className={styles.titlelink}> {props.item.title}</a>
+            </Link>
+          </Typography>
+          <div className={styles.bottomIcon}>
+            <div className={styles.buttonItem}>
+              <FavoriteBorderIcon className={styles.nomal} />
+              <p className={styles.cardicon}>14.36k</p>
+            </div>
+            <div className={styles.buttonItem}>
+              <IconButton onClick={() => setisBookmark(!isBookmark)}>
+                <BookmarkAddOutlinedIcon className={`${styles[isBookmark ? 'mark' : 'nomal']}`} />
+              </IconButton>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </Paper>
   );
 };
-export default Card;
+export default Cards;

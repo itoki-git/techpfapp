@@ -1,45 +1,78 @@
-.card {
-  position: relative;
+$gray: #919eab;
+$black: #333;
+$lightblue: #049dd9;
+.cardroot {
+  background-color: rgb(255, 255, 255);
+  color: rgb(33, 43, 54);
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  background-image: none;
   overflow: hidden;
-  width: 100%;
-}
-.card::before {
-  content: "";
-  display: block;
-  padding-top: 100%;
-}
-.carditem {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  border-radius: 1rem;
-}
-.thumbnail {
-  filter: brightness(75%);
-  object-fit: cover;
-  position: absolute;
-  border-radius: 1rem;
-  &:hover {
-    filter: brightness(100%) saturate(200%);
+  box-shadow: rgba(145, 158, 171, 0.24) 0px 0px 2px 0px, rgba(145, 158, 171, 0.24) 0px 16px 32px -4px;
+  border-radius: 16px;
+  z-index: 0;
+  position: relative;
+  .avator {
+    position: relative;
+    padding-top: calc(75%);
   }
 }
-.cardtitle {
-  &:hover {
-    filter: brightness(100%) saturate(200%);
+.cardContent {
+  padding: 32px 24px 24px;
+  position: relative;
+  .carddate {
+    margin: 0 0 8px;
+    line-height: 1.5;
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: $gray;
+    display: block;
   }
-  filter: brightness(100%);
-  color: #fff;
-  font-size: 2em;
-  font-weight: 700;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  margin: 0;
-  padding: 0;
-  z-index: 1;
+  .cardtitle {
+    margin: 0;
+    font-weight: 600;
+    line-height: 1.57143;
+    font-size: 0.875rem;
+    height: 44px;
+    overflow: hidden;
+  }
+  .titlelink {
+    position: relative;
+    display: inline-block;
+    color: #020202;
+    text-decoration: none;
+    background: linear-gradient($black, $black);
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    background-size: 0 2px;
+    transition: background-size 0.6s;
+    &:hover {
+      background-size: 100% 2px;
+    }
+  }
+  .bottomIcon {
+    display: flex;
+    flex-wrap: wrap;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+    margin-top: 24px;
+    color: rgb(145, 158, 171);
+    .buttonItem {
+      display: flex;
+      -webkit-box-align: center;
+      align-items: center;
+      margin-left: 15px;
+      .nomal {
+        color: $gray;
+      }
+      .mark {
+        color: $lightblue;
+      }
+      .cardicon {
+        margin: 0px;
+        line-height: 1.5;
+        font-size: 0.75rem;
+        font-weight: 400;
+      }
+    }
+  }
 }
