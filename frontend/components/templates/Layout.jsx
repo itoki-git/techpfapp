@@ -12,15 +12,6 @@ import { api, publicMenu } from '../../pages/api/utility';
 const Layout = (props) => {
   const { title, children } = props;
   const siteTile = 'Tripoon';
-  const [isLogin, setLoginState] = useRecoilState(loginState);
-  const fetcher = (url) => axios.post(url).then((res) => res.data);
-  const { data, error } = useSWR(api.user, fetcher);
-
-  if (!data || error) {
-    setLoginState(false);
-  } else {
-    setLoginState(true);
-  }
 
   return (
     <div className="page">

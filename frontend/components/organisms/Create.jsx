@@ -5,7 +5,7 @@ import { SideButton } from '../molecules/SideButton';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import { Editor } from '../molecules/Editor';
-import { Stack } from '@mui/material';
+import Stack from '@mui/material/Stack';
 import { Preview } from './Preview';
 
 const Create = () => {
@@ -20,11 +20,13 @@ const Create = () => {
             <Stack
               direction={{ xs: 'column', sm: 'row' }}
               justifyContent="center"
-              alignItems="center"
+              alignItems="flex-end"
               spacing={{ xs: 1, sm: 1, md: 2 }}
             >
-              {isEdit ? <Editor id={id} /> : <Preview markdown={markdown} />}
-              <SideButton id="create" />
+              {isEdit ? <Editor stateId={id} id={id} /> : <Preview markdown={markdown} id={id} />}
+              <div style={{ paddingBottom: '5rem' }}>
+                <SideButton id="create" />
+              </div>
             </Stack>
           </Container>
         </div>

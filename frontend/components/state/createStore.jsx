@@ -14,3 +14,8 @@ export const textStateFamily = atomFamily({
   key: 'input/text',
   default: '',
 });
+
+export const menuState = atom({
+  key: 'menu/menuState',
+  default: 0,
+});

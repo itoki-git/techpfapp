@@ -1,0 +1,38 @@
+.infoarea {
+  width: 100%;
+  .inputarea {
+    margin-top: 2rem;
+  }
+}
+.highlight {
+  color: red;
+}
+.displayInfo {
+  overflow: hidden;
+  display: flex;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  .left {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    .jobName {
+      font-size: 11px;
+      line-height: 1.5;
+      color: #949fa6;
+      text-transform: none;
+      white-space: normal;
+    }
+  }
+  .right {
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-evenly;
+    width: 360px;
+  }
+}

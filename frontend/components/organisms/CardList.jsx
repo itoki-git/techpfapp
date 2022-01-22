@@ -2,10 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Cards from '../molecules/Card';
 import Grid from '@mui/material/Grid';
-import { useRecoilValue } from 'recoil';
-
 import styles from '../../styles/organisms/CardList.module.scss';
-import { loginState } from '../state/currentUser';
 
 // カードリスト
 const CardList = (props) => {
@@ -53,8 +50,6 @@ const CardList = (props) => {
       createDay: '2021/01/01',
     },
   ];
-  const isLogin = useRecoilValue(loginState);
-  console.log('article:' + isLogin);
   return (
     <div className={styles.cardlist}>
       <Grid container spacing={3} className={styles.cardgrid}>

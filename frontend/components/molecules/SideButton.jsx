@@ -4,6 +4,7 @@ import ImageIcon from '@mui/icons-material/Image';
 import AddLinkIcon from '@mui/icons-material/AddLink';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
+import Box from '@mui/material/Box';
 import EditIcon from '@mui/icons-material/Edit';
 import Fab from '@mui/material/Fab';
 import Tooltip from '@mui/material/Tooltip';
@@ -13,9 +14,9 @@ import { textStateFamily, editState } from '../state/createStore';
 
 const fabColorStyle = {
   color: 'common.black',
-  bgcolor: '#fff',
+  bgcolor: '#F2F2F2',
   '&:hover': {
-    bgcolor: '#fff',
+    bgcolor: '#F2F2F2',
   },
 };
 const fabs = [
@@ -25,7 +26,7 @@ const fabs = [
     icon: <AddLinkIcon />,
     label: 'Expand',
     text: '[title](url)',
-    tooltip: '画像を挿入',
+    tooltip: 'リンクを挿入',
   },
   {
     color: 'inherit',
@@ -44,7 +45,6 @@ export const SideButton = (props) => {
   const changeEditState = () => setEditState(!isEdit);
 
   const insertInButton = (inner) => {
-    console.log(inner);
     const editorEl = document.getElementById('editEl');
     const sentence = editorEl.value;
     const index = editorEl.selectionStart;
@@ -63,10 +63,12 @@ export const SideButton = (props) => {
       </Tooltip>
 
       <label htmlFor="icon-button-file">
-        <Fab sx={fabColorStyle} aria-label="Expand" color="inherit" component="span">
-          <Input accept="image/*" id="icon-button-file" type="file" style={{ display: 'none' }} />
-          <ImageIcon />
-        </Fab>
+        <Tooltip title="画像を挿入" arrow>
+          <Fab sx={fabColorStyle} aria-label="Expand" color="inherit" component="span">
+            <Input accept="image/*" id="icon-button-file" type="file" style={{ display: 'none' }} />
+            <ImageIcon />
+          </Fab>
+        </Tooltip>
       </label>
       {fabs.map((fab, index) => (
         <Tooltip title={fab.tooltip} arrow>

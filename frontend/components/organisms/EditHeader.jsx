@@ -11,11 +11,7 @@ import { useState } from 'react';
 import { Avatar, Menu, MenuItem } from '@mui/material';
 
 // ヘッダー
-const Header = (props) => {
-  const [click, setClick] = useState(false); // closeボタン制御
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-
+const EditHeader = (props) => {
   return (
     <div className={styles.header}>
       <div className={styles.logo}>TriPoon</div>
@@ -33,33 +29,8 @@ const Header = (props) => {
         >
           <Nav menus={props.menus} style="nav" button="navInActive" />
         </Box>
-        <Box
-          sx={{
-            display: {
-              xs: 'block',
-              sm: 'block',
-              md: 'none',
-              lg: 'none',
-              xl: 'none',
-            },
-          }}
-        >
-          <IconButton onClick={() => setClick(!click)}>
-            {click ? (
-              <CloseIcon className={styles.close} fontSize="large" />
-            ) : (
-              <MenuIcon className={styles.menu} fontSize="large" />
-            )}
-          </IconButton>
-          <Nav
-            menus={props.menus}
-            style="smallNav"
-            active={click ? 'active' : ''}
-            button={click ? 'navActive' : 'navInActive'}
-          />
-        </Box>
       </div>
     </div>
   );
 };
-export default Header;
+export default EditHeader;

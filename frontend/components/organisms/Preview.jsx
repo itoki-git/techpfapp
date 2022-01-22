@@ -6,7 +6,7 @@ import 'zenn-content-css';
 
 export const Preview = (props) => {
   // マークダウンエディターの高さを取得
-  let editorArea = document.getElementById('editEl');
+  let editorArea = document.getElementById(props.id);
   let previewHeight = editorArea.scrollHeight;
   return (
     <div className={styles.preview} style={{ height: previewHeight }}>
