@@ -1,7 +1,6 @@
 package main
 
 import (
-	common "app/controllers/common"
 	controller "app/controllers/controller"
 
 	// middleware
@@ -10,6 +9,7 @@ import (
 	// MySQL用ドライバ
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	// cors
+
 	"github.com/gin-contrib/cors"
 )
 
@@ -39,7 +39,7 @@ func server() {
 		AllowHeaders: []string{
 			"Access-Control-Allow-Credentials",
 			"Access-Control-Allow-Headers",
-			"Content-Type：application/json",
+			"Content-Type:application/json",
 			"Content-Length",
 			"Accept-Encoding",
 			"Authorization",
@@ -47,41 +47,11 @@ func server() {
 		// COOKIEなどの情報を必要とするか
 		AllowCredentials: true,
 	}))
-	// ユーザー情報をDB登録する
-	router.POST("/signup", controller.SignupUser)
-	// ログイン
-	router.POST("/login", controller.Login)
-	// ユーザー情報の取得
-	router.POST("/user", controller.User)
-	// ログアウト
-	router.POST("/logout", controller.Logout)
-	// Name, Emailの更新
-	router.POST("/updateAccount", controller.UpdateAccount)
-	// パスワードの更新
-	router.POST("/updatePassword", controller.UpdatePassword)
-	// プロフィールの更新
-	router.POST("/updateProfile", controller.UpdateProfile)
-	// アカウント削除
-	router.POST("/removeAccount", controller.RemoveAccount)
-	// 画像アップロード・保存
-	router.POST("/upload", common.UploadFile)
-
-	// 全ての記事情報のJSONを返す
-	router.GET("/getAllArticle", controller.GetAllArticle)
-	// ユーザーの記事情報のJSONを返す
-	router.POST("/getUserArticle", controller.GetUserArticle)
-	// 1つの記事情報のJSONを返す
-	router.POST("/getArticle", controller.GetSpecifiedArticle)
-	// 記事をDB登録する
-	router.POST("/registerArticle", controller.RegisterArticle)
-	// 記事をアップデートする
-	router.POST("/updateArticle", controller.UpadateArticle)
-	// 記事をDB登録する
-	router.POST("/getCreator", controller.GetCreatorInformation)
-	// 記事を削除する
-	router.POST("/removeArticle", controller.RemoveArticle)
-	// 記事を削除する
-	router.GET("/sample", controller.Sample)
+	router.POST("/posts", controller.CreatePost)
+	router.GET("/posts/id", controller.GetPost)
+	router.POST("/users", controller.CreateUser)
+	router.GET("/users/:id", controller.GetUser)
+	//router.POST("/login", controller.LoginUser)
 
 	router.Run(":8080")
 }
