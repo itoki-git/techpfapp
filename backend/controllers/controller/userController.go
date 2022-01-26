@@ -8,12 +8,9 @@ import (
 	"app/models/entity"
 	"context"
 	"fmt"
-	"log"
-	"os"
 	"reflect"
 
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"golang.org/x/crypto/bcrypt"
@@ -93,6 +90,7 @@ func GetUser(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, user)
 }
 
+/*
 // LoginUser ユーザー認証を行う
 func LoginUser(ctx *gin.Context) {
 	var login entity.User
@@ -118,3 +116,4 @@ func LoginUser(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, user)
 }
+*/
