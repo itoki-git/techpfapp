@@ -30,14 +30,13 @@ func ConnectUsersDB() *mongo.Collection {
 	if err := godotenv.Load(".env"); err != nil {
 		log.Fatalf("Error loading .env file")
 	}
-	fmt.Println(os.Getenv("MONGO_URI"))
 	// 指定したURIに接続する
 	clientOptions := options.Client().ApplyURI(os.Getenv("MONGO_URI"))
 	client, err := mongo.Connect(context.TODO(), clientOptions)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("Connected to Posts Collection. ")
+	fmt.Println("Connected to Users Collection. ")
 
 	collection := client.Database(dbname).Collection("users")
 
@@ -63,7 +62,6 @@ func ConnectPostsDB() *mongo.Collection {
 
 // GetError エラーを返却する
 func GetError(err error, ctx *gin.Context) {
-	log.Fatal(err.Error())
 	var response = ErrorResponse{
 		ErrorMessage: err.Error(),
 		StatusCode:   http.StatusInternalServerError,
