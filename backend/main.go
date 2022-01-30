@@ -51,7 +51,8 @@ func server() {
 	router.GET("/posts/id", controller.GetPost)
 	router.POST("/users", controller.CreateUser)
 	router.GET("/users/:id", controller.GetUser)
-	//router.POST("/login", controller.LoginUser)
+	router.POST("/users/check", controller.CheckUserLogin)
+	router.POST("/login", controller.LoginUser)
 
 	router.Run(":8080")
 }
