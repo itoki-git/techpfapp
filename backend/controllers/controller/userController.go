@@ -48,10 +48,7 @@ func ContainsKey(check []string, elem interface{}, ignore []string) bool {
 		}
 		isIgnore = false
 	}
-	if reflect.DeepEqual(check, target) {
-		return true
-	}
-	return false
+	return reflect.DeepEqual(check, target)
 }
 
 // CreateUser ユーザーの新規登録
@@ -124,7 +121,7 @@ func LoginUser(ctx *gin.Context) {
 		if err != nil {
 			ctx.JSON(http.StatusUnauthorized, gin.H{"message": "error Authentication failed. "})
 		}
-		ctx.SetCookie("status", token, 60*1, "/", "localhost", false, true)
+		ctx.SetCookie("status", token, 60*60*24, "/", "localhost", false, true)
 		ctx.JSON(http.StatusOK, user)
 	}
 }
