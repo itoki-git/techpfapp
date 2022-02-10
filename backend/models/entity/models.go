@@ -21,3 +21,14 @@ type Post struct {
 	Timestamp time.Time          `json:"timestamp" bson:"timestamp,omitempty"`
 	Author    string             `json:"author" bson:"author,omitempty"`
 }
+
+type Article struct {
+	ID        primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
+	Markdown  string             `json:"markdown" bson:"markdown,omitempty"`
+	Timestamp time.Time          `json:"timestamp" bson:"timestamp,omitempty"`
+	Author    string             `json:"author" bson:"author,omitempty"`
+}
+
+type Image struct {
+	FileName string `json:"filename"`
+}

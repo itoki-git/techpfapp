@@ -48,6 +48,7 @@ func server() {
 		AllowCredentials: true,
 	}))
 	router.POST("/posts", controller.CreatePost)
+	router.POST("/posts/upload", controller.UploadImage)
 	router.GET("/posts/id", controller.GetPost)
 	router.POST("/users", controller.CreateUser)
 	router.GET("/users/:id", controller.GetUser)

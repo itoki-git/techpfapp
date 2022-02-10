@@ -1,10 +1,13 @@
 package controller
 
 import (
+	common "app/controllers/common"
 	db "app/models/db"
 	"app/models/entity"
 	"context"
+	"fmt"
 	"net/http"
+	"path/filepath"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -42,6 +45,25 @@ func CreatePost(ctx *gin.Context) {
 		return
 	}
 	ctx.JSON(http.StatusOK, result)
+}
+
+func UploadImage(ctx *gin.Context) {
+	var file entity.Image
+	ctx.ShouldBindJSON(&file)
+	ext := filepath.Ext(file.FileName)
+	fileName, err := common.GetUUID()
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"message": "error S3 upload failed. "})
+		return
+	}
+	fileName += ext
+	fmt.Println(fileName)
+	preID, err := common.S3("/test/", fileName)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"message": "error S3 upload failed. "})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{"s3url": preID})
 }
 
 /*
