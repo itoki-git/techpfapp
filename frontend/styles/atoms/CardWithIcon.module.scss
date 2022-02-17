@@ -1,0 +1,43 @@
+.box {
+  padding-left: 24px;
+  .boxMain {
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+
+    .left {
+      display: flex;
+      -webkit-box-align: center;
+      align-items: center;
+      .icon {
+        width: 36px;
+        height: 36px;
+      }
+      .addicon {
+        border-radius: 50%;
+        border: 1px dashed #949fa6;
+      }
+      .iconName {
+        margin-left: 1rem;
+        .softwareName {
+          margin-bottom: 0px;
+          margin-top: 0px;
+          font-size: 13px;
+          font-weight: 600;
+          line-height: 1.5;
+          text-transform: none;
+          white-space: normal;
+        }
+        .softcategory {
+          font-size: 11px;
+          line-height: 1.5;
+          text-transform: none;
+          white-space: normal;
+          color: #949fa6;
+        }
+      }
+    }
+  }
+}
