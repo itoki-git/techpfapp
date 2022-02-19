@@ -10,3 +10,13 @@ export const TopicCard = (props) => {
     </div>
   );
 };
+
+export const SelectTopicCard = (props) => {
+  const { item } = props;
+  return (
+    <>
+      <div className={styles.topicIcon}>{item.icon}</div>
+      <div className={styles.topicName}>{item.iconName}</div>
+    </>
+  );
+};
