@@ -7,6 +7,10 @@ export const stateName = {
   create: 'create',
   loginEmail: 'loginEmail',
   loginPassword: 'loginPassword',
+  editTopic: 'editTopic',
+  selectedTopicsID: 'selectedTopics',
+  topicSearchID: 'topicSearch',
+  topicListID: 'topicList',
 };
 
 export const editState = atom({
@@ -32,4 +36,14 @@ export const editorHeight = atom({
 export const menuState = atom({
   key: 'menu/menuState',
   default: 0,
+});
+
+export const dialogState = atomFamily({
+  key: 'dialog/isOpen',
+  default: false,
+});
+
+export const topicListState = atomFamily({
+  key: 'topics/list',
+  default: [],
 });
