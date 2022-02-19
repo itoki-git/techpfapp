@@ -1,5 +1,6 @@
 .box {
-  padding-left: 24px;
+  padding-left: 1.5rem;
+  padding-top: 1rem;
   .boxMain {
     display: flex;
     -webkit-box-pack: justify;
@@ -21,6 +22,7 @@
       }
       .iconName {
         margin-left: 1rem;
+
         .softwareName {
           margin-bottom: 0px;
           margin-top: 0px;
@@ -31,10 +33,11 @@
           white-space: normal;
         }
         .softcategory {
+          white-space: nowrap;
           font-size: 11px;
           line-height: 1.5;
           text-transform: none;
-          white-space: normal;
+          white-space: nowrap;
           color: #949fa6;
         }
       }

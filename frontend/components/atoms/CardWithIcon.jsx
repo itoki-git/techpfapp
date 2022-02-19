@@ -12,7 +12,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import styles from '../../styles/atoms/CardWithIcon.module.scss';
 import { dialogState } from '../state/createStore';
 import { useRecoilState } from 'recoil';
-import settingStyle from '../../styles/organisms/UserSetting.module.scss';
 
 export const CardwithIcon = (props) => {
   return (
@@ -46,45 +45,47 @@ export const CardwithIconEdit = (props) => {
           <small className={styles.softcategory}>{props.skill.softcategory}</small>
         </div>
       </div>
-      <IconButton
-        id="basic-button"
-        aria-controls={open ? 'basic-menu' : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}
-      >
-        <MoreHorizIcon />
-      </IconButton>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        elevation={1}
-        onClose={handleClose}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
-      >
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <EditIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Edit</ListItemText>
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <DeleteIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Delete</ListItemText>
-        </MenuItem>
-      </Menu>
+      <div>
+        <IconButton
+          id="basic-button"
+          aria-controls={open ? 'basic-menu' : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? 'true' : undefined}
+          onClick={handleClick}
+        >
+          <MoreHorizIcon />
+        </IconButton>
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={open}
+          elevation={1}
+          onClose={handleClose}
+          MenuListProps={{
+            'aria-labelledby': 'basic-button',
+          }}
+        >
+          <MenuItem onClick={handleClose}>
+            <ListItemIcon>
+              <EditIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText>Edit</ListItemText>
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <ListItemIcon>
+              <DeleteIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText>Delete</ListItemText>
+          </MenuItem>
+        </Menu>
+      </div>
     </div>
   );
 };
 export const CardWithAddIcon = (props) => {
   const [isOpen, setisOpen] = useRecoilState(dialogState(props.id));
   return (
-    <Grid item xs={12} sm={6} className={styles.box}>
+    <Grid item className={styles.box}>
       <div className={styles.boxMain}>
         <div className={styles.left}>
           <div className={styles.addicon}>
@@ -93,7 +94,7 @@ export const CardWithAddIcon = (props) => {
             </IconButton>
           </div>
           <div className={styles.iconName}>
-            <h6 className={styles.softwareName}>New Item</h6>
+            <h6 className={styles.softwareName}>{props.title}</h6>
             <small className={styles.softcategory}>{props.description}</small>
           </div>
         </div>
