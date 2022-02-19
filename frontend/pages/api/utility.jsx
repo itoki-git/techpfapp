@@ -6,11 +6,15 @@ import Backdrop from '@mui/material/Backdrop';
 import Button from '@mui/material/Button';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { useRecoilState, useRecoilValue } from 'recoil';
+import SvgIcon from '@mui/material/SvgIcon';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSliders } from '@fortawesome/free-solid-svg-icons';
 import { stateName, textStateFamily } from '../../components/state/createStore';
+import { IconButton } from '@mui/material';
+import editor from '../../styles/molecules/Editor.module.scss';
 
 export const url = {
   home: '/',
-  logout: '/logout',
   login: '/login',
   signup: '/signup',
   create: '/create',
@@ -20,11 +24,13 @@ export const url = {
 };
 
 export const api = {
-  logout: 'api/logout',
   login: 'api/login',
+  logout: 'api/logout',
   signup: 'api/users',
   user: 'api/user',
   register_article: 'api/registerArticle',
+  s3Upload: 'api/posts/upload',
+  postID: 'api/posts/create',
 };
 
 export const privateMenu = [
@@ -38,8 +44,24 @@ export const publicMenu = [
   { id: '2', displayName: 'Article', to: url.article },
 ];
 export const createMenu = [
-  { id: '1', displayName: <SettingsIcon />, to: url.login },
-  { id: '2', displayName: <Button variant="contained">公開する</Button>, to: url.article },
+  {
+    id: '1',
+    displayName: (
+      <IconButton>
+        <FontAwesomeIcon icon={faSliders} />
+      </IconButton>
+    ),
+    to: url.login,
+  },
+  {
+    id: '2',
+    displayName: (
+      <div className={editor.saveButton}>
+        <Button>公開する</Button>
+      </div>
+    ),
+    to: url.article,
+  },
 ];
 
 export const config = {
@@ -146,7 +168,7 @@ export const useLogout = () => {
   }, [isReady]);
   const logout = useCallback(async () => {
     await axios
-      .post('/api/logout', {
+      .post(api.logout, {
         withCredentials: true,
       })
       .then(() => {
@@ -172,6 +194,16 @@ export const useLogout = () => {
 
   return logout;
 };
+export const useGetUUID = () => {
+  const getUUID = useCallback(async () => {
+    let uuid = '';
+    await axios.get(api.postID, { withCredentials: true }).then((res) => {
+      uuid = res.data.postID;
+    });
+    return uuid;
+  }, []);
+  return getUUID;
+};
 
 export const useUploadFIle = async (e) => {
   e.preventDefault();
@@ -179,7 +211,7 @@ export const useUploadFIle = async (e) => {
   const data = { filename: e.target.files[0].name };
   // get url from backend
   await axios
-    .post('api/posts/upload', data, {
+    .post(api.s3Upload, data, {
       withCredentials: true,
     })
     .then((res) => {
@@ -195,7 +227,5 @@ export const useUploadFIle = async (e) => {
     },
     data: e.target.files[0],
   });
-
-  const imageUrl = s3url.split('?')[0];
-  console.log(imageUrl);
+  return s3url.split('?')[0];
 };

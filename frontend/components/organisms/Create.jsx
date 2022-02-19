@@ -1,24 +1,23 @@
 import React from 'react';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { editState, stateName, textStateFamily } from '../state/createStore';
+import { createIDState, editState, stateName, textStateFamily } from '../state/createStore';
 import { SideButton } from '../molecules/SideButton';
 import { Editor } from '../molecules/Editor';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
-import ImageIcon from '@mui/icons-material/Image';
 import { Preview } from './Preview';
 import { useUploadFIle } from '../../pages/api/utility';
-import { Fab } from '@mui/material';
 
 const Create = () => {
+  const createID = useRecoilValue(createIDState);
   const isEdit = useRecoilValue(editState);
-  const [markdown, setMarkdown] = useRecoilState(textStateFamily(stateName.create));
+  const [markdown, setMarkdown] = useRecoilState(textStateFamily(createID + stateName.markdown));
 
   const insertInButton = async (e) => {
     let inner = await useUploadFIle(e);
     inner = '![](' + inner + ')';
-    const marparea = document.getElementById('create');
+    const marparea = document.getElementById(createID);
     const sentence = marparea.value;
     const index = marparea.selectionStart;
     marparea.value = sentence.substr(0, index) + inner + sentence.substr(index, sentence.length);
@@ -36,7 +35,7 @@ const Create = () => {
             <Stack
               direction={{ xs: 'column', sm: 'row' }}
               justifyContent="center"
-              alignItems="flex-end"
+              alignItems={{ xs: 'center', sm: 'flex-end' }}
               spacing={{ xs: 1, sm: 1, md: 2 }}
             >
               <input
@@ -46,19 +45,13 @@ const Create = () => {
                 style={{ display: 'none' }}
                 onChange={(e) => insertInButton(e)}
               />
-              <label htmlFor="icon-button-file">
-                <Fab aria-label="upload picture" component="span">
-                  <ImageIcon />
-                </Fab>
-              </label>
-
               {isEdit ? (
-                <Editor stateId={stateName.create} id={stateName.create} />
+                <Editor stateId={createID + stateName.markdown} id={createID + stateName.markdown} />
               ) : (
-                <Preview markdown={markdown} id={stateName.create} />
+                <Preview markdown={markdown} />
               )}
               <div style={{ paddingBottom: '5rem' }}>
-                <SideButton id="create" />
+                <SideButton />
               </div>
             </Stack>
           </Container>

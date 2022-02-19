@@ -7,10 +7,12 @@ export const stateName = {
   create: 'create',
   loginEmail: 'loginEmail',
   loginPassword: 'loginPassword',
-  editTopic: 'editTopic',
-  selectedTopicsID: 'selectedTopics',
-  topicSearchID: 'topicSearch',
-  topicListID: 'topicList',
+  editTopic: '_editTopic',
+  selectedTopicsID: '_selectedTopics',
+  topicSearchID: '_topicSearch',
+  topicListID: '_topicList',
+  createID: '_createID',
+  markdown: '_markdown',
 };
 
 export const editState = atom({
@@ -18,7 +20,7 @@ export const editState = atom({
   default: true,
 });
 
-export const editID = atom({
+export const editID = atomFamily({
   key: 'edit/id',
   default: 0,
 });
@@ -46,4 +48,9 @@ export const dialogState = atomFamily({
 export const topicListState = atomFamily({
   key: 'topics/list',
   default: [],
+});
+
+export const createIDState = atom({
+  key: 'create/id',
+  default: '',
 });

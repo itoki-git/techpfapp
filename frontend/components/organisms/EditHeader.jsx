@@ -9,11 +9,14 @@ import styles from '../../styles/organisms/Header.module.scss';
 import { DialogSlide } from '../molecules/Dialog';
 import { useRouter } from 'next/router';
 import { url } from '../../pages/api/utility';
+import { useRecoilValue } from 'recoil';
+import { createIDState } from '../state/createStore';
 
 // ヘッダー
 const EditHeader = () => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  const createID = useRecoilValue(createIDState);
   const dialogAction = () => {
     console.log('AA');
     setOpen(!open);
@@ -45,7 +48,7 @@ const EditHeader = () => {
             </Button>
           </Stack>
         </Box>
-        <DialogSlide click={open} dialogAction={dialogAction} />
+        <DialogSlide createID={createID} click={open} dialogAction={dialogAction} />
       </div>
     </div>
   );

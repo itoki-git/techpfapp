@@ -22,6 +22,15 @@ type PostFilter struct {
 	LowerId      string        `json:"lowerId"`
 }
 
+func GeneratePostID(ctx *gin.Context) {
+	postID, err := common.GetUUID()
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"message": "error generate postID failed. "})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{"postID": postID})
+}
+
 // GetPost IDに紐づいた記事を１件取得する
 func GetPost(ctx *gin.Context) {
 	var post entity.Post
