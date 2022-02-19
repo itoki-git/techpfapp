@@ -1,13 +1,14 @@
 import React from 'react';
 import PrivateLayout from '../components/templates/PrivateLayout';
-import Create from '../components/organisms/Create';
 import EditHeader from '../components/organisms/editHeader';
-import { url, api, privateMenu } from '../pages/api/utility';
+import { url, createMenu } from '../pages/api/utility';
+import dynamic from 'next/dynamic';
 
 const CreatePage = () => {
+  const Create = dynamic(() => import('../components/organisms/Create'), { ssr: false });
   return (
     <div>
-      <EditHeader menus={privateMenu} />
+      <EditHeader menus={createMenu} />
       <PrivateLayout title="create">
         <Create />
       </PrivateLayout>
