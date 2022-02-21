@@ -13,6 +13,7 @@ export const stateName = {
   topicListID: '_topicList',
   createID: '_createID',
   markdown: '_markdown',
+  title: '_title',
 };
 
 export const editState = atom({

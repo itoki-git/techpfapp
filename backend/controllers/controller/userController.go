@@ -55,7 +55,7 @@ func ContainsKey(check []string, elem interface{}, ignore []string) bool {
 func CreateUser(ctx *gin.Context) {
 	var user entity.User
 	var checkKey = []string{"Name", "Email", "Password"}
-	ignore := []string{"ID"}
+	ignore := []string{"ID", "JobTitle", "Bio", "Image", "Article"}
 	ctx.ShouldBindJSON(&user)
 
 	if containsString := ContainsKey(checkKey, user, ignore); !containsString {
@@ -64,8 +64,18 @@ func CreateUser(ctx *gin.Context) {
 	}
 	// パスワードを暗号化
 	password, _ := bcrypt.GenerateFromPassword([]byte(user.Password), 14)
-	user.Password = string(password)
-	result, err := userCollection.InsertOne(context.TODO(), user)
+	// 初期値を入力
+	register := entity.User{
+		ID:       primitive.NewObjectID(),
+		Name:     user.Name,
+		Email:    user.Email,
+		Password: string(password),
+		JobTitle: "",
+		Bio:      "",
+		Image:    "",
+		Article:  []primitive.ObjectID{},
+	}
+	result, err := userCollection.InsertOne(context.TODO(), register)
 	if err != nil {
 		db.GetError(err, ctx)
 		return
@@ -89,10 +99,10 @@ func GetUser(ctx *gin.Context) {
 
 // LoginUser ユーザー認証を行う
 func LoginUser(ctx *gin.Context) {
-	var login entity.User
-	var user entity.User
+	var login entity.LoginUser
+	var user entity.LoginUser
 	var checkKey = []string{"Email", "Password"}
-	ignore := []string{"ID", "Name"}
+	ignore := []string{"ID", "Name", "JobTitle", "Bio", "Image", "Article"}
 	if err := godotenv.Load(".env"); err != nil {
 		log.Fatalf("Error loading .env file")
 	}

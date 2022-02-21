@@ -7,6 +7,16 @@ import (
 )
 
 type User struct {
+	ID       primitive.ObjectID   `json:"_id,omitempty" bson:"_id"`
+	Name     string               `json:"name,omitempty" bson:"name"`
+	Email    string               `json:"email,omitempty" bson:"email"`
+	Password string               `json:"password,omitempty" bson:"password"`
+	JobTitle string               `json:"jobtitle" bson:"jobtitle"`
+	Bio      string               `json:"bio" bson:"bio"`
+	Image    string               `json:"image" bson:"image"`
+	Article  []primitive.ObjectID `json:"article" bson:"article"`
+}
+type LoginUser struct {
 	ID       primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
 	Name     string             `json:"name,omitempty" bson:"name,omitempty"`
 	Email    string             `json:"email,omitempty" bson:"email,omitempty"`
@@ -14,21 +24,23 @@ type User struct {
 }
 
 type Post struct {
-	ID        primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
-	JobTitle  string             `json:"jobtitle" bson:"jobtitle,omitempty"`
-	Bio       string             `json:"bio" bson:"bio,omitempty"`
-	Image     string             `json:"image" bson:"image,omitempty"`
-	Timestamp time.Time          `json:"timestamp" bson:"timestamp,omitempty"`
-	Author    string             `json:"author" bson:"author,omitempty"`
+	Author   primitive.ObjectID   `json:"author" bson:"author,omitempty"`
+	Name     string               `json:"name" bson:"name,omitempty"`
+	Email    string               `json:"email,omitempty" bson:"email,omitempty"`
+	JobTitle string               `json:"jobtitle" bson:"jobtitle,omitempty"`
+	Bio      string               `json:"bio" bson:"bio,omitempty"`
+	Image    string               `json:"image" bson:"image,omitempty"`
+	Article  []primitive.ObjectID `json:"article" bson:"article,omitempty"`
 }
 
 type Article struct {
-	ID        primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
+	ArticleID primitive.ObjectID `json:"articleID,omitempty" bson:"articleID,omitempty"`
+	Author    primitive.ObjectID `json:"authorID" bson:"authorID,omitempty"`
+	Title     string             `json:"title" bson:"title,omitempty"`
 	Markdown  string             `json:"markdown" bson:"markdown,omitempty"`
+	Topic     []string           `json:"topic" bson:"topic,omitempty"`
 	Timestamp time.Time          `json:"timestamp" bson:"timestamp,omitempty"`
-	Author    string             `json:"author" bson:"author,omitempty"`
 }
-
 type Image struct {
 	FileName string `json:"filename"`
 }

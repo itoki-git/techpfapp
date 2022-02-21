@@ -63,4 +63,18 @@ $black: #202221;
       border-color: #4158d0;
     }
   }
+  &.searchBox {
+    border: 2px solid #e5eaf2;
+    background: #fff;
+    box-shadow: none;
+    border-radius: 3rem;
+    flex: 1;
+    padding: 1rem;
+    font-weight: 500;
+    font-size: 1rem;
+    letter-spacing: 0.1rem;
+    &:focus {
+      border-color: #222222;
+    }
+  }
 }

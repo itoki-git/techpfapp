@@ -49,7 +49,6 @@ func server() {
 	}))
 	router.POST("/posts", controller.CreatePost)
 	router.POST("/posts/upload", controller.UploadImage)
-	router.GET("/posts/create", controller.GeneratePostID)
 	router.GET("/posts/id", controller.GetPost)
 	router.POST("/users", controller.CreateUser)
 	router.GET("/users/:id", controller.GetUser)

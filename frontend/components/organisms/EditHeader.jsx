@@ -8,18 +8,32 @@ import { faSliders, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import styles from '../../styles/organisms/Header.module.scss';
 import { DialogSlide } from '../molecules/Dialog';
 import { useRouter } from 'next/router';
-import { url } from '../../pages/api/utility';
+import { url, usePublishArticle } from '../../pages/api/utility';
 import { useRecoilValue } from 'recoil';
-import { createIDState } from '../state/createStore';
+import { createIDState, stateName, textStateFamily } from '../state/createStore';
 
 // ヘッダー
 const EditHeader = () => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const createID = useRecoilValue(createIDState);
+  const titleValue = useRecoilValue(textStateFamily(createID + stateName.title));
+  const submit = usePublishArticle(createID);
+
   const dialogAction = () => {
-    console.log('AA');
     setOpen(!open);
+  };
+
+  const publishArticle = async (e) => {
+    console.log('AAAA');
+    e.preventDefault();
+    const result = await submit();
+    console.log(result);
+    if (result) {
+      router.push(url.setting);
+    } else {
+      console.log('falied');
+    }
   };
   return (
     <div className={styles.header}>
@@ -43,7 +57,7 @@ const EditHeader = () => {
               <FontAwesomeIcon icon={faSliders} />
             </IconButton>
 
-            <Button className={styles.saveButton} disabled>
+            <Button className={styles.saveButton} disabled={!titleValue} onClick={(e) => publishArticle(e)}>
               公開する
             </Button>
           </Stack>

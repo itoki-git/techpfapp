@@ -36,7 +36,14 @@ export const DialogSlide = (props) => {
             <label className={inputStyle.labelName} htmlFor="username">
               Title<span className={inputStyle.highlight}>*</span>
             </label>
-            <Input id="edit/title" stateId="edit/title" component="profile" type="text" placeholder="Title" row={1} />
+            <Input
+              id={createID + stateName.title}
+              stateId={createID + stateName.title}
+              component="profile"
+              type="text"
+              placeholder="Title"
+              row={1}
+            />
           </div>
         </DialogContent>
         <DialogTitle>

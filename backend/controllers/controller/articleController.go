@@ -6,13 +6,18 @@ import (
 	"app/models/entity"
 	"context"
 	"fmt"
+	"log"
 	"net/http"
+	"os"
 	"path/filepath"
 	"time"
 
+	"github.com/form3tech-oss/jwt-go"
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 var postCollection = db.ConnectPostsDB()
@@ -20,15 +25,6 @@ var postCollection = db.ConnectPostsDB()
 type PostFilter struct {
 	LimitedPosts []entity.Post `json:"Posts"`
 	LowerId      string        `json:"lowerId"`
-}
-
-func GeneratePostID(ctx *gin.Context) {
-	postID, err := common.GetUUID()
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"message": "error generate postID failed. "})
-		return
-	}
-	ctx.JSON(http.StatusOK, gin.H{"postID": postID})
 }
 
 // GetPost IDに紐づいた記事を１件取得する
@@ -45,12 +41,49 @@ func GetPost(ctx *gin.Context) {
 }
 
 func CreatePost(ctx *gin.Context) {
-	var post entity.Post
+	var post entity.Article
+	var user entity.User
+	// cookieからユーザーIDを取得する
+	if err := godotenv.Load(".env"); err != nil {
+		log.Fatalf("Error loading .env file")
+	}
+	secretKey := os.Getenv("SECRET_KEY")
+	cookie, err := ctx.Cookie("status")
+	if err != nil {
+		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "error Authentication failed. "})
+		return
+	}
+	token, err := jwt.ParseWithClaims(cookie, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
+		return []byte(secretKey), nil
+	})
+	if err != nil {
+		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "error Authentication failed. "})
+		return
+	}
+	claims := token.Claims.(*jwt.StandardClaims)
+	id, err := primitive.ObjectIDFromHex(claims.Issuer)
+	filter := bson.M{"_id": id}
+	if err := userCollection.FindOne(context.TODO(), filter).Decode(&user); err != nil {
+		db.GetError(err, ctx)
+		return
+	}
 	_ = ctx.ShouldBindJSON(&post)
 	post.Timestamp = time.Now()
+	post.Author = user.ID
 	result, err := postCollection.InsertOne(context.TODO(), post)
 	if err != nil {
 		db.GetError(err, ctx)
+		return
+	}
+
+	// User情報に記事のIDを追加(アップデート)
+	update := bson.D{primitive.E{Key: "$push", Value: bson.D{
+		primitive.E{Key: "article", Value: result.InsertedID},
+	}}}
+	opts := options.Update().SetUpsert(true)
+	_, updateErr := userCollection.UpdateOne(context.TODO(), filter, update, opts)
+	if updateErr != nil {
+		db.GetError(updateErr, ctx)
 		return
 	}
 	ctx.JSON(http.StatusOK, result)

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Stack from '@mui/material/Stack';
 import ImageIcon from '@mui/icons-material/Image';
 import AddLinkIcon from '@mui/icons-material/AddLink';
@@ -9,8 +9,13 @@ import EditIcon from '@mui/icons-material/Edit';
 import Fab from '@mui/material/Fab';
 import Tooltip from '@mui/material/Tooltip';
 import { Input } from '@mui/material';
-import { useRecoilState } from 'recoil';
-import { textStateFamily, editState } from '../state/createStore';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { textStateFamily, editState, stateName, createIDState } from '../state/createStore';
+import { FabButton } from '../atoms/FabButton';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLink } from '@fortawesome/free-solid-svg-icons';
+import IconButton from '@mui/material/IconButton';
+import { useInsertTextarea, useUploadFIle } from '../../pages/api/utility';
 
 const fabColorStyle = {
   color: 'common.black',
@@ -19,41 +24,25 @@ const fabColorStyle = {
     bgcolor: '#F2F2F2',
   },
 };
-const fabs = [
-  {
-    color: 'inherit',
-    sx: { ...fabColorStyle },
-    icon: <AddLinkIcon />,
-    label: 'Expand',
-    text: '[title](url)',
-    tooltip: 'リンクを挿入',
-  },
-  {
-    color: 'inherit',
-    sx: { ...fabColorStyle },
-    icon: <QuestionMarkIcon />,
-    label: 'Expand',
-    tooltip: 'ヘルプ',
-  },
-];
 
 export const SideButton = (props) => {
-  const [text, setText] = useRecoilState(textStateFamily(props.id));
   const [isEdit, setEditState] = useRecoilState(editState);
+  useEffect(() => {
+    alert('Finished loading');
+  }, []);
 
   // 編集とプレビューの切り替え
   const changeEditState = () => setEditState(!isEdit);
-
-  const insertInButton = (inner) => {
-    const editorEl = document.getElementById('editEl');
-    const sentence = editorEl.value;
-    const index = editorEl.selectionStart;
-    editorEl.value = sentence.substring(0, index) + inner + sentence.substring(index, sentence.length);
-    editorEl.focus();
-    const newString = index + inner.length;
-    editorEl.setSelectionRange(newString, newString);
-    setText(editorEl.value);
-  };
+  const fabs = [
+    {
+      id: 'icon-button-file',
+      color: 'inherit',
+      sx: { ...fabColorStyle },
+      label: 'upload picture',
+      component: <ImageIcon />,
+      name: '画像を挿入',
+    },
+  ];
   return (
     <Stack direction={{ xs: 'row', sm: 'column' }} justifyContent="center" alignItems="center" spacing={4}>
       <Tooltip title={isEdit ? 'プレビュー' : '編集'} arrow>
@@ -61,21 +50,10 @@ export const SideButton = (props) => {
           {isEdit ? <PlayArrowIcon /> : <EditIcon />}
         </Fab>
       </Tooltip>
-
-      <label htmlFor="icon-button-file">
-        <Tooltip title="画像を挿入" arrow>
-          <Fab sx={fabColorStyle} aria-label="Expand" color="inherit" component="span">
-            <Input accept="image/*" id="icon-button-file" type="file" style={{ display: 'none' }} />
-            <ImageIcon />
-          </Fab>
-        </Tooltip>
-      </label>
       {fabs.map((fab, index) => (
-        <Tooltip title={fab.tooltip} arrow>
-          <Fab sx={fab.sx} aria-label={fab.label} color={fab.color} onClick={() => insertInButton(fab.text)}>
-            {fab.icon}
-          </Fab>
-        </Tooltip>
+        <FabButton id={fab.id} sx={fab.sx} name={fab.name} label={fab.label} color={fab.color} key={index}>
+          {fab.component}
+        </FabButton>
       ))}
     </Stack>
   );

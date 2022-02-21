@@ -5,11 +5,11 @@ import { useRouter } from 'next/router';
 import Backdrop from '@mui/material/Backdrop';
 import Button from '@mui/material/Button';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import SvgIcon from '@mui/material/SvgIcon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSliders } from '@fortawesome/free-solid-svg-icons';
-import { stateName, textStateFamily } from '../../components/state/createStore';
+import { stateName, textStateFamily, topicListState } from '../../components/state/createStore';
 import { IconButton } from '@mui/material';
 import editor from '../../styles/molecules/Editor.module.scss';
 
@@ -30,7 +30,7 @@ export const api = {
   user: 'api/user',
   register_article: 'api/registerArticle',
   s3Upload: 'api/posts/upload',
-  postID: 'api/posts/create',
+  postArticle: 'api/posts',
 };
 
 export const privateMenu = [
@@ -194,38 +194,72 @@ export const useLogout = () => {
 
   return logout;
 };
-export const useGetUUID = () => {
-  const getUUID = useCallback(async () => {
-    let uuid = '';
-    await axios.get(api.postID, { withCredentials: true }).then((res) => {
-      uuid = res.data.postID;
+
+// S3にアップロード
+export const useUploadFile = () => {
+  const getS3URL = useCallback(async (e) => {
+    e.preventDefault();
+    let s3url = null;
+    const data = { filename: e.target.files[0].name };
+    // get url from backend
+    await axios
+      .post(api.s3Upload, data, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        s3url = res.data.s3url;
+      });
+
+    // post image s3 bucket
+    await axios({
+      method: 'PUT',
+      url: s3url,
+      headers: {
+        'Content-Type': e.target.files[0].type,
+      },
+      data: e.target.files[0],
     });
-    return uuid;
+    console.log(s3url.split('?')[0]);
+    return s3url.split('?')[0];
   }, []);
-  return getUUID;
+  return getS3URL;
 };
 
-export const useUploadFIle = async (e) => {
-  e.preventDefault();
-  let s3url = null;
-  const data = { filename: e.target.files[0].name };
-  // get url from backend
-  await axios
-    .post(api.s3Upload, data, {
-      withCredentials: true,
-    })
-    .then((res) => {
-      s3url = res.data.s3url;
-    });
+// textareaのカーソルの位置に文字を挿入する
+export const useInsertTextarea = (stateID) => {
+  const setMarkdown = useSetRecoilState(textStateFamily(stateID));
+  const insertTextarea = useCallback((inner) => {
+    const marparea = document.getElementById(stateID);
+    const sentence = marparea.value;
+    const index = marparea.selectionStart;
+    marparea.value = sentence.substr(0, index) + inner + sentence.substr(index, sentence.length);
+    marparea.focus();
+    const newCaret = index + inner.length;
+    marparea.setSelectionRange(newCaret, newCaret);
+    setMarkdown(marparea.value);
+  }, []);
+  return insertTextarea;
+};
 
-  // post image s3 bucket
-  await axios({
-    method: 'PUT',
-    url: s3url,
-    headers: {
-      'Content-Type': e.target.files[0].type,
-    },
-    data: e.target.files[0],
+// 作成した記事を公開する
+export const usePublishArticle = (createID) => {
+  const title = useRecoilValue(textStateFamily(createID + stateName.title));
+  const markdown = useRecoilValue(textStateFamily(createID + stateName.markdown));
+  const selectedTopic = useRecoilValue(topicListState(createID + stateName.selectedTopicsID));
+  const publishArticle = useCallback(async () => {
+    let isSuccess = false;
+    const topic = selectedTopic.map((item) => item.id);
+    const data = { title: title, markdown: markdown, topic: topic };
+    await axios
+      .post(api.postArticle, data, { withCredentials: true })
+      .then(() => {
+        isSuccess = true;
+      })
+      .catch(() => {
+        isSuccess = false;
+      });
+    console.log(isSuccess);
+    return isSuccess;
   });
-  return s3url.split('?')[0];
+  return publishArticle;
 };
