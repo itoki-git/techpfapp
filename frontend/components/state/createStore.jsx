@@ -1,6 +1,11 @@
 import { atom, atomFamily } from 'recoil';
 
 export const stateName = {
+  userName: 'userName',
+  jobName: 'jobName',
+  bio: 'bio',
+  userImage: 'userImage',
+  userSkill: 'userSkill',
   signupName: 'signupName',
   signupEmail: 'signupEmail',
   signupPassword: 'signupPassword',

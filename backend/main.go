@@ -51,6 +51,7 @@ func server() {
 	router.POST("/posts/upload", controller.UploadImage)
 	router.GET("/posts/id", controller.GetPost)
 	router.POST("/users", controller.CreateUser)
+	router.PATCH("/users", controller.UpdateProfile)
 	router.GET("/users/:id", controller.GetUser)
 	router.POST("/users/check", controller.CheckUserLogin)
 	router.POST("/login", controller.LoginUser)

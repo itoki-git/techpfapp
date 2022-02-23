@@ -31,6 +31,7 @@ export const api = {
   register_article: 'api/registerArticle',
   s3Upload: 'api/posts/upload',
   postArticle: 'api/posts',
+  updateUser: 'api/users',
 };
 
 export const privateMenu = [
@@ -78,7 +79,9 @@ export const useLogin = () => {
   const password = useRecoilValue(textStateFamily(stateName.loginPassword));
   const [loading, setLoading] = useState(false);
   const { state, dispatch } = useContext(AuthContext);
-  const login = async (e) => {
+
+  const login = useCallback(async (e) => {
+    let isLogin = false;
     const data = { email: email, password: password };
     e.preventDefault();
     await axios
@@ -95,29 +98,61 @@ export const useLogin = () => {
           payload: res.data.email,
         });
         dispatch({
+          type: 'GET_JOBNAME',
+          payload: res.data.jobname,
+        });
+        dispatch({
+          type: 'GET_BIO',
+          payload: res.data.bio,
+        });
+        dispatch({
+          type: 'GET_IMAGE',
+          payload: res.data.image,
+        });
+        dispatch({
+          type: 'GET_SKILLS',
+          payload: res.data.skill,
+        });
+        dispatch({
+          type: 'GET_ARTICLE',
+          payload: res.data.article,
+        });
+        dispatch({
+          type: 'GET_LIKE',
+          payload: res.data.like,
+        });
+        dispatch({
+          type: 'GET_WATCHLATER',
+          payload: res.data.watchlater,
+        });
+        dispatch({
           type: 'LOGIN_STATUS',
           payload: true,
         });
+        console.log(res.data);
         if (!loading) {
           router.push(url.article);
         }
+        isLogin = true;
       })
       .catch((err) => {
         dispatch({
           type: 'LOGIN_STATUS',
           payload: false,
         });
+        isLogin = false;
       });
-  };
+    return isLogin;
+  });
   return login;
 };
 
 export function useRequireLogin() {
   const { state, dispatch } = useContext(AuthContext);
-  const [isLogin, setIsLogin] = useState(false);
-  const router = useRouter();
-  useEffect(() => {
-    axios
+
+  const checkLoginUser = useCallback(async () => {
+    let isLogin = false;
+    await axios
       .post('/api/users/check', {
         withCredentials: true,
       })
@@ -131,10 +166,42 @@ export function useRequireLogin() {
           payload: res.data.email,
         });
         dispatch({
+          type: 'GET_JOBNAME',
+          payload: res.data.jobname,
+        });
+        dispatch({
+          type: 'GET_BIO',
+          payload: res.data.bio,
+        });
+        dispatch({
+          type: 'GET_IMAGE',
+          payload: res.data.image,
+        });
+        dispatch({
+          type: 'GET_SKILLS',
+          payload: res.data.skill,
+        });
+        dispatch({
+          type: 'GET_ARTICLE',
+          payload: res.data.article,
+        });
+        dispatch({
+          type: 'GET_LIKE',
+          payload: res.data.like,
+        });
+        dispatch({
+          type: 'GET_WATCHLATER',
+          payload: res.data.watchlater,
+        });
+        dispatch({
           type: 'LOGIN_STATUS',
           payload: true,
         });
-        setIsLogin(true);
+        dispatch({
+          type: 'LOGIN_STATUS',
+          payload: true,
+        });
+        isLogin = true;
         console.log('login');
       })
       .catch(() => {
@@ -150,9 +217,11 @@ export function useRequireLogin() {
           type: 'LOGIN_STATUS',
           payload: false,
         });
-        router.push(url.login);
+        isLogin = false;
       });
-  }, [isLogin]);
+    return isLogin;
+  });
+  return checkLoginUser;
 }
 
 // useLogout ログアウト処理
@@ -262,4 +331,34 @@ export const usePublishArticle = (createID) => {
     return isSuccess;
   });
   return publishArticle;
+};
+
+// ユーザー情報を更新する
+export const useUpdataProfile = () => {
+  const name = useRecoilValue(textStateFamily(stateName.userName));
+  const jobName = useRecoilValue(textStateFamily(stateName.jobName));
+  const bio = useRecoilValue(textStateFamily(stateName.bio));
+  const image = useRecoilValue(textStateFamily(stateName.userImage));
+  const skill = useRecoilValue(topicListState(stateName.userSkill + stateName.selectedTopicsID));
+  const updateProfile = useCallback(async (e) => {
+    e.preventDefault();
+
+    const skillID = skill.map((item) => item.id);
+
+    const data = { name: name, jobname: jobName, bio: bio, image: image, skill: skillID };
+
+    let isSuccess = false;
+    await axios
+      .patch(api.updateUser, data, {
+        withCredentials: true,
+      })
+      .then(() => {
+        isSuccess = true;
+      })
+      .catch(() => {
+        isSuccess = false;
+      });
+    return isSuccess;
+  });
+  return updateProfile;
 };

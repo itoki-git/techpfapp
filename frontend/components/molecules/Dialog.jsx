@@ -14,7 +14,7 @@ import settingStyle from '../../styles/organisms/UserSetting.module.scss';
 import skillStyle from '../../styles/atoms/CardWithIcon.module.scss';
 import cardListStyle from '../../styles/molecules/TopicCardList.module.scss';
 import { CardWithAddIcon, CardwithIcon } from '../atoms/CardWithIcon';
-import { codeItems, skilsItems } from '../../pages/api/icon';
+import { skillsItems } from '../../pages/api/icon';
 import { TopicSelectdList } from './TopicCardList';
 import Container from '@mui/material/Container';
 import { dialogState, stateName, textStateFamily, topicListState } from '../state/createStore';
@@ -22,9 +22,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 export const DialogSlide = (props) => {
   const { createID } = props;
-  const skilsItem = skilsItems;
-  const codeItem = codeItems;
-  const listItems = skilsItem.concat(codeItem);
+  const listItems = skillsItems;
   const selectTopics = useRecoilValue(topicListState(createID + stateName.selectedTopicsID));
   const isOpen = useRecoilValue(dialogState(createID + stateName.editTopic));
   return (
@@ -94,7 +92,6 @@ export const DialogFullScreen = (props) => {
 
     // なければ追加、あれば選択されたものを削除
     if (arrayExists === undefined) {
-      console.log(item);
       setSelectList([...selectList, item]);
     } else {
       const deleteTopic = selectList.filter((listItem) => listItem.id !== item.id);
@@ -104,7 +101,6 @@ export const DialogFullScreen = (props) => {
 
   const saveTopic = () => {
     setisOpen(false);
-    console.log(selectList);
   };
 
   return (
@@ -113,8 +109,8 @@ export const DialogFullScreen = (props) => {
         <DialogContent className={inputStyle.infoarea}>
           <div className={inputStyle.inputarea}>
             <Input
-              id={stateName.topicSearchID}
-              stateId={stateName.topicSearchID}
+              id={createID + stateName.topicSearchID}
+              stateId={createID + stateName.topicSearchID}
               component="searchBox"
               type="text"
               placeholder="トピックスを入力..."

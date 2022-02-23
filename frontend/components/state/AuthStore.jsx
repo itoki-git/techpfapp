@@ -22,6 +22,41 @@ function reducer(state, action) {
         ...state,
         email: action.payload,
       };
+    case 'GET_JOBNAME':
+      return {
+        ...state,
+        jobname: action.payload,
+      };
+    case 'GET_BIO':
+      return {
+        ...state,
+        bio: action.payload,
+      };
+    case 'GET_IMAGE':
+      return {
+        ...state,
+        image: action.payload,
+      };
+    case 'GET_SKILLS':
+      return {
+        ...state,
+        skill: action.payload,
+      };
+    case 'GET_ARTICLE':
+      return {
+        ...state,
+        article: action.payload,
+      };
+    case 'GET_LIKE':
+      return {
+        ...state,
+        like: action.payload,
+      };
+    case 'GET_WATCHLATER':
+      return {
+        ...state,
+        watchlater: action.payload,
+      };
     case 'CHANGE_REDIRECT':
       return {
         ...state,
