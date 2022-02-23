@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSliders } from '@fortawesome/free-solid-svg-icons';
 
-export const skilsItems = [
+export const skillsItems = [
   {
     id: 'sk1',
     iconName: 'Illustrator',
@@ -35,20 +35,6 @@ export const skilsItems = [
   },
   {
     id: 'sk3',
-    iconName: 'Premiere Pro',
-    softcategory: 'Design Software',
-    icon: (
-      <svg viewBox="0 0 128 128">
-        <path fill="#2A0634" d="M50.3 38.5h-7.4v20.7h7.4c5 0 9.1-4.1 9.1-9.1v-2.4c0-5.1-4.1-9.2-9.1-9.2z"></path>
-        <path
-          fill="#2A0634"
-          d="M0 0v128h128V0H0zm51.2 67.5h-8.3v21.3h-9.6V30.3h18.5c9.4-.1 17.1 7.4 17.2 16.8v2.3c0 9.9-8 18-17.8 18.1zm46.1-14.2s-7 0-10.1 1.3v34.2H77.1V48.9s10.2-5.1 20.2-3.8v8.2z"
-        ></path>
-      </svg>
-    ),
-  },
-  {
-    id: 'sk4',
     iconName: 'Premiere Pro',
     softcategory: 'Design Software',
     icon: (
@@ -3505,10 +3491,8 @@ export const skilsItems = [
       </svg>
     ),
   },
-];
-export const codeItems = [
   {
-    id: 'cd1',
+    id: 'sk21',
     iconName: 'JavaScript',
     softcategory: 'Programming languages',
     icon: (
@@ -3522,7 +3506,7 @@ export const codeItems = [
     ),
   },
   {
-    id: 'cd2',
+    id: 'sk22',
     iconName: 'Python',
     softcategory: 'Programming languages',
     icon: (
@@ -3581,7 +3565,7 @@ export const codeItems = [
     ),
   },
   {
-    id: 'cd3',
+    id: 'sk23',
     iconName: 'TypeScript',
     softcategory: 'Programming languages',
     icon: (
@@ -3596,7 +3580,7 @@ export const codeItems = [
     ),
   },
   {
-    id: 'cd4',
+    id: 'sk24',
     iconName: 'React',
     softcategory: 'Programming languages',
     icon: (
@@ -3609,7 +3593,7 @@ export const codeItems = [
     ),
   },
   {
-    id: 'cd5',
+    id: 'sk25',
     iconName: 'Flutter',
     softcategory: 'Programming languages',
     icon: (
@@ -3636,7 +3620,7 @@ export const codeItems = [
     ),
   },
   {
-    id: 'cd6',
+    id: 'sk26',
     iconName: 'Go',
     softcategory: 'Programming languages',
     icon: (
@@ -3837,7 +3821,7 @@ export const codeItems = [
     ),
   },
   {
-    id: 'cd7',
+    id: 'sk27',
     iconName: 'Next.js',
     softcategory: 'Programming languages',
     icon: (
@@ -3847,7 +3831,7 @@ export const codeItems = [
     ),
   },
   {
-    id: 'cd8',
+    id: 'sk28',
     iconName: 'PHP',
     softcategory: 'Programming languages',
     icon: (
@@ -3900,7 +3884,7 @@ export const codeItems = [
     ),
   },
   {
-    id: 'cd9',
+    id: 'sk29',
     iconName: 'Rails',
     softcategory: 'Programming languages',
     icon: (
@@ -3976,7 +3960,7 @@ export const codeItems = [
     ),
   },
   {
-    id: 'cd10',
+    id: 'sk30',
     iconName: 'Node.js',
     softcategory: 'Programming languages',
     icon: (
@@ -3989,7 +3973,7 @@ export const codeItems = [
     ),
   },
   {
-    id: 'cd11',
+    id: 'sk31',
     iconName: 'Ruby',
     softcategory: 'Programming languages',
     icon: (
@@ -4286,7 +4270,7 @@ export const codeItems = [
     ),
   },
   {
-    id: 'cd12',
+    id: 'sk32',
     iconName: 'Laravel',
     softcategory: 'Programming languages',
     icon: (
@@ -4307,7 +4291,7 @@ export const codeItems = [
     ),
   },
   {
-    id: 'cd13',
+    id: 'sk33',
     iconName: 'Swift',
     softcategory: 'Programming languages',
     icon: (
@@ -4324,7 +4308,7 @@ export const codeItems = [
     ),
   },
   {
-    id: 'cd14',
+    id: 'sk34',
     iconName: 'Rust',
     softcategory: 'Programming languages',
     icon: (
@@ -4337,7 +4321,7 @@ export const codeItems = [
     ),
   },
   {
-    id: 'cd15',
+    id: 'sk35',
     iconName: 'Unity',
     softcategory: 'Programming languages',
     icon: (
@@ -4350,7 +4334,7 @@ export const codeItems = [
     ),
   },
   {
-    id: 'cd16',
+    id: 'sk36',
     iconName: 'CSS',
     softcategory: 'Programming languages',
     icon: (
@@ -4377,7 +4361,7 @@ export const codeItems = [
     ),
   },
   {
-    id: 'cd17',
+    id: 'sk37',
     iconName: 'Vue.js',
     softcategory: 'Programming languages',
     icon: (
@@ -4392,7 +4376,7 @@ export const codeItems = [
     ),
   },
   {
-    id: 'cd18',
+    id: 'sk38',
     iconName: 'Dart',
     softcategory: 'Programming languages',
     icon: (
