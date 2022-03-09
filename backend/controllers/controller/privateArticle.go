@@ -20,26 +20,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-var postCollection = db.ConnectPostsDB()
-
-type PostFilter struct {
-	LimitedPosts []entity.Post `json:"Posts"`
-	LowerId      string        `json:"lowerId"`
-}
-
-// GetPost IDに紐づいた記事を１件取得する
-func GetPost(ctx *gin.Context) {
-	var post entity.Post
-	postID := ctx.Params.ByName("id")
-	id, _ := primitive.ObjectIDFromHex(postID)
-	filter := bson.M{"_id": id}
-	if err := postCollection.FindOne(context.TODO(), filter).Decode(&post); err != nil {
-		db.GetError(err, ctx)
-		return
-	}
-	ctx.JSON(http.StatusOK, post)
-}
-
+// CreatePost 記事を作成・登録
 func CreatePost(ctx *gin.Context) {
 	var post entity.Article
 	var user entity.User
@@ -48,7 +29,7 @@ func CreatePost(ctx *gin.Context) {
 		log.Fatalf("Error loading .env file")
 	}
 	secretKey := os.Getenv("SECRET_KEY")
-	cookie, err := ctx.Cookie("status")
+	cookie, err := ctx.Cookie("jwt")
 	if err != nil {
 		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "error Authentication failed. "})
 		return
@@ -63,14 +44,15 @@ func CreatePost(ctx *gin.Context) {
 	claims := token.Claims.(*jwt.StandardClaims)
 	id, err := primitive.ObjectIDFromHex(claims.Issuer)
 	filter := bson.M{"_id": id}
-	if err := userCollection.FindOne(context.TODO(), filter).Decode(&user); err != nil {
+	if err := UserCollection.FindOne(context.TODO(), filter).Decode(&user); err != nil {
 		db.GetError(err, ctx)
 		return
 	}
 	_ = ctx.ShouldBindJSON(&post)
+	post.ArticleID = primitive.NewObjectID()
+	post.AuthorID = user.ID
 	post.Timestamp = time.Now()
-	post.Author = user.ID
-	result, err := postCollection.InsertOne(context.TODO(), post)
+	result, err := PostCollection.InsertOne(context.TODO(), post)
 	if err != nil {
 		db.GetError(err, ctx)
 		return
@@ -81,7 +63,7 @@ func CreatePost(ctx *gin.Context) {
 		primitive.E{Key: "article", Value: result.InsertedID},
 	}}}
 	opts := options.Update().SetUpsert(true)
-	_, updateErr := userCollection.UpdateOne(context.TODO(), filter, update, opts)
+	_, updateErr := UserCollection.UpdateOne(context.TODO(), filter, update, opts)
 	if updateErr != nil {
 		db.GetError(updateErr, ctx)
 		return
@@ -89,6 +71,7 @@ func CreatePost(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, result)
 }
 
+// UploadImage 画像をS3にアップロードするURLを生成
 func UploadImage(ctx *gin.Context) {
 	var file entity.Image
 	ctx.ShouldBindJSON(&file)
@@ -107,14 +90,3 @@ func UploadImage(ctx *gin.Context) {
 	}
 	ctx.JSON(http.StatusOK, gin.H{"s3url": preID})
 }
-
-/*
-// ユーザーが作成した記事を取得する
-func GetPostsByUser(ctx *gin.Context) {
-	var posts []entity.Post
-	var user entity.User
-
-	userID := ctx.Params.ByName("id")
-
-}
-*/

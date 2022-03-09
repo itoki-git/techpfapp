@@ -1,15 +1,21 @@
 package entity
 
 import (
+	"app/models/db"
+	"context"
+	"fmt"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"golang.org/x/crypto/bcrypt"
 )
+
+var UserCollection = db.ConnectUsersDB()
 
 type CreateUser struct {
 	ID         primitive.ObjectID   `json:"_id" bson:"_id"`
-	Name       string               `json:"name" bson:"name"`
-	Email      string               `json:"email" bson:"email"`
+	NickName   string               `json:"nickname" bson:"nickname"`
+	UserName   string               `json:"username" bson:"username"`
 	Password   string               `json:"password" bson:"password"`
 	JobName    string               `json:"jobname" bson:"jobname"`
 	Bio        string               `json:"bio" bson:"bio"`
@@ -21,8 +27,8 @@ type CreateUser struct {
 }
 type User struct {
 	ID         primitive.ObjectID   `json:"_id,omitempty" bson:"_id,omitempty"`
-	Name       string               `json:"name,omitempty" bson:"name,omitempty"`
-	Email      string               `json:"email,omitempty" bson:"email,omitempty"`
+	NickName   string               `json:"nickname,omitempty" bson:"nickname,omitempty"`
+	UserName   string               `json:"username,omitempty" bson:"username,omitempty"`
 	Password   string               `json:"password,omitempty" bson:"password,omitempty"`
 	JobName    string               `json:"jobname,omitempty" bson:"jobname,omitempty"`
 	Bio        string               `json:"bio,omitempty" bson:"bio,omitempty"`
@@ -34,24 +40,33 @@ type User struct {
 }
 type LoginUser struct {
 	ID       primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
-	Name     string             `json:"name,omitempty" bson:"name,omitempty"`
-	Email    string             `json:"email,omitempty" bson:"email,omitempty"`
+	NickName string             `json:"nickname,omitempty" bson:"nickname,omitempty"`
+	UserName string             `json:"username,omitempty" bson:"username,omitempty"`
 	Password string             `json:"password,omitempty" bson:"password,omitempty"`
 }
 
+type LoginPayload struct {
+	UserName string `json:"username"`
+	Password string `json:"password"`
+}
+
+type PostUser struct {
+	ID       primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
+	UserName string             `json:"name,omitempty" bson:"name,omitempty"`
+	Image    string             `json:"image,omitempty" bson:"image,omitempty"`
+}
+
 type Post struct {
-	Author  primitive.ObjectID   `json:"author" bson:"author,omitempty"`
-	Name    string               `json:"name" bson:"name,omitempty"`
-	Email   string               `json:"email,omitempty" bson:"email,omitempty"`
-	JobName string               `json:"jobname" bson:"jobname,omitempty"`
-	Bio     string               `json:"bio" bson:"bio,omitempty"`
-	Image   string               `json:"image" bson:"image,omitempty"`
-	Article []primitive.ObjectID `json:"article" bson:"article,omitempty"`
+	ArticleID   primitive.ObjectID `json:"articleID,omitempty" bson:"articleID,omitempty"`
+	Title       string             `json:"title" bson:"title,omitempty"`
+	LikedCount  int                `json:"liked_count" bson:"liked_count,omitempty"`
+	Topic       []string           `json:"topic" bson:"topic,omitempty"`
+	PublishedAt time.Time          `json:"timestamp" bson:"timestamp,omitempty"`
 }
 
 type Article struct {
 	ArticleID primitive.ObjectID `json:"articleID,omitempty" bson:"articleID,omitempty"`
-	Author    primitive.ObjectID `json:"authorID" bson:"authorID,omitempty"`
+	AuthorID  primitive.ObjectID `json:"authorID" bson:"authorID,omitempty"`
 	Title     string             `json:"title" bson:"title,omitempty"`
 	Markdown  string             `json:"markdown" bson:"markdown,omitempty"`
 	Topic     []string           `json:"topic" bson:"topic,omitempty"`
@@ -59,4 +74,52 @@ type Article struct {
 }
 type Image struct {
 	FileName string `json:"filename"`
+}
+
+// HashPassword パスワードを暗号化する
+func (user *User) HashPassword(password string) error {
+	byte, err := bcrypt.GenerateFromPassword([]byte(password), 14)
+	if err != nil {
+		return err
+	}
+
+	user.Password = string(byte)
+	return nil
+}
+
+// CheckPassword パスワードを検証する
+func (user *User) CheckPassword(providedPassword string) error {
+	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(providedPassword))
+	if err != nil {
+		fmt.Println("CheckPassword FAILS")
+		return err
+	}
+
+	fmt.Println("CheckPassword OK")
+
+	return nil
+}
+
+// CreateUserRecord ユーザーの初期値などを登録する
+func (user User) CreateUserRecord() error {
+	// 初期値を入力
+	register := CreateUser{
+		ID:         primitive.NewObjectID(),
+		NickName:   user.NickName,
+		UserName:   user.UserName,
+		Password:   user.Password,
+		JobName:    "",
+		Bio:        "",
+		Image:      "",
+		Skills:     []string{},
+		Article:    []primitive.ObjectID{},
+		Like:       []primitive.ObjectID{},
+		WatchLater: []primitive.ObjectID{},
+	}
+	fmt.Println(register)
+	_, err := UserCollection.InsertOne(context.TODO(), register)
+	if err != nil {
+		return err
+	}
+	return nil
 }

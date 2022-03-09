@@ -1,7 +1,8 @@
 package main
 
 import (
-	controller "app/controllers/controller"
+	"app/controllers/controller"
+	"app/middleware"
 
 	// middleware
 	// Gin
@@ -13,11 +14,7 @@ import (
 	"github.com/gin-contrib/cors"
 )
 
-func main() {
-	server()
-}
-
-func server() {
+func server() *gin.Engine {
 	// ginのルーターを作成
 	router := gin.Default()
 	//store := cookie.NewStore([]byte("secret"))
@@ -47,14 +44,29 @@ func server() {
 		// COOKIEなどの情報を必要とするか
 		AllowCredentials: true,
 	}))
-	router.POST("/posts", controller.CreatePost)
-	router.POST("/posts/upload", controller.UploadImage)
-	router.GET("/posts/id", controller.GetPost)
-	router.POST("/users", controller.CreateUser)
-	router.PATCH("/users", controller.UpdateProfile)
-	router.GET("/users/:id", controller.GetUser)
-	router.POST("/users/check", controller.CheckUserLogin)
-	router.POST("/login", controller.LoginUser)
+	api := router.Group("/api")
+	{
+		public := api.Group("/public")
+		{
+			public.POST("/users", controller.CreateUser)
+			public.POST("/login", controller.LoginUser)
+			public.GET("/posts/:id", controller.GetPost)
+			public.GET("/article", controller.GetPostList)
+			public.GET("/users/:id", controller.GetUser)
+		}
+		private := api.Group("/private").Use(middleware.Auth())
+		{
+			private.GET("/me", controller.GetProfile)
+			private.POST("/posts", controller.CreatePost)
+			private.POST("/posts/upload", controller.UploadImage)
+			private.PATCH("/users", controller.UpdateProfile)
+			private.POST("/users/check", controller.CheckUserLogin)
+		}
+	}
+	return router
+}
 
+func main() {
+	router := server()
 	router.Run(":8080")
 }
