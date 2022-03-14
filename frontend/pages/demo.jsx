@@ -15,7 +15,8 @@ export default function ISRDemo(props) {
       <main className={styles.main}>
         <h2 className={styles.title}>{props.pageTitle}</h2>
         <p>What time is it now?</p>
-        <p>It&apos;s {props.nowDate}.</p>
+        <p>It&apos;s {props.build_time}.</p>
+        <p>{props.stars}</p>
         <p className={styles.description}>
           <Link href={'/'}>
             <a>Go back</a>
@@ -25,12 +26,17 @@ export default function ISRDemo(props) {
     </div>
   );
 }
-export const getStaticProps = async (context) => {
+export async function getStaticProps() {
+  const res = await fetch('https://api.github.com/repos/zeit/next.js');
+  const json = await res.json();
+  const stars = json.stargazers_count;
+  // ビルド時刻の取得
+  const build_time = new Date().toString();
+
   return {
     props: {
-      nowDate: new Date().toLocaleString(),
-      pageTitle: 'ISR Demo',
+      stars,
+      build_time,
     },
-    revalidate: 5, // ISR settings
   };
-};
+}

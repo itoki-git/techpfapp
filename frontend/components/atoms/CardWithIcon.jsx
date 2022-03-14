@@ -26,6 +26,18 @@ export const CardwithIcon = (props) => {
     </div>
   );
 };
+export const CardwithIconArticle = (props) => {
+  return (
+    <div className={styles.boxMain}>
+      <div className={styles.left}>
+        <div className={styles.icon}>{props.skill.icon}</div>
+        <div className={styles.iconName}>
+          <h6 className={styles.softwareName}>{props.skill.iconName}</h6>
+        </div>
+      </div>
+    </div>
+  );
+};
 export const CardwithIconEdit = (props) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);

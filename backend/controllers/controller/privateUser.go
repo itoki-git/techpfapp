@@ -8,13 +8,9 @@ import (
 	"app/models/entity"
 	"context"
 	"fmt"
-	"log"
-	"os"
 	"reflect"
 
-	"github.com/form3tech-oss/jwt-go"
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 
@@ -45,32 +41,9 @@ func ContainsKey(check []string, elem interface{}, ignore []string) bool {
 	return reflect.DeepEqual(check, target)
 }
 
-func CheckUserLogin(ctx *gin.Context) {
-	var user entity.User
-	if err := godotenv.Load(".env"); err != nil {
-		log.Fatalf("Error loadinga .env file")
-	}
-	secretKey := os.Getenv("SECRET_KEY")
-	cookie, err := ctx.Cookie("jwt")
-	if err != nil {
-		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "error Authentication failed. "})
-		return
-	}
-	token, err := jwt.ParseWithClaims(cookie, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
-		return []byte(secretKey), nil
-	})
-	if err != nil {
-		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "error Authentication failed. "})
-		return
-	}
-	claims := token.Claims.(*jwt.StandardClaims)
-	id, err := primitive.ObjectIDFromHex(claims.Issuer)
-	filter := bson.M{"_id": id}
-	if err := UserCollection.FindOne(context.TODO(), filter).Decode(&user); err != nil {
-		db.GetError(err, ctx)
-		return
-	}
-	ctx.JSON(http.StatusOK, user)
+func Logout(ctx *gin.Context) {
+	ctx.SetCookie("jwt", "", -60*60*24, "/", "localhost", false, true)
+	ctx.JSON(http.StatusOK, gin.H{"message": "success"})
 }
 
 func GetProfile(ctx *gin.Context) {
@@ -94,24 +67,8 @@ func GetProfile(ctx *gin.Context) {
 func UpdateProfile(ctx *gin.Context) {
 	var user entity.User
 	var updateUser entity.User
-	if err := godotenv.Load(".env"); err != nil {
-		log.Fatalf("Error loadinga .env file")
-	}
-	secretKey := os.Getenv("SECRET_KEY")
-	cookie, err := ctx.Cookie("jwt")
-	if err != nil {
-		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "error Authentication failed. "})
-		return
-	}
-	token, err := jwt.ParseWithClaims(cookie, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
-		return []byte(secretKey), nil
-	})
-	if err != nil {
-		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "error Authentication failed. "})
-		return
-	}
-	claims := token.Claims.(*jwt.StandardClaims)
-	id, err := primitive.ObjectIDFromHex(claims.Issuer)
+	userID := ctx.GetString("userID")
+	id, _ := primitive.ObjectIDFromHex(userID)
 	filter := bson.M{"_id": id}
 	if err := UserCollection.FindOne(context.TODO(), filter).Decode(&user); err != nil {
 		db.GetError(err, ctx)

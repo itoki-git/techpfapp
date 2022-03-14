@@ -33,5 +33,6 @@
   },
   "[go]": {
     "editor.defaultFormatter": "golang.go"
-  }
+  },
+  "codic.case": "camelCase"
 }

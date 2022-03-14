@@ -80,15 +80,14 @@ func GetUser(ctx *gin.Context) {
 	}
 	// レスポンス設定
 	response := entity.User{
-		NickName:   user.NickName,
-		UserName:   user.UserName,
-		JobName:    user.JobName,
-		Bio:        user.Bio,
-		Image:      user.Image,
-		Skills:     user.Skills,
-		Article:    user.Article,
-		Like:       user.Like,
-		WatchLater: user.WatchLater,
+		NickName: user.NickName,
+		UserName: user.UserName,
+		JobName:  user.JobName,
+		Bio:      user.Bio,
+		Image:    user.Image,
+		Skills:   user.Skills,
+		Article:  user.Article,
+		Like:     user.Like,
 	}
 	ctx.JSON(http.StatusOK, response)
 }
@@ -138,11 +137,7 @@ func LoginUser(ctx *gin.Context) {
 		ctx.Abort()
 		return
 	}
-
-	tokenResponse := LoginResponse{
-		Token: signedToken,
-	}
 	ctx.SetCookie("jwt", signedToken, 60*60*24, "/", "localhost", false, true)
-	ctx.JSON(http.StatusOK, tokenResponse)
+	ctx.JSON(http.StatusOK, user)
 	return
 }

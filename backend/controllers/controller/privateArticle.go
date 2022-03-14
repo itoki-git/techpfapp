@@ -6,15 +6,11 @@ import (
 	"app/models/entity"
 	"context"
 	"fmt"
-	"log"
 	"net/http"
-	"os"
 	"path/filepath"
 	"time"
 
-	"github.com/form3tech-oss/jwt-go"
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -24,25 +20,9 @@ import (
 func CreatePost(ctx *gin.Context) {
 	var post entity.Article
 	var user entity.User
-	// cookieからユーザーIDを取得する
-	if err := godotenv.Load(".env"); err != nil {
-		log.Fatalf("Error loading .env file")
-	}
-	secretKey := os.Getenv("SECRET_KEY")
-	cookie, err := ctx.Cookie("jwt")
-	if err != nil {
-		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "error Authentication failed. "})
-		return
-	}
-	token, err := jwt.ParseWithClaims(cookie, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
-		return []byte(secretKey), nil
-	})
-	if err != nil {
-		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "error Authentication failed. "})
-		return
-	}
-	claims := token.Claims.(*jwt.StandardClaims)
-	id, err := primitive.ObjectIDFromHex(claims.Issuer)
+
+	userID := ctx.GetString("userID")
+	id, _ := primitive.ObjectIDFromHex(userID)
 	filter := bson.M{"_id": id}
 	if err := UserCollection.FindOne(context.TODO(), filter).Decode(&user); err != nil {
 		db.GetError(err, ctx)

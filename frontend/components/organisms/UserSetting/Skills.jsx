@@ -15,21 +15,34 @@ import skillStyle from '../../../styles/atoms/CardWithIcon.module.scss';
 import { dialogState, stateName, topicListState } from '../../state/createStore';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { AuthContext } from '../../../components/state/AuthStore';
-import { api, useUpdataProfile } from '../../../pages/api/utility';
 import axios from 'axios';
+import { MessageSnackbar } from '../../atoms/MessageBar';
+import { useUpdataProfile } from '../../../pages/api/userAPI';
 
 const Skills = () => {
-  const skillState = 'slillState';
   const [selectTopics, setSelectTopics] = useRecoilState(
     topicListState(stateName.userSkill + stateName.selectedTopicsID)
   );
   const isOpen = useRecoilValue(dialogState(stateName.userSkill + stateName.editTopic));
-  const { state, dispatch } = useContext(AuthContext);
   const updateProfile = useUpdataProfile();
+  const [barState, setBarState] = useState({
+    open: false,
+    vertical: 'top',
+    horizontal: 'center',
+    message: '更新できませんでした',
+    severity: 'error',
+  });
 
+  // プロフィール(ユーザースキル)更新
   const handleSave = async (e) => {
     const isSuccess = await updateProfile(e);
-    console.log(isSuccess);
+    if (isSuccess) {
+      setBarState({ ...barState, open: isSuccess, message: '更新しました', severity: 'success' });
+    }
+  };
+
+  const messageBarClose = () => {
+    setBarState({ ...barState, open: false });
   };
 
   return (
@@ -54,6 +67,7 @@ const Skills = () => {
           Save
         </a>
       </div>
+      {barState.open ? <MessageSnackbar barState={barState} messageBarClose={messageBarClose} /> : ''}
     </Paper>
   );
 };

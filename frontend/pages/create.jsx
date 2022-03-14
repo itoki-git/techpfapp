@@ -6,6 +6,7 @@ import { createIDState } from '../components/state/createStore';
 import dynamic from 'next/dynamic';
 import { useSetRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
+import Layout from '../components/templates/Layout';
 
 const CreatePage = () => {
   const Create = dynamic(() => import('../components/organisms/Create'), { ssr: false });

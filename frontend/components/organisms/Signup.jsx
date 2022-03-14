@@ -1,39 +1,57 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 import { Input } from '../atoms/Input';
-import { textStateFamily } from '../state/createStore';
+import { stateName, textStateFamily } from '../state/createStore';
 import styles from '../../styles/organisms/Login.module.scss';
-import { useRecoilValue } from 'recoil';
 import { api, url } from '../../pages/api/utility';
+import { useRecoilValue } from 'recoil';
+import { useRouter } from 'next/router';
 
 const Signup = (props) => {
-  const name = useRecoilValue(textStateFamily('signupName'));
-  const email = useRecoilValue(textStateFamily('signupEmail'));
-  const password = useRecoilValue(textStateFamily('signupPassword'));
+  const router = useRouter();
+  const isReady = router.isReady;
+  const [loading, setLoading] = useState(false);
+  const username = useRecoilValue(textStateFamily(stateName.signupUserName));
+  const nickname = useRecoilValue(textStateFamily(stateName.signupNickName));
+  const password = useRecoilValue(textStateFamily(stateName.signupPassword));
+  useEffect(() => {
+    if (isReady) {
+      setLoading(true);
+    }
+  }, [isReady]);
 
   const signup = async (e) => {
-    const data = { name: name, email: email, password: password };
     e.preventDefault();
-    await axios.post(api.signup, data).then((res) => {
-      console.log('signup');
-    });
+    if (nickname === '' || username === '' || password === '') {
+      console.log('error');
+      return;
+    }
+    const data = { nickname: nickname, username: username, password: password };
+    await axios
+      .post(api.signup, data, { withCredentials: true })
+      .then((res) => {
+        router.push(url.login);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <div className={styles.wrapper}>
       <div className={styles.title}>Signup</div>
       <form onSubmit={signup}>
         <div className={styles.field}>
-          <label>Name</label>
-          <Input stateId="signupName" id="signupName" component="auth" type="text" />
+          <label>ニックネーム</label>
+          <Input stateId={stateName.signupNickName} id={stateName.signupNickName} component="auth" type="text" />
         </div>
         <div className={styles.field}>
-          <label>Email</label>
-          <Input stateId="signupEmail" id="signupEmail" component="auth" type="text" />
+          <label>ユーザーネーム</label>
+          <Input stateId={stateName.signupUserName} id={stateName.signupUserName} component="auth" type="text" />
         </div>
         <div className={styles.field}>
           <label>Password</label>
-          <Input stateId="signupPassword" id="signupPassword" component="auth" type="password" />
+          <Input stateId={stateName.signupPassword} id={stateName.signupPassword} component="auth" type="password" />
         </div>
         <div className={styles.field}>
           <input className={styles.submit} type="submit" value="Sign UP" />

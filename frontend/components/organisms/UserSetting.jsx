@@ -13,29 +13,11 @@ import Password from './UserSetting/Password';
 import Articles from './UserSetting/Articles';
 import Likes from './UserSetting/Likes';
 import WatchLater from './UserSetting/WatchLater';
-import { skillsItems } from '../../pages/api/icon';
+import { getUserInfo, useGetLoginUserProfile } from '../../pages/api/userAPI';
 
 const UserSeting = (props) => {
-  const { state, dispatch } = useContext(AuthContext);
-  const setUserName = useSetRecoilState(textStateFamily(stateName.userName));
-  const setJobName = useSetRecoilState(textStateFamily(stateName.jobName));
-  const setBio = useSetRecoilState(textStateFamily(stateName.bio));
-  const setUserImage = useSetRecoilState(textStateFamily(stateName.userImage));
-  const setSelectTopics = useSetRecoilState(topicListState(stateName.userSkill + stateName.selectedTopicsID));
-
   const menuStateValue = useRecoilValue(menuState);
-  useMemo(() => {
-    const result = skillsItems.filter((item) => {
-      if (state.skill.includes(item.id)) {
-        return item;
-      }
-    });
-    setUserName(state.name ? state.name : '');
-    setJobName(state.jobname ? state.jobname : '');
-    setBio(state.bio ? state.bio : '');
-    setUserImage(state.image ? state.image : '');
-    setSelectTopics(state.skill ? result : []);
-  }, []);
+  getUserInfo();
   const changePage = () => {
     switch (menuStateValue) {
       case 0:
@@ -48,8 +30,6 @@ const UserSeting = (props) => {
         return <Articles />;
       case 4:
         return <Likes />;
-      case 5:
-        return <WatchLater />;
     }
   };
   return (

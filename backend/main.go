@@ -56,11 +56,12 @@ func server() *gin.Engine {
 		}
 		private := api.Group("/private").Use(middleware.Auth())
 		{
+			private.POST("/logout", controller.Logout)
 			private.GET("/me", controller.GetProfile)
 			private.POST("/posts", controller.CreatePost)
 			private.POST("/posts/upload", controller.UploadImage)
 			private.PATCH("/users", controller.UpdateProfile)
-			private.POST("/users/check", controller.CheckUserLogin)
+
 		}
 	}
 	return router

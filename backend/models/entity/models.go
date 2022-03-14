@@ -26,17 +26,16 @@ type CreateUser struct {
 	WatchLater []primitive.ObjectID `json:"watchlater" bson:"watchlater"`
 }
 type User struct {
-	ID         primitive.ObjectID   `json:"_id,omitempty" bson:"_id,omitempty"`
-	NickName   string               `json:"nickname,omitempty" bson:"nickname,omitempty"`
-	UserName   string               `json:"username,omitempty" bson:"username,omitempty"`
-	Password   string               `json:"password,omitempty" bson:"password,omitempty"`
-	JobName    string               `json:"jobname,omitempty" bson:"jobname,omitempty"`
-	Bio        string               `json:"bio,omitempty" bson:"bio,omitempty"`
-	Image      string               `json:"image,omitempty" bson:"image,omitempty"`
-	Skills     []string             `json:"skill,omitempty" bson:"skill,omitempty"`
-	Article    []primitive.ObjectID `json:"article,omitempty" bson:"article,omitempty"`
-	Like       []primitive.ObjectID `json:"like,omitempty" bson:"like,omitempty"`
-	WatchLater []primitive.ObjectID `json:"watchlater,omitempty" bson:"watchlater,omitempty"`
+	ID       primitive.ObjectID   `json:"_id,omitempty" bson:"_id,omitempty"`
+	NickName string               `json:"nickname,omitempty" bson:"nickname,omitempty"`
+	UserName string               `json:"username,omitempty" bson:"username,omitempty"`
+	Password string               `json:"password,omitempty" bson:"password,omitempty"`
+	JobName  string               `json:"jobname,omitempty" bson:"jobname,omitempty"`
+	Bio      string               `json:"bio,omitempty" bson:"bio,omitempty"`
+	Image    string               `json:"image,omitempty" bson:"image,omitempty"`
+	Skills   []string             `json:"skill,omitempty" bson:"skill,omitempty"`
+	Article  []primitive.ObjectID `json:"article,omitempty" bson:"article,omitempty"`
+	Like     []primitive.ObjectID `json:"like,omitempty" bson:"like,omitempty"`
 }
 type LoginUser struct {
 	ID       primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`

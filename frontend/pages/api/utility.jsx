@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState, useContext, useCallback, useEffect } from 'react';
+import React, { useState, useContext, useCallback, useEffect, useMemo } from 'react';
 import { AuthContext } from '../../components/state/AuthStore';
 import { useRouter } from 'next/router';
 import Backdrop from '@mui/material/Backdrop';
@@ -11,7 +11,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSliders } from '@fortawesome/free-solid-svg-icons';
 import { stateName, textStateFamily, topicListState } from '../../components/state/createStore';
 import { IconButton } from '@mui/material';
+import { skillsItems } from '../api/icon';
+import useSWR from 'swr';
 import editor from '../../styles/molecules/Editor.module.scss';
+import { getUser } from './userAPI';
 
 export const url = {
   home: '/',
@@ -24,20 +27,23 @@ export const url = {
 };
 
 export const api = {
-  login: 'api/login',
-  logout: 'api/logout',
-  signup: 'api/users',
-  user: 'api/user',
-  register_article: 'api/registerArticle',
-  s3Upload: 'api/posts/upload',
-  postArticle: 'api/posts',
-  updateUser: 'api/users',
+  login: 'api/public/login',
+  logout: 'api/private/logout',
+  signup: 'api/public/users',
+  user: 'api/public/user/',
+  me: process.browser ? 'api/private/me' : 'http://webServer:80/api/private/me/',
+  register_article: 'api/private/registerArticle',
+  s3Upload: 'api/private/posts/upload',
+  postArticle: 'api/private/posts',
+  updateUser: 'api/private/users',
+  getArticles: 'http://webServer:80/api/public/article?page=',
+  getArticle: 'http://webServer:80/api/public/posts/',
 };
 
 export const privateMenu = [
   { id: '1', displayName: 'HOME', to: url.article },
   { id: '2', displayName: 'CREATE', to: url.create },
-  //{ id: '3', displayName: 'Page', to: url.demo },
+  { id: '3', displayName: 'Page', to: url.demo },
   { id: '4', displayName: 'MYPAGE', to: url.setting },
 ];
 export const publicMenu = [
@@ -70,198 +76,6 @@ export const config = {
   region: process.env.NEXT_PUBLIC_REGION,
   accessKeyId: process.env.NEXT_PUBLIC_ACCESS_KEY,
   secretAccessKey: process.env.NEXT_PUBLIC_SECRET_ACCESS_KEY,
-};
-
-export const useLogin = () => {
-  const router = useRouter();
-  const isReady = router.isReady;
-  const email = useRecoilValue(textStateFamily(stateName.loginEmail));
-  const password = useRecoilValue(textStateFamily(stateName.loginPassword));
-  const [loading, setLoading] = useState(false);
-  const { state, dispatch } = useContext(AuthContext);
-
-  const login = useCallback(async (e) => {
-    let isLogin = false;
-    const data = { email: email, password: password };
-    e.preventDefault();
-    await axios
-      .post(api.login, data, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        dispatch({
-          type: 'GET_NAME',
-          payload: res.data.name,
-        });
-        dispatch({
-          type: 'GET_EMAIL',
-          payload: res.data.email,
-        });
-        dispatch({
-          type: 'GET_JOBNAME',
-          payload: res.data.jobname,
-        });
-        dispatch({
-          type: 'GET_BIO',
-          payload: res.data.bio,
-        });
-        dispatch({
-          type: 'GET_IMAGE',
-          payload: res.data.image,
-        });
-        dispatch({
-          type: 'GET_SKILLS',
-          payload: res.data.skill,
-        });
-        dispatch({
-          type: 'GET_ARTICLE',
-          payload: res.data.article,
-        });
-        dispatch({
-          type: 'GET_LIKE',
-          payload: res.data.like,
-        });
-        dispatch({
-          type: 'GET_WATCHLATER',
-          payload: res.data.watchlater,
-        });
-        dispatch({
-          type: 'LOGIN_STATUS',
-          payload: true,
-        });
-        console.log(res.data);
-        if (!loading) {
-          router.push(url.article);
-        }
-        isLogin = true;
-      })
-      .catch((err) => {
-        dispatch({
-          type: 'LOGIN_STATUS',
-          payload: false,
-        });
-        isLogin = false;
-      });
-    return isLogin;
-  });
-  return login;
-};
-
-export function useRequireLogin() {
-  const { state, dispatch } = useContext(AuthContext);
-
-  const checkLoginUser = useCallback(async () => {
-    let isLogin = false;
-    await axios
-      .post('/api/users/check', {
-        withCredentials: true,
-      })
-      .then((res) => {
-        dispatch({
-          type: 'GET_NAME',
-          payload: res.data.name,
-        });
-        dispatch({
-          type: 'GET_EMAIL',
-          payload: res.data.email,
-        });
-        dispatch({
-          type: 'GET_JOBNAME',
-          payload: res.data.jobname,
-        });
-        dispatch({
-          type: 'GET_BIO',
-          payload: res.data.bio,
-        });
-        dispatch({
-          type: 'GET_IMAGE',
-          payload: res.data.image,
-        });
-        dispatch({
-          type: 'GET_SKILLS',
-          payload: res.data.skill,
-        });
-        dispatch({
-          type: 'GET_ARTICLE',
-          payload: res.data.article,
-        });
-        dispatch({
-          type: 'GET_LIKE',
-          payload: res.data.like,
-        });
-        dispatch({
-          type: 'GET_WATCHLATER',
-          payload: res.data.watchlater,
-        });
-        dispatch({
-          type: 'LOGIN_STATUS',
-          payload: true,
-        });
-        dispatch({
-          type: 'LOGIN_STATUS',
-          payload: true,
-        });
-        isLogin = true;
-        console.log('login');
-      })
-      .catch(() => {
-        dispatch({
-          type: 'GET_NAME',
-          payload: '',
-        });
-        dispatch({
-          type: 'GET_EMAIL',
-          payload: '',
-        });
-        dispatch({
-          type: 'LOGIN_STATUS',
-          payload: false,
-        });
-        isLogin = false;
-      });
-    return isLogin;
-  });
-  return checkLoginUser;
-}
-
-// useLogout ログアウト処理
-export const useLogout = () => {
-  const { state, dispatch } = useContext(AuthContext);
-  const router = useRouter();
-  const isReady = router.isReady;
-  const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    if (isReady) {
-      setLoading(true);
-    }
-  }, [isReady]);
-  const logout = useCallback(async () => {
-    await axios
-      .post(api.logout, {
-        withCredentials: true,
-      })
-      .then(() => {
-        dispatch({
-          type: 'GET_NAME',
-          payload: '',
-        });
-        dispatch({
-          type: 'GET_EMAIL',
-          payload: '',
-        });
-        dispatch({
-          type: 'LOGIN_STATUS',
-          payload: false,
-        });
-        if (!loading) {
-          router.push(url.login);
-        } else {
-          console.log('logout');
-        }
-      });
-  }, []);
-
-  return logout;
 };
 
 // S3にアップロード
@@ -333,32 +147,56 @@ export const usePublishArticle = (createID) => {
   return publishArticle;
 };
 
-// ユーザー情報を更新する
-export const useUpdataProfile = () => {
-  const name = useRecoilValue(textStateFamily(stateName.userName));
-  const jobName = useRecoilValue(textStateFamily(stateName.jobName));
-  const bio = useRecoilValue(textStateFamily(stateName.bio));
-  const image = useRecoilValue(textStateFamily(stateName.userImage));
-  const skill = useRecoilValue(topicListState(stateName.userSkill + stateName.selectedTopicsID));
-  const updateProfile = useCallback(async (e) => {
-    e.preventDefault();
+export const getArticleList = async (page) => {
+  const res = await axios.get(api.getArticles + page);
+  return res.data;
+};
 
-    const skillID = skill.map((item) => item.id);
-
-    const data = { name: name, jobname: jobName, bio: bio, image: image, skill: skillID };
-
+// 記事のリスト(ページ単位)を取得
+export const useGetPostArticle = () => {
+  const getArticleList = useCallback(async (page) => {
+    //e.preventDefault();
+    let articles = [];
     let isSuccess = false;
+    console.log(api.getArticles + page);
     await axios
-      .patch(api.updateUser, data, {
-        withCredentials: true,
-      })
-      .then(() => {
+      .get(api.getArticles + page)
+      .then((res) => {
+        articles = res.data;
         isSuccess = true;
       })
       .catch(() => {
         isSuccess = false;
       });
-    return isSuccess;
+
+    return { articles, isSuccess };
   });
-  return updateProfile;
+  return getArticleList;
 };
+
+export const getArticle = async (path) => {
+  const res = await axios.get(api.getArticle + path);
+  return res.data;
+};
+/*
+// 記事のリスト(ページ単位)を取得
+export const useGetArticleContent = () => {
+  const getArticle = useCallback(async (path) => {
+    //e.preventDefault();
+    let articles = [];
+    let isSuccess = false;
+    await axios
+      .get(api.getArticle + path)
+      .then((res) => {
+        articles = res.data;
+        isSuccess = true;
+      })
+      .catch(() => {
+        isSuccess = false;
+      });
+
+    return articles;
+  });
+  return getArticle;
+};
+*/

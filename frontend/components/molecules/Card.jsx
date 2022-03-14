@@ -13,23 +13,24 @@ import styles from '../../styles/molecules/Card.module.scss';
 
 // カード
 const Cards = (props) => {
+  const { articleID, title, liked_count, timestamp } = props.item;
   const [isBookmark, setisBookmark] = useState(false);
   return (
     <Paper className={styles.cardroot}>
       <Card className={styles.cardContent}>
         <CardContent>
           <Typography variant="body2" component="span" className={styles.carddate}>
-            {props.item.createDay}
+            {timestamp}
           </Typography>
           <Typography gutterBottom variant="h5" component="div" className={styles.cardtitle}>
-            <Link href="#">
-              <a className={styles.titlelink}> {props.item.title}</a>
+            <Link href="/article/[articleID]" as={`/article/${articleID}`}>
+              <a className={styles.titlelink}> {title}</a>
             </Link>
           </Typography>
           <div className={styles.bottomIcon}>
             <div className={styles.buttonItem}>
               <FavoriteBorderIcon className={styles.nomal} />
-              <p className={styles.cardicon}>14.36k</p>
+              <p className={styles.cardicon}>{liked_count}</p>
             </div>
             <div className={styles.buttonItem}>
               <IconButton onClick={() => setisBookmark(!isBookmark)}>
