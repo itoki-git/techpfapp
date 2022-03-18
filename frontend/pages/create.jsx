@@ -7,10 +7,13 @@ import dynamic from 'next/dynamic';
 import { useSetRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 import Layout from '../components/templates/Layout';
+import { Protected } from './api/userAPI';
 
 const CreatePage = () => {
   const Create = dynamic(() => import('../components/organisms/Create'), { ssr: false });
   const setCreateIDState = useSetRecoilState(createIDState);
+
+  Protected();
 
   useMemo(() => {
     console.log('get create id');
@@ -21,9 +24,9 @@ const CreatePage = () => {
   return (
     <div>
       <EditHeader menus={createMenu} />
-      <PrivateLayout title="create">
+      <Layout title="create">
         <Create />
-      </PrivateLayout>
+      </Layout>
     </div>
   );
 };

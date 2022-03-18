@@ -94,36 +94,56 @@ export const useUpdataProfile = () => {
 };
 
 export const getUser = async () => {
-  console.log(api.me);
+  let req = api.me;
+  if (!process.browser) {
+    req = api.serverMe;
+  }
   try {
-    let res = await axios.get(api.me, { withCredentials: true });
+    let res = await axios.get(req, { withCredentials: true });
+    return res.data;
+  } catch (error) {
+    error.status = 403;
+    throw error;
+  }
+};
+export async function getServerUser() {
+  console.log('getServerMe');
+  try {
+    let res = await axios.get(api.serverMe, { withCredentials: true });
 
     return res.data;
   } catch (error) {
     console.log(error);
     throw error;
   }
-};
+}
 
 export default function useUser() {
   const setCurrentUser = useSetRecoilState(userState);
   const { data, mutate, error } = useSWR('api_user', getUser);
 
   const loading = !data && !error;
-  let loggedIn = false;
-  if (!error && data) {
-    loggedIn = true;
-  }
-  if (loggedIn) {
-    setCurrentUser(data);
-  } else {
-    setCurrentUser(null);
-  }
+  const loggedOut = error && error.status === 403;
 
   return {
     loading,
-    loggedIn,
+    loggedOut,
     user: data,
     mutate,
   };
 }
+
+export const getUserProfile = async (userID) => {
+  const res = await axios.get(api.getUserProfile + userID);
+  return res.data;
+};
+
+export const Protected = () => {
+  const { loggedOut } = useUser();
+  const router = useRouter();
+  useEffect(() => {
+    if (loggedOut) {
+      router.replace(url.login);
+    }
+  }, [loggedOut]);
+};

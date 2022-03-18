@@ -13,17 +13,23 @@ import { faUser, faGem, faLock, faBook, faHeart, faBookmark } from '@fortawesome
 import settingStyle from '../../styles/organisms/UserSetting.module.scss';
 import { useRecoilState } from 'recoil';
 import { menuState } from '../state/createStore';
-import { useLogout } from '../../pages/api/userAPI';
+import useUser, { useLogout } from '../../pages/api/userAPI';
 import { menuIconItems } from '../../pages/api/icon';
+import { Router, useRouter } from 'next/router';
+import { url } from '../../pages/api/utility';
 
 const Menu = (props) => {
   const menuItems = menuIconItems;
   const [selectedIndex, setSelectedIndex] = useRecoilState(menuState);
   const logout = useLogout();
+  const router = useRouter();
+  const { mutate } = useUser();
 
   const handleClickLogout = async (e) => {
     e.preventDefault();
     await logout();
+    mutate(null);
+    router.replace(url.login);
   };
   return (
     <Paper elevation={1} className={styles.menuRoot}>

@@ -72,6 +72,7 @@ func GetUser(ctx *gin.Context) {
 	var user entity.User
 	// URLからIDを取得する
 	userID := ctx.Params.ByName("id")
+	fmt.Println(userID)
 	id, _ := primitive.ObjectIDFromHex(userID)
 	filter := bson.M{"_id": id}
 	if err := UserCollection.FindOne(context.TODO(), filter).Decode(&user); err != nil {

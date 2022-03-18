@@ -31,19 +31,21 @@ export const api = {
   logout: 'api/private/logout',
   signup: 'api/public/users',
   user: 'api/public/user/',
-  me: process.browser ? 'api/private/me' : 'http://webServer:80/api/private/me/',
+  me: 'api/private/me',
   register_article: 'api/private/registerArticle',
   s3Upload: 'api/private/posts/upload',
   postArticle: 'api/private/posts',
   updateUser: 'api/private/users',
   getArticles: 'http://webServer:80/api/public/article?page=',
   getArticle: 'http://webServer:80/api/public/posts/',
+  getUserProfile: 'http://webServer:80/api/public/users/',
+  serverMe: 'http://webServer:80/api/private/me',
 };
 
-export const privateMenu = [
-  { id: '1', displayName: 'HOME', to: url.article },
+const privateMenu = [
+  { id: '1', displayName: 'HOME', to: url.article + '?page=1' },
   { id: '2', displayName: 'CREATE', to: url.create },
-  { id: '3', displayName: 'Page', to: url.demo },
+  { id: '3', displayName: 'DEMO', to: url.demo },
   { id: '4', displayName: 'MYPAGE', to: url.setting },
 ];
 export const publicMenu = [

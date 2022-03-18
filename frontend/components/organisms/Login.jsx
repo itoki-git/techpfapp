@@ -12,19 +12,19 @@ import { userState } from '../state/currentUser';
 const Login = (props) => {
   const username = useRecoilValue(textStateFamily(stateName.loginUserName));
   const password = useRecoilValue(textStateFamily(stateName.loginPassword));
-  const { mutate, loggedIn } = useUser();
+  const { mutate, loggedOut, user } = useUser();
   const login = useLogin();
 
   useEffect(() => {
-    if (loggedIn) Router.replace(url.article);
-  }, [loggedIn]);
+    if (user && !loggedOut) {
+      Router.replace(url.article);
+    }
+  }, [user, loggedOut]);
 
-  if (loggedIn) return <> Redirecting.... </>;
-
-  const handleClickLogin = async (e) => {
+  const handleClickLogin = (e) => {
     e.preventDefault();
     if (username && password) {
-      await login();
+      login();
       mutate();
     }
   };

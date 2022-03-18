@@ -23,14 +23,13 @@ const PrivateLayout = (props) => {
     { id: '3', displayName: 'DEMO', to: url.demo },
     { id: '4', displayName: 'MYPAGE', to: url.setting },
   ];
+
   const { user, loading, loggedIn } = useUser();
 
-  const LoginOrInfo = () => {
-    console.log('PrivateLayout', loggedIn);
-    if (loading) return null;
-    if (loggedIn) return <>{pathName !== url.create ? <Header menus={privateMenu} /> : ''}</>;
-    if (!loggedIn) return <Header menus={publicMenu} />;
-  };
+  useEffect(() => {
+    console.log(loggedIn);
+    if (!loggedIn) router.push(url.login);
+  }, [loggedIn]);
 
   return (
     <div className={styles.page}>
@@ -40,7 +39,7 @@ const PrivateLayout = (props) => {
       </Head>
 
       <div className={styles.parent}>
-        <LoginOrInfo />
+        {pathName !== url.create ? <Header menus={privateMenu} /> : ''}
         <Container className={styles.children}>{children}</Container>
       </div>
     </div>

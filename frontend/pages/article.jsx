@@ -21,7 +21,7 @@ const ArticlePage = ({ data, page, numberOfMovies }) => {
   const lastPage = Math.ceil(numberOfMovies / 3);
 
   return (
-    <PrivateLayout title="article">
+    <Layout title="article">
       <div className={styles.cardlist}>
         <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
           <CardList data={data} />
@@ -50,7 +50,7 @@ const ArticlePage = ({ data, page, numberOfMovies }) => {
           </Stack>
         </Stack>
       </div>
-    </PrivateLayout>
+    </Layout>
   );
 };
 export default ArticlePage;
