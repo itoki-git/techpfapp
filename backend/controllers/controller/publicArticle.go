@@ -31,6 +31,7 @@ func GetPost(ctx *gin.Context) {
 func GetPostList(ctx *gin.Context) {
 	postList := []entity.Post{}
 	var post entity.Post
+	var response entity.PostResponse
 	articleCount := 12
 	pageCount, err := strconv.Atoi(ctx.Query("page"))
 	fmt.Println(pageCount)
@@ -44,11 +45,13 @@ func GetPostList(ctx *gin.Context) {
 		Skip:  &skip,
 		Limit: &limit,
 	}
+
 	cursor, err := PostCollection.Find(context.TODO(), bson.M{}, &opts)
 	if err != nil {
 		db.GetError(err, ctx)
 		return
 	}
+	count, err := PostCollection.CountDocuments(context.TODO(), bson.M{})
 	for cursor.Next(context.TODO()) {
 		if err := cursor.Decode(&post); err != nil {
 			db.GetError(err, ctx)
@@ -57,5 +60,101 @@ func GetPostList(ctx *gin.Context) {
 		postList = append(postList, post)
 		fmt.Println(post)
 	}
-	ctx.JSON(http.StatusOK, postList)
+
+	response.PostList = postList
+	response.PostCount = int(count)
+	ctx.JSON(http.StatusOK, response)
+}
+
+// GetPostTopicList トピックの記事を取得する
+func GetPostTopicList(ctx *gin.Context) {
+	postList := []entity.Post{}
+	var post entity.Post
+	var response entity.PostResponse
+	articleCount := 12
+	pageCount, err := strconv.Atoi(ctx.Query("page"))
+	topic := ctx.Params.ByName("topic")
+	fmt.Println(pageCount)
+
+	if err != nil {
+		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "error get page failed. "})
+		return
+	}
+
+	skip := int64(pageCount*articleCount - articleCount)
+	limit := int64(pageCount * articleCount)
+
+	opts := options.FindOptions{
+		Skip:  &skip,
+		Limit: &limit,
+	}
+
+	cursor, _ := PostCollection.Find(context.TODO(), bson.M{"topic.iconName": topic}, &opts)
+	if err != nil {
+		db.GetError(err, ctx)
+		return
+	}
+	count, _ := PostCollection.CountDocuments(context.TODO(), bson.M{"topic.iconName": topic})
+	for cursor.Next(context.TODO()) {
+		if err := cursor.Decode(&post); err != nil {
+			db.GetError(err, ctx)
+			return
+		}
+		postList = append(postList, post)
+		fmt.Println(post)
+	}
+	response.PostList = postList
+	response.PostCount = int(count)
+	ctx.JSON(http.StatusOK, response)
+}
+
+// GetSearchList 検索された記事を取得する
+func GetSearchList(ctx *gin.Context) {
+	postList := []entity.Post{}
+	var post entity.Post
+	var response entity.PostResponse
+	articleCount := 12
+	pageCount, err := strconv.Atoi(ctx.Query("page"))
+	query := ctx.Query("q")
+	fmt.Println(pageCount)
+
+	if err != nil {
+		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "error get page failed. "})
+		return
+	}
+
+	skip := int64(pageCount*articleCount - articleCount)
+	limit := int64(pageCount * articleCount)
+
+	opts := options.FindOptions{
+		Skip:  &skip,
+		Limit: &limit,
+	}
+
+	filter := bson.D{
+		{"$or",
+			bson.A{
+				bson.M{"markdown": query},
+				bson.M{"title": query},
+				bson.M{"topic.iconName": query},
+			}},
+	}
+
+	cursor, _ := PostCollection.Find(context.TODO(), filter, &opts)
+	if err != nil {
+		db.GetError(err, ctx)
+		return
+	}
+	count, _ := PostCollection.CountDocuments(context.TODO(), filter)
+	for cursor.Next(context.TODO()) {
+		if err := cursor.Decode(&post); err != nil {
+			db.GetError(err, ctx)
+			return
+		}
+		postList = append(postList, post)
+		fmt.Println(post)
+	}
+	response.PostList = postList
+	response.PostCount = int(count)
+	ctx.JSON(http.StatusOK, response)
 }

@@ -53,6 +53,8 @@ func server() *gin.Engine {
 			public.GET("/posts/:id", controller.GetPost)
 			public.GET("/article", controller.GetPostList)
 			public.GET("/users/:id", controller.GetUser)
+			public.GET("/topics/:topic", controller.GetPostTopicList)
+			public.GET("/search", controller.GetSearchList)
 		}
 		private := api.Group("/private").Use(middleware.Auth())
 		{

@@ -59,7 +59,7 @@ type Post struct {
 	ArticleID   primitive.ObjectID `json:"articleID,omitempty" bson:"articleID,omitempty"`
 	Title       string             `json:"title" bson:"title,omitempty"`
 	LikedCount  int                `json:"liked_count" bson:"liked_count,omitempty"`
-	Topic       []string           `json:"topic" bson:"topic,omitempty"`
+	Topic       []TopicInfo        `json:"topic" bson:"topic,omitempty"`
 	PublishedAt time.Time          `json:"timestamp" bson:"timestamp,omitempty"`
 }
 
@@ -68,8 +68,18 @@ type Article struct {
 	AuthorID  primitive.ObjectID `json:"authorID" bson:"authorID,omitempty"`
 	Title     string             `json:"title" bson:"title,omitempty"`
 	Markdown  string             `json:"markdown" bson:"markdown,omitempty"`
-	Topic     []string           `json:"topic" bson:"topic,omitempty"`
+	Topic     []TopicInfo        `json:"topic" bson:"topic,omitempty"`
 	Timestamp time.Time          `json:"timestamp" bson:"timestamp,omitempty"`
+}
+
+type PostResponse struct {
+	PostList  []Post
+	PostCount int
+}
+
+type TopicInfo struct {
+	TopicID   string `json:"id" bson:"id,omitempty"`
+	TopicName string `json:"iconName" bson:"iconName,omitempty"`
 }
 type Image struct {
 	FileName string `json:"filename"`
