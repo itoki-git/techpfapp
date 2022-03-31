@@ -1,7 +1,9 @@
 import React from 'react';
 import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
 import { SelectTopicCard, TopicCard } from '../atoms/TopicCard';
 import styles from '../../styles/atoms/TopicCard.module.scss';
+import Link from 'next/link';
 
 export const TopicCardList = (props) => {
   const listItems = props.listItems;
@@ -9,7 +11,9 @@ export const TopicCardList = (props) => {
     <Grid container spacing={2}>
       {listItems.map((item, i) => (
         <Grid item xs={4} sm={2} key={i}>
-          <TopicCard item={item} />
+          <label className={styles.topic}>
+            <TopicCard item={item} />
+          </label>
         </Grid>
       ))}
     </Grid>
@@ -38,8 +42,25 @@ export const TopicSelectdList = (props) => {
             checked={arrayExists(item.id)}
           />
           <label htmlFor={item.id} className={`${styles['topic']} ${arrayExists(item.id) ? styles['selected'] : null}`}>
-            <SelectTopicCard item={item} />
+            <TopicCard item={item} />
           </label>
+        </Grid>
+      ))}
+    </Grid>
+  );
+};
+
+export const TopicListButton = (props) => {
+  const { listItems, selectList } = props;
+  return (
+    <Grid container spacing={2}>
+      {listItems.map((item, i) => (
+        <Grid item xs={4} sm={2} key={i}>
+          <Link href="/topics/[item.iconName]" as={`/topics/${item.iconName}`}>
+            <label htmlFor={item.id} className={styles.topic}>
+              <TopicCard item={item} />
+            </label>
+          </Link>
         </Grid>
       ))}
     </Grid>
