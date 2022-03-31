@@ -1,42 +1,51 @@
-import axios from 'axios';
-import { useRouter } from 'next/router';
-import React, { useMemo, useState } from 'react';
-import CardList from '../components/organisms/CardList';
-import Layout from '../components/templates/Layout';
-import { api, getPageCount, getPostList, useGetPostArticle } from './api/utility';
-import Button from '@mui/material/Button';
+import { Grid, Paper } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 import Stack from '@mui/material/Stack';
-import Link from 'next/link';
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
 import Container from '@mui/material/Container';
-import styles from '../styles/organisms/CardList.module.scss';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import Layout from '../../components/templates/Layout';
+import CardList from '../../components/organisms/CardList';
+import { useRouter } from 'next/router';
+import { getPageCount, getPostList } from '../api/utility';
 import useSWR from 'swr';
+import { TopicTitle } from '../../components/atoms/TopicCard';
+import { skillsItems } from '../api/icon';
+import topicStyles from '../../styles/atoms/TopicCard.module.scss';
+import contentStyles from '../../styles/organisms/CardList.module.scss';
 
-const ArticlePage = () => {
+const Topic = () => {
   const [pageIndex, setPageIndex] = useState(1);
-  const query = 'article?page=';
-  const { data, error } = useSWR(`api/public/${query}${pageIndex}`, getPostList);
+  const router = useRouter();
+
+  // Grab our ID parameter
+  const { topic } = router.query;
+  const { data, error } = useSWR(`/api/public/topics/${topic}?page=${pageIndex}`, getPostList);
+
+  const topics = skillsItems.find((item) => item.iconName === topic);
 
   const handlePageChange = (e, v) => {
     e.preventDefault();
     setPageIndex(v);
   };
-  console.log(data);
-
   if (error) return <div>failed to load</div>;
   if (!data) return <div>loading...</div>;
 
+  console.log(data);
+
   return (
     <Layout title="article">
-      <div className={styles.cardlist}>
+      <div>
         <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
-          <span className={styles.contentSpacing} />
+          <div className={topicStyles.topicArticle}>
+            <TopicTitle item={topics} />
+          </div>
+          <span className={contentStyles.contentSpacing} />
           {data.PostCount === 0 ? (
             <div>
-              <div className={styles.contentEmpty}>記事が見つかりませでした</div>
+              <div className={contentStyles.contentEmpty}>{topic}の記事は見つかりませんでした</div>
             </div>
           ) : (
             <>
@@ -54,7 +63,6 @@ const ArticlePage = () => {
                         page={item.page}
                         components={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
                         naked
-                        href={`/articles/${item.page === 0 ? '' : `?page=${item.page}`}`}
                         {...item}
                       />
                     )}
@@ -68,36 +76,4 @@ const ArticlePage = () => {
     </Layout>
   );
 };
-export default ArticlePage;
-
-/*
-export const getStaticProps = async () => {
-  const data = await axios
-    .get(api.getArticles + '1')
-    .then((res) => res.data)
-    .catch(() => null);
-  return {
-    props: {
-      data: data,
-    },
-  };
-};
-*/
-/*
-export const getServerSideProps = async ({ query: { page = 1 } }) => {
-  const start = +page === 1 ? 1 : (+page - 1) * 2;
-  console.log('strt' + start);
-  const data = await axios
-    .get(api.getArticles + start)
-    .then((res) => res.data)
-    .catch(() => null);
-  console.log(data);
-  return {
-    props: {
-      data: data,
-      page: +page,
-      numberOfMovies: 10,
-    },
-  };
-};
-*/
+export default Topic;

@@ -1,37 +1,40 @@
 import { Grid, Paper } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 import 'zenn-content-css';
+import nookies, { parseCookies } from 'nookies';
 import styles from '../../styles/organisms/Preview.module.scss';
 import articleStyle from '../../styles/organisms/ArticlePage.module.scss';
 import settingStyle from '../../styles/organisms/UserSetting.module.scss';
 import skillStyle from '../../styles/atoms/CardWithIcon.module.scss';
 import ProfileStyle from '../../styles/organisms/UserSetting/Profile.module.scss';
 import cardListStyle from '../../styles/molecules/TopicCardList.module.scss';
-import { getArticle, getArticleList } from '../api/utility';
+import { api, getArticle } from '../api/utility';
 import Avatar from '@mui/material/Avatar';
 import Divider from '@mui/material/Divider';
-import PrivateLayout from '../../components/templates/PrivateLayout';
 import { CardwithIconArticle } from '../../components/atoms/CardWithIcon';
 import { skillsItems } from '../api/icon';
+import { getUserProfile, useServerUser } from '../api/userAPI';
+import axios from 'axios';
 import Layout from '../../components/templates/Layout';
-import useUser, { getServerUser, getUser, getUserProfile, useRequireLogin } from '../api/userAPI';
 
-const Page = ({ post, profile }) => {
+const Page = ({ article, profile, cookies }) => {
+  const list = article.topic.map((item) => item.id);
   const topic = skillsItems.filter((item) => {
-    if (post.topic && post.topic.includes(item.id)) {
+    if (list && list.includes(item.id)) {
       return item;
     }
   });
+
   return (
-    <Layout title="article">
+    <Layout>
       <Grid container direction="row" justifyContent="center" alignItems="flex-start">
         <div className={articleStyle.container}>
           <header className={articleStyle.header}>
-            <h1 className={articleStyle.title}>{post.title}</h1>
+            <h1 className={articleStyle.title}>{article.title}</h1>
             <div className={articleStyle.meta}>
-              <span>{post.timestamp}に公開</span>
+              <span>{article.timestamp}に公開</span>
             </div>
           </header>
 
@@ -39,7 +42,7 @@ const Page = ({ post, profile }) => {
             <Grid item xs={12} sm={12} md={9} lg={9} xl={9}>
               <div className={styles.preview}>
                 <ReactMarkdown className="znc" plugins={[gfm]} unwrapDisallowed={false}>
-                  {post.markdown}
+                  {article.markdown}
                 </ReactMarkdown>
                 <Divider variant="middle" className={settingStyle.divider} />
                 <div className={ProfileStyle.displayInfo}>
@@ -86,41 +89,40 @@ const Page = ({ post, profile }) => {
 export default Page;
 
 /*
-export const getStaticPaths = async () => {
-  const article = await getArticleList(1);
-  //const paths = article.map((item) => item.articleID);
-  const paths = article.map((item) => ({
-    params: {
-      slug: item.articleID,
-    },
-  }));
-  return {
-    paths,
-    fallback: false,
-  };
-};
+export const getServerSideProps = async (context) => {
+  const cookies = parseCookies(context);
+  const { slug } = context.query;
+  const article = await getArticle(slug);
+  const profile = await getUserProfile(article.authorID);
 
-export const getStaticProps = async ({ params: { slug } }) => {
-  console.log(`Building slug: ${slug}`);
-  const post = await getArticle(slug);
   return {
     props: {
-      post,
+      article,
+      profile,
+      cookies,
     },
   };
 };
 */
 
-export const getServerSideProps = async (context) => {
-  const { slug } = context.query;
-  const post = await getArticle(slug);
-  console.log('AAAA');
-  const profile = await getUserProfile(post.authorID);
+export const getStaticProps = async ({ params }) => {
+  const slug = params.slug;
+  const article = await getArticle(slug);
+  const profile = await getUserProfile(article.authorID);
 
   return {
     props: {
-      post,
+      slug,
+      article,
       profile,
     },
+    revalidate: 3,
+  };
+};
+
+export const getStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: 'blocking',
   };
 };

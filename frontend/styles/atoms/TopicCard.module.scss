@@ -11,6 +11,9 @@
   padding: 1.2em 0.5em 1em;
   font-size: 0.83rem;
   line-height: 1.5;
+  &:hover {
+    background-color: #c2e5f2;
+  }
   .topicIcon {
     text-align: center;
     width: 36px;
@@ -26,5 +29,26 @@
   &.selected {
     border: 1px solid #eee;
     background-color: #c2e5f2;
+  }
+}
+
+.topicArticle {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  .topicIcon {
+    border: 1px solid #eee;
+    border-radius: 50%;
+    padding: 1rem;
+
+    margin-right: 1.7rem;
+    .topicIconImage {
+      width: 100px;
+    }
+  }
+  .topicName {
+    font-weight: bold;
+    font-size: 1.9rem;
+    line-height: 1.4;
   }
 }
