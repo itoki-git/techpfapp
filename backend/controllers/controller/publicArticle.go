@@ -116,7 +116,6 @@ func GetSearchList(ctx *gin.Context) {
 	articleCount := 12
 	pageCount, err := strconv.Atoi(ctx.Query("page"))
 	query := ctx.Query("q")
-	fmt.Println(pageCount)
 
 	if err != nil {
 		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "error get page failed. "})
@@ -134,13 +133,22 @@ func GetSearchList(ctx *gin.Context) {
 	filter := bson.D{
 		{"$or",
 			bson.A{
-				bson.M{"markdown": query},
-				bson.M{"title": query},
-				bson.M{"topic.iconName": query},
+				bson.M{"markdown": bson.M{"$regex": primitive.Regex{
+					Pattern: "^" + query,
+					Options: "i",
+				}}},
+				bson.M{"title": bson.M{"$regex": primitive.Regex{
+					Pattern: "^" + query,
+					Options: "i",
+				}}},
+				bson.M{"topic.iconName": bson.M{"$regex": primitive.Regex{
+					Pattern: "^" + query,
+					Options: "i",
+				}}},
 			}},
 	}
 
-	cursor, _ := PostCollection.Find(context.TODO(), filter, &opts)
+	cursor, _ := PostCollection.Find(context.Background(), filter, &opts)
 	if err != nil {
 		db.GetError(err, ctx)
 		return
