@@ -57,6 +57,7 @@ type PostUser struct {
 
 type Post struct {
 	ArticleID   primitive.ObjectID `json:"articleID,omitempty" bson:"articleID,omitempty"`
+	AuthorID    primitive.ObjectID `json:"_id" bson:"_id,omitempty"`
 	Title       string             `json:"title" bson:"title,omitempty"`
 	LikedCount  int                `json:"liked_count" bson:"liked_count,omitempty"`
 	Topic       []TopicInfo        `json:"topic" bson:"topic,omitempty"`

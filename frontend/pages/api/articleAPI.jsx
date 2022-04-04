@@ -77,3 +77,14 @@ export const getPageCount = (count) => {
   console.log(count);
   return pageCount;
 };
+
+// 投稿された記事を取得(private)
+export const getPrivatePostList = async (...args) => {
+  try {
+    let res = await axios.get(...args, { withCredentials: true });
+    return res.data;
+  } catch (error) {
+    error.status = 403;
+    throw error;
+  }
+};

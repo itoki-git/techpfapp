@@ -51,6 +51,37 @@ func CreatePost(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, result)
 }
 
+// GetUserPost 登録ユーザーの記事を取得する
+func GetUserPost(ctx *gin.Context) {
+	postList := []entity.Post{}
+	var post entity.Post
+	var response entity.PostResponse
+
+	userID := ctx.GetString("userID")
+	id, _ := primitive.ObjectIDFromHex(userID)
+	filter := bson.M{"authorID": id}
+
+	cursor, err := PostCollection.Find(context.TODO(), filter)
+	if err != nil {
+		db.GetError(err, ctx)
+		return
+	}
+	count, err := PostCollection.CountDocuments(context.TODO(), bson.M{})
+	for cursor.Next(context.TODO()) {
+		if err := cursor.Decode(&post); err != nil {
+			db.GetError(err, ctx)
+			return
+		}
+		postList = append(postList, post)
+		fmt.Println(post)
+	}
+
+	response.PostList = postList
+	response.PostCount = int(count)
+	fmt.Println(response)
+	ctx.JSON(http.StatusOK, response)
+}
+
 // UploadImage 画像をS3にアップロードするURLを生成
 func UploadImage(ctx *gin.Context) {
 	var file entity.Image
