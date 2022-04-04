@@ -19,6 +19,7 @@ import Layout from '../../components/templates/Layout';
 
 const Page = ({ article, profile, cookies }) => {
   const list = article.topic.map((item) => item.id);
+  const data = article.timestamp.substr(0, article.timestamp.indexOf('T'));
   const topic = skillsItems.filter((item) => {
     if (list && list.includes(item.id)) {
       return item;
@@ -32,7 +33,7 @@ const Page = ({ article, profile, cookies }) => {
           <header className={articleStyle.header}>
             <h1 className={articleStyle.title}>{article.title}</h1>
             <div className={articleStyle.meta}>
-              <span>{article.timestamp}に公開</span>
+              <span>{data}に公開</span>
             </div>
           </header>
 
