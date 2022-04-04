@@ -1,22 +1,20 @@
 import { Grid, Paper } from '@mui/material';
-import React, { useEffect } from 'react';
+import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 import 'zenn-content-css';
-import nookies, { parseCookies } from 'nookies';
 import styles from '../../styles/organisms/Preview.module.scss';
 import articleStyle from '../../styles/organisms/ArticlePage.module.scss';
 import settingStyle from '../../styles/organisms/UserSetting.module.scss';
 import skillStyle from '../../styles/atoms/CardWithIcon.module.scss';
 import ProfileStyle from '../../styles/organisms/UserSetting/Profile.module.scss';
 import cardListStyle from '../../styles/molecules/TopicCardList.module.scss';
-import { api, getArticle } from '../api/utility';
+import { getArticle } from '../api/articleAPI';
 import Avatar from '@mui/material/Avatar';
 import Divider from '@mui/material/Divider';
 import { CardwithIconArticle } from '../../components/atoms/CardWithIcon';
 import { skillsItems } from '../api/icon';
-import { getUserProfile, useServerUser } from '../api/userAPI';
-import axios from 'axios';
+import { getUserProfile } from '../api/userAPI';
 import Layout from '../../components/templates/Layout';
 
 const Page = ({ article, profile, cookies }) => {

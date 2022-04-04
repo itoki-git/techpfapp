@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SearchField } from '../components/molecules/Search';
 import Layout from '../components/templates/Layout';
 import { TopicListButton } from '../components/molecules/TopicCardList';
@@ -15,12 +15,13 @@ import Stack from '@mui/material/Stack';
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
 import contentStyles from '../styles/organisms/CardList.module.scss';
-import { getPageCount, getSearchList } from './api/utility';
+import { getPageCount, getSearchList } from './api/articleAPI';
 import useSWR from 'swr';
 
 const SearchResult = ({ query }) => {
   const [pageIndex, setPageIndex] = useState(1);
-  const { data, error } = useSWR(`api/public/search?q=${query}&page=${pageIndex}`, getSearchList);
+  const router = useRouter();
+  const { data, error } = useSWR(`api/public/search?q=${router.query.q}&page=${pageIndex}`, getSearchList);
 
   const handlePageChange = (e, v) => {
     e.preventDefault();
@@ -36,7 +37,7 @@ const SearchResult = ({ query }) => {
         <span className={contentStyles.contentSpacing} />
         {data.PostCount === 0 ? (
           <div>
-            <div className={contentStyles.contentEmpty}>{query}の記事は見つかりませんでした</div>
+            <div className={contentStyles.contentEmpty}>{router.query.q}の記事は見つかりませんでした</div>
           </div>
         ) : (
           <>
@@ -70,6 +71,13 @@ const SearchResult = ({ query }) => {
 export const SearchPage = () => {
   const [value, setValue] = useRecoilState(textStateFamily('searh'));
   const [isSearchResult, setIsSearchResult] = useState(false);
+  const router = useRouter();
+  useEffect(() => {
+    if (router.query.q) {
+      setIsSearchResult(true);
+    }
+  }, [router.query.q]);
+  console.log(isSearchResult);
   const handleSubmit = (e) => {
     e.preventDefault();
     const href = `?q=${value}`;

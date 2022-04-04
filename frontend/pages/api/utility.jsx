@@ -1,21 +1,12 @@
 import axios from 'axios';
-import React, { useState, useContext, useCallback, useEffect, useMemo } from 'react';
-import { AuthContext } from '../../components/state/AuthStore';
-import { useRouter } from 'next/router';
-import Backdrop from '@mui/material/Backdrop';
+import React, { useCallback } from 'react';
 import Button from '@mui/material/Button';
-import SettingsIcon from '@mui/icons-material/Settings';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import SvgIcon from '@mui/material/SvgIcon';
+import { useSetRecoilState } from 'recoil';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSliders } from '@fortawesome/free-solid-svg-icons';
-import { stateName, textStateFamily, topicListState } from '../../components/state/createStore';
+import { textStateFamily } from '../../components/state/createStore';
 import IconButton from '@mui/material/IconButton';
-import { skillsItems } from '../api/icon';
-import SearchIcon from '@mui/icons-material/Search';
-import useSWR from 'swr';
 import editor from '../../styles/molecules/Editor.module.scss';
-import { getUser } from './userAPI';
 
 export const url = {
   home: '/',
@@ -73,8 +64,30 @@ export const privateMenu = [
   { id: '4', displayName: 'MYPAGE', to: url.setting },
 ];
 export const publicMenu = [
-  { id: '1', displayName: 'Login', to: url.login },
-  { id: '2', displayName: 'Article', to: url.article },
+  {
+    id: '0',
+    displayName: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="icon icon-tabler icon-tabler-search"
+        width="28"
+        height="28"
+        viewBox="0 0 24 24"
+        strokeWidth="3"
+        stroke="#1a1e26"
+        fill="none"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <circle cx="10" cy="10" r="7" />
+        <line x1="21" y1="21" x2="15" y2="15" />
+      </svg>
+    ),
+    to: url.search,
+  },
+  { id: '1', displayName: 'Article', to: url.article },
+  { id: '2', displayName: 'Login', to: url.login },
 ];
 export const createMenu = [
   {
@@ -148,122 +161,4 @@ export const useInsertTextarea = (stateID) => {
     setMarkdown(marparea.value);
   }, []);
   return insertTextarea;
-};
-
-// 作成した記事を公開する
-export const usePublishArticle = (createID) => {
-  const title = useRecoilValue(textStateFamily(createID + stateName.title));
-  const markdown = useRecoilValue(textStateFamily(createID + stateName.markdown));
-  const selectedTopic = useRecoilValue(topicListState(createID + stateName.selectedTopicsID));
-  const publishArticle = useCallback(async () => {
-    let isSuccess = false;
-    const data = { title: title, markdown: markdown, topic: selectedTopic };
-
-    await axios
-      .post(api.postArticle, data, { withCredentials: true })
-      .then(() => {
-        isSuccess = true;
-      })
-      .catch(() => {
-        isSuccess = false;
-      });
-
-    console.log(isSuccess);
-    return isSuccess;
-  });
-  return publishArticle;
-};
-
-export const getArticleList = async (page) => {
-  const res = await axios.get(api.getArticles + page);
-  return res.data;
-};
-
-// 記事のリスト(ページ単位)を取得
-export const useGetPostArticle = () => {
-  const getArticleList = useCallback(async (page) => {
-    //e.preventDefault();
-    let articles = [];
-    let isSuccess = false;
-    console.log(api.getArticles + page);
-    await axios
-      .get(api.getArticles + page)
-      .then((res) => {
-        articles = res.data;
-        isSuccess = true;
-      })
-      .catch(() => {
-        isSuccess = false;
-      });
-
-    return { articles, isSuccess };
-  });
-  return getArticleList;
-};
-
-export const getArticle = async (path) => {
-  const res = await axios.get(api.getArticle + path);
-  return res.data;
-};
-/*
-// 記事のリスト(ページ単位)を取得
-export const useGetArticleContent = () => {
-  const getArticle = useCallback(async (path) => {
-    //e.preventDefault();
-    let articles = [];
-    let isSuccess = false;
-    await axios
-      .get(api.getArticle + path)
-      .then((res) => {
-        articles = res.data;
-        isSuccess = true;
-      })
-      .catch(() => {
-        isSuccess = false;
-      });
-
-    return articles;
-  });
-  return getArticle;
-};
-*/
-export const getPostList = async (...args) => {
-  try {
-    let res = await axios.get(...args);
-    return res.data;
-  } catch (error) {
-    error.status = 403;
-    throw error;
-  }
-};
-
-export const getTopicList = async (...args) => {
-  console.log(...args);
-  try {
-    let res = await axios.get(...args);
-    return res.data;
-  } catch (error) {
-    error.status = 403;
-    throw error;
-  }
-};
-
-export const getSearchList = async (...args) => {
-  try {
-    let res = await axios.get(...args);
-    return res.data;
-  } catch (error) {
-    error.status = 403;
-    throw error;
-  }
-};
-
-// ページ数を返却する
-export const getPageCount = (count) => {
-  let pageCount = Math.round(count / 12);
-  if (count % 12 !== 0) {
-    pageCount++;
-  }
-  console.log(count);
-  return pageCount;
 };

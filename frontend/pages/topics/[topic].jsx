@@ -9,7 +9,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Layout from '../../components/templates/Layout';
 import CardList from '../../components/organisms/CardList';
 import { useRouter } from 'next/router';
-import { getPageCount, getPostList } from '../api/utility';
+import { getPageCount, getPostList } from '../api/articleAPI';
 import useSWR from 'swr';
 import { TopicTitle } from '../../components/atoms/TopicCard';
 import { skillsItems } from '../api/icon';

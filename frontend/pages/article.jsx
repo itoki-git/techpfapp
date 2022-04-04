@@ -1,12 +1,8 @@
-import axios from 'axios';
-import { useRouter } from 'next/router';
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import CardList from '../components/organisms/CardList';
 import Layout from '../components/templates/Layout';
-import { api, getPageCount, getPostList, useGetPostArticle } from './api/utility';
-import Button from '@mui/material/Button';
+import { getPageCount, getPostList } from './api/articleAPI';
 import Stack from '@mui/material/Stack';
-import Link from 'next/link';
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
 import Container from '@mui/material/Container';
