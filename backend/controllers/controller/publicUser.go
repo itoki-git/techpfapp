@@ -23,6 +23,7 @@ import (
 
 var PostCollection = db.ConnectPostsDB()
 var UserCollection = db.ConnectUsersDB()
+var LikeCollection = db.ConnectLikesDB()
 
 type LoginResponse struct {
 	Token string `json:"token"`

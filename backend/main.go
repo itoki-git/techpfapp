@@ -61,8 +61,10 @@ func server() *gin.Engine {
 			private.POST("/logout", controller.Logout)
 			private.GET("/me", controller.GetProfile)
 			private.POST("/posts", controller.CreatePost)
+			private.GET("/posts", controller.GetUserPost)
 			private.POST("/posts/upload", controller.UploadImage)
 			private.PATCH("/users", controller.UpdateProfile)
+			private.PATCH("/posts/:id", controller.UpdateLike)
 
 		}
 	}

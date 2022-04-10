@@ -20,6 +20,7 @@ import (
 func CreatePost(ctx *gin.Context) {
 	var post entity.Article
 	var user entity.User
+	var like entity.Like
 
 	userID := ctx.GetString("userID")
 	id, _ := primitive.ObjectIDFromHex(userID)
@@ -46,6 +47,13 @@ func CreatePost(ctx *gin.Context) {
 	_, updateErr := UserCollection.UpdateOne(context.TODO(), filter, update, opts)
 	if updateErr != nil {
 		db.GetError(updateErr, ctx)
+		return
+	}
+	// 記事のLikeドキュメントを作成
+	like.ArticleID = post.ArticleID
+	like.Users = []entity.LikeUser{}
+	if _, err := LikeCollection.InsertOne(context.TODO(), like); err != nil {
+		db.GetError(err, ctx)
 		return
 	}
 	ctx.JSON(http.StatusOK, result)

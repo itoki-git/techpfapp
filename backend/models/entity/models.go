@@ -59,7 +59,6 @@ type Post struct {
 	ArticleID   primitive.ObjectID `json:"articleID,omitempty" bson:"articleID,omitempty"`
 	AuthorID    primitive.ObjectID `json:"_id" bson:"_id,omitempty"`
 	Title       string             `json:"title" bson:"title,omitempty"`
-	LikedCount  int                `json:"liked_count" bson:"liked_count,omitempty"`
 	Topic       []TopicInfo        `json:"topic" bson:"topic,omitempty"`
 	PublishedAt time.Time          `json:"timestamp" bson:"timestamp,omitempty"`
 }
@@ -84,6 +83,16 @@ type TopicInfo struct {
 }
 type Image struct {
 	FileName string `json:"filename"`
+}
+
+type Like struct {
+	Users     []LikeUser         `json:"users" bson:"users"`
+	ArticleID primitive.ObjectID `json:"articleID,omitempty" bson:"articleID,omitempty"`
+}
+
+type LikeUser struct {
+	UserID    primitive.ObjectID `json:"_id" bson:"_id"`
+	Timestamp time.Time          `json:"timestamp" bson:"timestamp"`
 }
 
 // HashPassword パスワードを暗号化する
