@@ -60,7 +60,12 @@ func GetPostIsLike(ctx *gin.Context) {
 	postID, _ := primitive.ObjectIDFromHex(getPostID)
 	filter := bson.M{"articleID": postID, "users._id": id}
 
-	if isLiked := LikeCollection.FindOne(context.TODO(), filter); isLiked != nil {
+	count, err := LikeCollection.CountDocuments(context.TODO(), filter)
+	if err != nil {
+		db.GetError(err, ctx)
+		return
+	}
+	if count != 0 {
 		ctx.JSON(http.StatusOK, gin.H{"liked": true})
 		return
 	}
