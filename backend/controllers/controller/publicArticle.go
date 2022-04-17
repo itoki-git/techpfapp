@@ -51,18 +51,24 @@ func GetPostList(ctx *gin.Context) {
 		db.GetError(err, ctx)
 		return
 	}
-	count, err := PostCollection.CountDocuments(context.TODO(), bson.M{})
+
+	if pageCount == 1 {
+		count, _ := PostCollection.CountDocuments(context.TODO(), bson.M{})
+		response.PostCount = int(count)
+	}
+
 	for cursor.Next(context.TODO()) {
 		if err := cursor.Decode(&post); err != nil {
 			db.GetError(err, ctx)
 			return
 		}
+		post.Like = GetCountLike(post.ArticleID)
 		postList = append(postList, post)
 		fmt.Println(post)
 	}
 
 	response.PostList = postList
-	response.PostCount = int(count)
+
 	ctx.JSON(http.StatusOK, response)
 }
 
@@ -94,17 +100,22 @@ func GetPostTopicList(ctx *gin.Context) {
 		db.GetError(err, ctx)
 		return
 	}
-	count, _ := PostCollection.CountDocuments(context.TODO(), bson.M{"topic.iconName": topic})
+	if pageCount == 1 {
+		count, _ := PostCollection.CountDocuments(context.TODO(), bson.M{"topic.iconName": topic})
+		response.PostCount = int(count)
+	}
+
 	for cursor.Next(context.TODO()) {
 		if err := cursor.Decode(&post); err != nil {
 			db.GetError(err, ctx)
 			return
 		}
+		post.Like = GetCountLike(post.ArticleID)
 		postList = append(postList, post)
 		fmt.Println(post)
 	}
 	response.PostList = postList
-	response.PostCount = int(count)
+
 	ctx.JSON(http.StatusOK, response)
 }
 
@@ -153,16 +164,22 @@ func GetSearchList(ctx *gin.Context) {
 		db.GetError(err, ctx)
 		return
 	}
-	count, _ := PostCollection.CountDocuments(context.TODO(), filter)
+
+	if pageCount == 1 {
+		count, _ := PostCollection.CountDocuments(context.TODO(), filter)
+		response.PostCount = int(count)
+	}
+
 	for cursor.Next(context.TODO()) {
 		if err := cursor.Decode(&post); err != nil {
 			db.GetError(err, ctx)
 			return
 		}
+		post.Like = GetCountLike(post.ArticleID)
 		postList = append(postList, post)
 		fmt.Println(post)
 	}
 	response.PostList = postList
-	response.PostCount = int(count)
+
 	ctx.JSON(http.StatusOK, response)
 }

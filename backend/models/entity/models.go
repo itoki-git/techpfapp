@@ -60,6 +60,7 @@ type Post struct {
 	AuthorID    primitive.ObjectID `json:"_id" bson:"_id,omitempty"`
 	Title       string             `json:"title" bson:"title,omitempty"`
 	Topic       []TopicInfo        `json:"topic" bson:"topic,omitempty"`
+	Like        int                `json:"like" bson:"like,omitempty"`
 	PublishedAt time.Time          `json:"timestamp" bson:"timestamp,omitempty"`
 }
 

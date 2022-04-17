@@ -13,6 +13,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+// UpdateLike Likeを押したら更新する
 func UpdateLike(ctx *gin.Context) {
 	var like entity.LikeUser
 	var user entity.LikeUser
@@ -49,4 +50,30 @@ func UpdateLike(ctx *gin.Context) {
 		result = true
 	}
 	ctx.JSON(http.StatusOK, gin.H{"liked": result})
+}
+
+// GetPostIsLike 記事にLikeを押しているかを返却する
+func GetPostIsLike(ctx *gin.Context) {
+	getPostID := ctx.Params.ByName("id")
+	getUserID := ctx.GetString("userID")
+	id, _ := primitive.ObjectIDFromHex(getUserID)
+	postID, _ := primitive.ObjectIDFromHex(getPostID)
+	filter := bson.M{"articleID": postID, "users._id": id}
+
+	if isLiked := LikeCollection.FindOne(context.TODO(), filter); isLiked != nil {
+		ctx.JSON(http.StatusOK, gin.H{"liked": true})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{"liked": false})
+	return
+}
+
+// GetCountLike 記事にいいねされている数を返却する
+func GetCountLike(postID primitive.ObjectID) int {
+	var like entity.Like
+	filter := bson.M{"articleID": postID}
+	if err := LikeCollection.FindOne(context.TODO(), filter).Decode(&like); err != nil {
+		return 0
+	}
+	return len(like.Users)
 }
