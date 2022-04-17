@@ -29,9 +29,14 @@ export const usePublishArticle = (createID) => {
 };
 
 // パスの記事を取得
-export const getArticle = async (path) => {
-  const res = await axios.get(api.getArticle + path);
-  return res.data;
+export const getArticle = async (...args) => {
+  try {
+    let res = await axios.get(...args);
+    return res.data;
+  } catch (error) {
+    error.status = 403;
+    throw error;
+  }
 };
 
 // 投稿された記事を取得
@@ -83,6 +88,28 @@ export const getPrivatePostList = async (...args) => {
   try {
     let res = await axios.get(...args, { withCredentials: true });
     return res.data;
+  } catch (error) {
+    error.status = 403;
+    throw error;
+  }
+};
+
+export const handleLikeButton = async (id) => {
+  const query = api.like + id;
+  try {
+    let res = await axios.patch(query, { withCredentials: true });
+    return res.data;
+  } catch (error) {
+    error.status = 403;
+    throw error;
+  }
+};
+
+// 記事にいいねしているか
+export const getArticleLike = async (...args) => {
+  try {
+    const res = await axios.get(...args, { withCredentials: true });
+    return res.data.liked;
   } catch (error) {
     error.status = 403;
     throw error;

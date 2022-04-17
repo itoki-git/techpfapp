@@ -30,9 +30,11 @@ export const api = {
   postArticle: '/api/private/posts',
   updateUser: '/api/private/users',
   getArticles: 'http://webServer:80/api/public/article?page=',
-  getArticle: 'http://webServer:80/api/public/posts/',
-  getUserProfile: 'http://webServer:80/api/public/users/',
+  getArticle: '/api/public/posts/',
+  getUserProfile: '/api/public/users/',
   serverMe: 'http://webServer:80/api/private/me',
+  like: '/api/private/posts/',
+  isLike: '//api/private/posts/',
 };
 
 export const privateMenu = [

@@ -94,32 +94,32 @@ export const useUpdataProfile = () => {
 };
 
 export const getUser = async () => {
-  let req = api.me;
-  if (!process.browser) {
-    req = api.serverMe;
-  }
   try {
-    let res = await axios.get(req, { withCredentials: true });
+    let res = await axios.get(api.me, { withCredentials: true });
     return res.data;
   } catch (error) {
     error.status = 403;
     throw error;
   }
 };
-export async function getServerUser() {
-  console.log('getServerMe');
+export async function getServerUser(cookie) {
+  const jwt = 'jwt=' + cookie.jwt;
   try {
-    let res = await axios.get(api.serverMe, { withCredentials: true });
-
+    let res = await axios.get(api.serverMe, {
+      headers: {
+        Cookie: jwt,
+      },
+      withCredentials: true,
+    });
     return res.data;
   } catch (error) {
-    console.log(error);
+    error.status = 403;
     throw error;
   }
 }
 
-export default function useUser() {
-  const setCurrentUser = useSetRecoilState(userState);
+export function useUser() {
+  //const setCurrentUser = useSetRecoilState(userState);
   const { data, mutate, error } = useSWR('api_user', getUser);
 
   const loading = !data && !error;
@@ -133,9 +133,28 @@ export default function useUser() {
   };
 }
 
-export const getUserProfile = async (userID) => {
-  const res = await axios.get(api.getUserProfile + userID);
-  return res.data;
+export function useServerUser(cookie) {
+  const { data, mutate, error } = useSWR('api_serveruser', getServerUser(cookie));
+
+  const loading = !data && !error;
+  const loggedOut = error && error.status === 403;
+
+  return {
+    loading,
+    loggedOut,
+    user: data,
+    mutate,
+  };
+}
+
+export const getUserProfile = async (...args) => {
+  try {
+    let res = await axios.get(...args);
+    return res.data;
+  } catch (error) {
+    error.status = 403;
+    throw error;
+  }
 };
 
 export const Protected = () => {
