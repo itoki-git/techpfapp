@@ -15,7 +15,7 @@ import { useUpdataProfile } from '../../../pages/api/userAPI';
 const Mypage = () => {
   const nickName = useRecoilValue(textStateFamily(stateName.nickName));
   const jobName = useRecoilValue(textStateFamily(stateName.jobName));
-  const updateProfile = useUpdataProfile;
+  const updateProfile = useUpdataProfile();
   const [barState, setBarState] = useState({
     open: false,
     vertical: 'top',
@@ -26,6 +26,7 @@ const Mypage = () => {
 
   // プロフィール(ユーザースキル)更新
   const handleSave = async (e) => {
+    e.preventDefault();
     const isSuccess = await updateProfile(e);
     if (isSuccess) {
       setBarState({ ...barState, open: isSuccess, message: '更新しました', severity: 'success' });

@@ -8,17 +8,12 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { loginState, userState } from '../state/currentUser';
 import styles from '../../styles/Layout.module.scss';
 import Header from '../organisms/Header';
-import { api, publicMenu, url } from '../../pages/api/utility';
-import useUser, { Protected } from '../../pages/api/userAPI';
+import { api, privateMenu, publicMenu, url } from '../../pages/api/utility';
+import { Protected, useUser } from '../../pages/api/userAPI';
+import nookies, { parseCookies } from 'nookies';
+import { NextPageContext } from 'next';
 
-const privateMenu = [
-  { id: '1', displayName: 'HOME', to: url.article + '?page=1' },
-  { id: '2', displayName: 'CREATE', to: url.create },
-  { id: '3', displayName: 'DEMO', to: url.demo },
-  { id: '4', displayName: 'MYPAGE', to: url.setting },
-];
-
-const Layout = (props) => {
+const Layout = (props, context) => {
   const { title, children } = props;
   const siteTile = 'PORTFOLIO';
   const router = useRouter();
@@ -36,7 +31,7 @@ const Layout = (props) => {
         'loading...'
       ) : (
         <div className={styles.parent}>
-          <Header menus={menuList} />
+          {pathName !== url.create ? <Header menus={menuList} /> : ''}
           <Container className={styles.children}>{children}</Container>
         </div>
       )}

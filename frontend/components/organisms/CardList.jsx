@@ -1,14 +1,7 @@
-import React, { useMemo, useState } from 'react';
-import Link from 'next/link';
+import React from 'react';
 import Cards from '../molecules/Card';
 import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import styles from '../../styles/organisms/CardList.module.scss';
-import { getPostList, url, useGetPostArticle } from '../../pages/api/utility';
-import useSWR from 'swr';
 
 // カードリスト
 const CardList = ({ data }) => {

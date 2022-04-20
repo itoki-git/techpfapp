@@ -1,21 +1,14 @@
-import React, { useContext, useMemo, useState } from 'react';
-import style from '../../../styles/atoms/CardWithIcon.module.scss';
+import React, { useState } from 'react';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import AddIcon from '@mui/icons-material/Add';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import profileStyle from '../../../styles/organisms/UserSetting/Profile.module.scss';
 import settingStyle from '../../../styles/organisms/UserSetting.module.scss';
-import { CardWithAddIcon, CardwithIcon, CardwithIconEdit } from '../../atoms/CardWithIcon';
+import { CardWithAddIcon, CardwithIcon } from '../../atoms/CardWithIcon';
 import { skillsItems } from '../../../pages/api/icon';
 import { DialogFullScreen } from '../../molecules/Dialog';
 import cardListStyle from '../../../styles/molecules/TopicCardList.module.scss';
 import skillStyle from '../../../styles/atoms/CardWithIcon.module.scss';
 import { dialogState, stateName, topicListState } from '../../state/createStore';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { AuthContext } from '../../../components/state/AuthStore';
-import axios from 'axios';
 import { MessageSnackbar } from '../../atoms/MessageBar';
 import { useUpdataProfile } from '../../../pages/api/userAPI';
 

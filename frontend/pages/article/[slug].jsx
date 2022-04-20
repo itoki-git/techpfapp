@@ -18,6 +18,7 @@ import { getUserProfile } from '../api/userAPI';
 import Layout from '../../components/templates/Layout';
 import { LikeButton } from '../../components/atoms/LikeButton';
 import useSWR from 'swr';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 const Page = () => {
@@ -28,14 +29,18 @@ const Page = () => {
 
   // Grab our ID parameter
   const { slug } = router.query;
-  const { data: article, error: articleError } = useSWR(`/api/public/posts/${slug}`, getArticle, {
-    refreshInterval: refreshIntervalArticle,
-  });
+  const { data: article, error: articleError } = useSWR(
+    slug != undefined ? `/api/public/posts/${slug}` : null,
+    getArticle,
+    {
+      refreshInterval: refreshIntervalArticle,
+    }
+  );
   const { data: profile, error: profileError } = useSWR(
     article ? `/api/public/users/${article.authorID}` : '',
     getUserProfile
   );
-  const { data: like, error: likeError } = useSWR(`/api/private/posts/${slug}`, getArticleLike);
+  const { data: like, error: likeError } = useSWR(article ? `/api/private/posts/${slug}` : false, getArticleLike);
 
   useEffect(() => {
     if (article) {
@@ -119,10 +124,12 @@ const Page = () => {
                 <div className={ProfileStyle.displayInfo}>
                   <div className={ProfileStyle.left}>
                     <Avatar alt="Remy Sharp" src="/DSC_9314.JPG" sx={{ width: 80, height: 80 }} />
-                    <div style={{ marginLeft: '1rem' }}>
-                      <h5>{profile.nickname}</h5>
-                      <small className={ProfileStyle.jobName}>{profile.jobname}</small>
-                    </div>
+                    <Link href="/user/[profile.username]" as={`/user/${profile.username}`}>
+                      <a style={{ marginLeft: '1rem' }}>
+                        <h5>{profile.nickname}</h5>
+                        <small className={ProfileStyle.jobName}>{profile.jobname}</small>
+                      </a>
+                    </Link>
                   </div>
                 </div>
               </Paper>

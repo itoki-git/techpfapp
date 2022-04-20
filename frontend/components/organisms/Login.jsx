@@ -5,7 +5,7 @@ import { Input } from '../atoms/Input';
 import { textStateFamily, stateName } from '../state/createStore';
 import styles from '../../styles/organisms/Login.module.scss';
 import { url } from '../../pages/api/utility';
-import useUser, { useLogin } from '../../pages/api/userAPI';
+import { useLogin, useUser } from '../../pages/api/userAPI';
 import { useRecoilValue } from 'recoil';
 import { userState } from '../state/currentUser';
 

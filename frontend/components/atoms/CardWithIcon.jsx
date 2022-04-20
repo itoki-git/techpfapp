@@ -12,6 +12,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import styles from '../../styles/atoms/CardWithIcon.module.scss';
 import { dialogState } from '../state/createStore';
 import { useRecoilState } from 'recoil';
+import Link from 'next/link';
 
 export const CardwithIcon = (props) => {
   return (
@@ -28,14 +29,16 @@ export const CardwithIcon = (props) => {
 };
 export const CardwithIconArticle = (props) => {
   return (
-    <div className={styles.boxMain}>
-      <div className={styles.left}>
-        <div className={styles.icon}>{props.skill.icon}</div>
-        <div className={styles.iconName}>
-          <h6 className={styles.softwareName}>{props.skill.iconName}</h6>
+    <Link href="/topics/[props.skill.iconName]" as={`/topics/${props.skill.iconName}`}>
+      <div className={styles.boxMain}>
+        <div className={styles.left}>
+          <div className={styles.icon}>{props.skill.icon}</div>
+          <div className={styles.iconName}>
+            <h6 className={styles.softwareName}>{props.skill.iconName}</h6>
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 export const CardwithIconEdit = (props) => {

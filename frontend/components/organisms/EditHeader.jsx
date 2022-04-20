@@ -8,7 +8,8 @@ import { faSliders, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import styles from '../../styles/organisms/Header.module.scss';
 import { DialogSlide } from '../molecules/Dialog';
 import { useRouter } from 'next/router';
-import { url, usePublishArticle } from '../../pages/api/utility';
+import { url } from '../../pages/api/utility';
+import { usePublishArticle } from '../../pages/api/articleAPI';
 import { useRecoilValue } from 'recoil';
 import { createIDState, stateName, textStateFamily } from '../state/createStore';
 

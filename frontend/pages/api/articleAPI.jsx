@@ -115,3 +115,14 @@ export const getArticleLike = async (...args) => {
     throw error;
   }
 };
+
+// 記事にいいねしているか
+export const getUserLikePost = async (...args) => {
+  try {
+    const res = await axios.get(...args, { withCredentials: true });
+    return res.data;
+  } catch (error) {
+    error.status = 403;
+    throw error;
+  }
+};

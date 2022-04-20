@@ -13,7 +13,7 @@ import { faUser, faGem, faLock, faBook, faHeart, faBookmark } from '@fortawesome
 import settingStyle from '../../styles/organisms/UserSetting.module.scss';
 import { useRecoilState } from 'recoil';
 import { menuState } from '../state/createStore';
-import useUser, { useLogout } from '../../pages/api/userAPI';
+import { useLogout, useUser } from '../../pages/api/userAPI';
 import { menuIconItems } from '../../pages/api/icon';
 import { Router, useRouter } from 'next/router';
 import { url } from '../../pages/api/utility';

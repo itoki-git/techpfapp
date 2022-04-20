@@ -29,7 +29,7 @@ const Signup = (props) => {
     }
     const data = { nickname: nickname, username: username, password: password };
     await axios
-      .post(api.signup, data, { withCredentials: true })
+      .post(api.signup, data)
       .then((res) => {
         router.push(url.login);
       })
