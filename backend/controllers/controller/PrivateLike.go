@@ -40,10 +40,19 @@ func UpdateLike(ctx *gin.Context) {
 			db.GetError(err, ctx)
 			return
 		}
+		// ユーザープロフィールのいいねを削除する
+		if _, err := UserCollection.UpdateOne(context.TODO(), bson.M{"_id": id}, bson.M{"$pull": bson.M{"like": postID}}); err != nil {
+			db.GetError(err, ctx)
+			return
+		}
 		result = false
 	} else {
 		// 記事のいいねに追加する
 		if _, err := LikeCollection.UpdateOne(context.TODO(), filter, bson.M{"$push": update}); err != nil {
+			db.GetError(err, ctx)
+			return
+		}
+		if _, err := UserCollection.UpdateOne(context.TODO(), bson.M{"_id": id}, bson.M{"$push": bson.M{"like": postID}}); err != nil {
 			db.GetError(err, ctx)
 			return
 		}

@@ -15,7 +15,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 
 	"net/http"
 	//jwtmiddleware "github.com/auth0/go-jwt-middleware"
@@ -72,16 +71,15 @@ func CreateUser(ctx *gin.Context) {
 func GetUser(ctx *gin.Context) {
 	var user entity.User
 	// URLからIDを取得する
-	userID := ctx.Params.ByName("id")
-	fmt.Println(userID)
-	id, _ := primitive.ObjectIDFromHex(userID)
-	filter := bson.M{"_id": id}
+	userName := ctx.Params.ByName("id")
+	filter := bson.M{"username": userName}
 	if err := UserCollection.FindOne(context.TODO(), filter).Decode(&user); err != nil {
 		db.GetError(err, ctx)
 		return
 	}
 	// レスポンス設定
 	response := entity.User{
+		ID:       user.ID,
 		NickName: user.NickName,
 		UserName: user.UserName,
 		JobName:  user.JobName,

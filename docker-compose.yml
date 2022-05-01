@@ -23,6 +23,8 @@ services:
     volumes:
       - ./frontend:/frontend/src/app
     tty: true
+    depends_on:
+      - webServer
     #command: sh -c "yarn dev"
   webServer:
     image: nginx

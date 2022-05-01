@@ -51,17 +51,19 @@ type LoginPayload struct {
 
 type PostUser struct {
 	ID       primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
-	UserName string             `json:"name,omitempty" bson:"name,omitempty"`
+	UserName string             `json:"username,omitempty" bson:"username,omitempty"`
+	NickName string             `json:"nickname,omitempty" bson:"nickname,omitempty"`
 	Image    string             `json:"image,omitempty" bson:"image,omitempty"`
 }
 
 type Post struct {
 	ArticleID   primitive.ObjectID `json:"articleID,omitempty" bson:"articleID,omitempty"`
-	AuthorID    primitive.ObjectID `json:"_id" bson:"_id,omitempty"`
+	AuthorID    primitive.ObjectID `json:"authorID" bson:"authorID,omitempty"`
 	Title       string             `json:"title" bson:"title,omitempty"`
 	Topic       []TopicInfo        `json:"topic" bson:"topic,omitempty"`
 	Like        int                `json:"like" bson:"like,omitempty"`
 	PublishedAt time.Time          `json:"timestamp" bson:"timestamp,omitempty"`
+	User        PostUser           `json:"user" bson:"user,omitempty"`
 }
 
 type Article struct {
@@ -71,6 +73,7 @@ type Article struct {
 	Markdown  string             `json:"markdown" bson:"markdown,omitempty"`
 	Topic     []TopicInfo        `json:"topic" bson:"topic,omitempty"`
 	Timestamp time.Time          `json:"timestamp" bson:"timestamp,omitempty"`
+	User      User               `json:"user" bson:"user,omitempty"`
 }
 
 type PostResponse struct {

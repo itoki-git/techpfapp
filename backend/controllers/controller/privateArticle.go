@@ -59,8 +59,8 @@ func CreatePost(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, result)
 }
 
-// GetUserPost 登録ユーザーの記事を取得する
-func GetUserPost(ctx *gin.Context) {
+// GetUserPost MyPageの記事を取得する
+func GetPrivateUserPost(ctx *gin.Context) {
 	postList := []entity.Post{}
 	var post entity.Post
 	var response entity.PostResponse
@@ -80,12 +80,42 @@ func GetUserPost(ctx *gin.Context) {
 			db.GetError(err, ctx)
 			return
 		}
+		post.Like = GetCountLike(post.ArticleID)
 		postList = append(postList, post)
-		fmt.Println(post)
 	}
 
 	response.PostList = postList
 	response.PostCount = int(count)
+	fmt.Println(response)
+	ctx.JSON(http.StatusOK, response)
+}
+
+// GetUserPost 登録ユーザーのいいねした記事を取得する
+func GetUserLikePost(ctx *gin.Context) {
+	postList := []entity.Post{}
+	var post entity.Post
+	var user entity.User
+	var response entity.PostResponse
+
+	userID := ctx.GetString("userID")
+	id, _ := primitive.ObjectIDFromHex(userID)
+	filter := bson.M{"_id": id}
+
+	if err := UserCollection.FindOne(context.TODO(), filter).Decode(&user); err != nil {
+		db.GetError(err, ctx)
+		return
+	}
+
+	for _, value := range user.Like {
+		if err := PostCollection.FindOne(context.TODO(), bson.M{"articleID": value}).Decode(&post); err != nil {
+			db.GetError(err, ctx)
+			return
+		}
+		post.Like = GetCountLike(post.ArticleID)
+		postList = append(postList, post)
+	}
+	response.PostList = postList
+	response.PostCount = len(postList)
 	fmt.Println(response)
 	ctx.JSON(http.StatusOK, response)
 }

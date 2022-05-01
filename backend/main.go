@@ -51,6 +51,7 @@ func server() *gin.Engine {
 			public.POST("/users", controller.CreateUser)
 			public.POST("/login", controller.LoginUser)
 			public.GET("/posts/:id", controller.GetPost)
+			public.GET("/users/posts/:id", controller.GetUserPost)
 			public.GET("/article", controller.GetPostList)
 			public.GET("/users/:id", controller.GetUser)
 			public.GET("/topics/:topic", controller.GetPostTopicList)
@@ -61,10 +62,12 @@ func server() *gin.Engine {
 			private.POST("/logout", controller.Logout)
 			private.GET("/me", controller.GetProfile)
 			private.POST("/posts", controller.CreatePost)
-			private.GET("/posts", controller.GetUserPost)
+			private.GET("/posts", controller.GetPrivateUserPost)
 			private.POST("/posts/upload", controller.UploadImage)
 			private.PATCH("/users", controller.UpdateProfile)
+			private.GET("/posts/like", controller.GetUserLikePost)
 			private.PATCH("/posts/:id", controller.UpdateLike)
+			private.GET("/posts/:id", controller.GetPostIsLike)
 
 		}
 	}
