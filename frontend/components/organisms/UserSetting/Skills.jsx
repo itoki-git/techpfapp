@@ -39,7 +39,7 @@ const Skills = () => {
   };
 
   return (
-    <Paper elevation={1} className={settingStyle.paper}>
+    <Paper elevation={0} className={settingStyle.paper}>
       <h5 className={settingStyle.pageTitle}>Skills</h5>
       <Grid container className={cardListStyle.cardList}>
         {selectTopics.map((skill, i) => (

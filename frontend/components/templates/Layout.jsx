@@ -30,10 +30,10 @@ const Layout = (props, context) => {
       {loading ? (
         'loading...'
       ) : (
-        <div className={styles.parent}>
-          {pathName !== url.create ? <Header menus={menuList} /> : ''}
-          <Container className={styles.children}>{children}</Container>
-        </div>
+        <>
+          {pathName !== url.create ? <Header className={styles.header} menus={menuList} /> : ''}
+          <div className={styles.children}>{children}</div>
+        </>
       )}
     </div>
   );

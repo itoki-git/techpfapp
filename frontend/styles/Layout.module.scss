@@ -1,9 +1,16 @@
 .page {
-  min-height: 100vh;
   overflow: hidden;
   background-color: #fff;
 }
+.parent {
+}
+.header {
+  height: 4rem;
+  background-color: #fff;
+}
 .children {
+  height: 100vh;
+  background-color: #f1f5f8;
   -webkit-box-flex: 1;
   flex-grow: 1;
   overflow: auto;

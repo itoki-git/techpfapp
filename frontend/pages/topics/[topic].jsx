@@ -37,42 +37,44 @@ const Topic = () => {
 
   return (
     <Layout title="article">
-      <div>
-        <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
-          <div className={topicStyles.topicArticle}>
-            <TopicTitle item={topics} />
-          </div>
-          <span className={contentStyles.contentSpacing} />
-          {data.PostCount === 0 ? (
-            <div>
-              <div className={contentStyles.contentEmpty}>{topic}の記事は見つかりませんでした</div>
+      <Container>
+        <div>
+          <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
+            <div className={topicStyles.topicArticle}>
+              <TopicTitle item={topics} />
             </div>
-          ) : (
-            <>
-              <CardList data={data.PostList} />
-              <Stack direction="row" spacing={2}>
-                <Container maxWidth="lg">
-                  <Pagination
-                    page={pageIndex}
-                    count={getPageCount(data.PostCount)}
-                    color="primary"
-                    size="large"
-                    onChange={handlePageChange}
-                    renderItem={(item) => (
-                      <PaginationItem
-                        page={item.page}
-                        components={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                        naked
-                        {...item}
-                      />
-                    )}
-                  />
-                </Container>
-              </Stack>
-            </>
-          )}
-        </Stack>
-      </div>
+            <span className={contentStyles.contentSpacing} />
+            {data.PostCount === 0 ? (
+              <div>
+                <div className={contentStyles.contentEmpty}>{topic}の記事は見つかりませんでした</div>
+              </div>
+            ) : (
+              <>
+                <CardList data={data.PostList} />
+                <Stack direction="row" spacing={2}>
+                  <Container maxWidth="lg">
+                    <Pagination
+                      page={pageIndex}
+                      count={getPageCount(data.PostCount)}
+                      color="primary"
+                      size="large"
+                      onChange={handlePageChange}
+                      renderItem={(item) => (
+                        <PaginationItem
+                          page={item.page}
+                          components={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                          naked
+                          {...item}
+                        />
+                      )}
+                    />
+                  </Container>
+                </Stack>
+              </>
+            )}
+          </Stack>
+        </div>
+      </Container>
     </Layout>
   );
 };

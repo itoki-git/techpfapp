@@ -17,7 +17,7 @@ $lightblue: #049dd9;
   }
 }
 .cardContent {
-  padding: 32px 24px 24px;
+  //padding: 32px 24px 24px;
   position: relative;
   .carddate {
     margin: 0 0 8px;
@@ -54,7 +54,8 @@ $lightblue: #049dd9;
     flex-wrap: wrap;
     -webkit-box-pack: end;
     justify-content: flex-end;
-    margin-top: 24px;
+    justify-content: space-between;
+    //margin-top: 24px;
     color: rgb(145, 158, 171);
     .buttonItem {
       display: flex;
@@ -68,10 +69,17 @@ $lightblue: #049dd9;
         color: $lightblue;
       }
       .cardicon {
-        margin: 0px;
+        margin-left: 4px;
         line-height: 1.5;
         font-size: 0.75rem;
         font-weight: 400;
+      }
+      .cardname {
+        color: #020202;
+        margin-left: 4px;
+        letter-spacing: 1px;
+        line-height: 1.5;
+        font-size: 1rem;
       }
     }
   }

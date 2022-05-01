@@ -11,9 +11,41 @@
   padding: 1.2em 0.5em 1em;
   font-size: 0.83rem;
   line-height: 1.5;
+  background-color: #fff;
   &:hover {
     background-color: #c2e5f2;
   }
+  .topicIcon {
+    text-align: center;
+    width: 36px;
+    height: 36px;
+  }
+  .topicName {
+    margin-top: 0.2rem;
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  &.selected {
+    border: 1px solid #eee;
+    background-color: #c2e5f2;
+  }
+}
+
+.topicCard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  text-align: center;
+  min-width: 0;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 1.2em 0.5em 1em;
+  font-size: 0.83rem;
+  line-height: 1.5;
+  background-color: #fff;
   .topicIcon {
     text-align: center;
     width: 36px;

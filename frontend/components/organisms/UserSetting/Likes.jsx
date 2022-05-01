@@ -21,7 +21,7 @@ const Likes = () => {
     setAnchorEl(null);
   };
   return (
-    <div elevation={1} className={settingStyle.paper}>
+    <div>
       <h5 className={settingStyle.pageTitle}>Likes</h5>
       {data.PostCount === 0 ? (
         <div>

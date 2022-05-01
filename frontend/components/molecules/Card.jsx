@@ -8,20 +8,22 @@ import BookmarkAddOutlinedIcon from '@mui/icons-material/BookmarkAddOutlined';
 import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
 import Link from 'next/link';
+import Avatar from '@mui/material/Avatar';
 
 import styles from '../../styles/molecules/Card.module.scss';
+import profileStyle from '../../styles/organisms/UserSetting/Profile.module.scss';
 
 // カード
 const Cards = (props) => {
-  const { articleID, title, like, timestamp } = props.item;
-  const [isBookmark, setisBookmark] = useState(false);
+  const { articleID, title, like, timestamp, user } = props.item;
+  const date = timestamp.substr(0, timestamp.indexOf('T'));
   console.log(props.item);
   return (
-    <Paper className={styles.cardroot}>
+    <Paper elevation={0} className={styles.cardroot}>
       <Card className={styles.cardContent}>
         <CardContent>
           <Typography variant="body2" component="span" className={styles.carddate}>
-            {timestamp}
+            {date}に公開
           </Typography>
           <Typography gutterBottom variant="h5" component="div" className={styles.cardtitle}>
             <Link href="/article/[articleID]" as={`/article/${articleID}`}>
@@ -29,14 +31,16 @@ const Cards = (props) => {
             </Link>
           </Typography>
           <div className={styles.bottomIcon}>
+            <Link className={profileStyle.left} href="/[user.username]" as={`/${user.username}`}>
+              <a className={styles.buttonItem}>
+                <Avatar alt="Remy Sharp" src={user.image} sx={{ width: 30, height: 30 }} />
+                <p className={styles.cardname}>{user.nickname}</p>
+              </a>
+            </Link>
+
             <div className={styles.buttonItem}>
               <FavoriteBorderIcon className={styles.nomal} />
               <p className={styles.cardicon}>{like}</p>
-            </div>
-            <div className={styles.buttonItem}>
-              <IconButton onClick={() => setisBookmark(!isBookmark)}>
-                <BookmarkAddOutlinedIcon className={`${styles[isBookmark ? 'mark' : 'nomal']}`} />
-              </IconButton>
             </div>
           </div>
         </CardContent>

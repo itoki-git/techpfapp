@@ -32,13 +32,13 @@ const Menu = (props) => {
     router.replace(url.login);
   };
   return (
-    <Paper elevation={1} className={styles.menuRoot}>
+    <Paper elevation={0} className={styles.menuRoot}>
       <Stack direction="column" justifyContent="center" alignItems="flex-start">
         <Typography className={styles.menuTitle} sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
           User Profile
         </Typography>
         {menuItems.map((item, i) => (
-          <ListItem disablePadding key={i}>
+          <ListItem disablePadding key={i} className={styles.menuItem}>
             <ListItemButton
               className={styles.menuButton}
               selected={selectedIndex === i}

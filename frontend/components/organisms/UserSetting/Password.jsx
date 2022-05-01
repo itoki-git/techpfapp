@@ -10,7 +10,7 @@ import Paper from '@mui/material/Paper';
 import settingStyle from '../../../styles/organisms/UserSetting.module.scss';
 const Password = () => {
   return (
-    <Paper elevation={1} className={settingStyle.paper}>
+    <Paper elevation={0} className={settingStyle.paper}>
       <h5 className={settingStyle.pageTitle}>Change Your Password</h5>
       <Stack spacing={{ xs: 1, sm: 1, md: 2 }}>
         <div className={style.infoarea}>

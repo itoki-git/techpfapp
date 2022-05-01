@@ -20,14 +20,16 @@ const Articles = () => {
     setAnchorEl(null);
   };
   return (
-    <div elevation={1} className={settingStyle.paper}>
+    <div>
       <h5 className={settingStyle.pageTitle}>Articles</h5>
-      {data.PostCount === 0 ? (
+      {data.PostList.length === 0 ? (
         <div>
           <div className={styles.contentEmpty}>記事を作成していません</div>
         </div>
       ) : (
-        <CardList data={data.PostList} />
+        <div>
+          <CardList data={data.PostList} />
+        </div>
       )}
     </div>
   );

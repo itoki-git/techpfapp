@@ -6,6 +6,7 @@ import { createIDState } from '../components/state/createStore';
 import dynamic from 'next/dynamic';
 import { useSetRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
+import Container from '@mui/material/Container';
 import Layout from '../components/templates/Layout';
 import { Protected } from './api/userAPI';
 
@@ -25,7 +26,9 @@ const CreatePage = () => {
     <div>
       <EditHeader menus={createMenu} />
       <Layout title="create">
-        <Create />
+        <Container>
+          <Create />
+        </Container>
       </Layout>
     </div>
   );

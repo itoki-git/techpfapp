@@ -86,18 +86,20 @@ export const SearchPage = () => {
   };
   return (
     <Layout title="search">
-      <SearchField handleSubmit={handleSubmit} />
-      {isSearchResult ? (
-        <SearchResult query={value} />
-      ) : (
-        <Container maxWidth="md">
-          <div className={inputStyle.infoarea}>
-            <div className={inputStyle.inputarea}>
-              <TopicListButton listItems={skillsItems} />
+      <Container>
+        <SearchField handleSubmit={handleSubmit} />
+        {isSearchResult ? (
+          <SearchResult query={value} />
+        ) : (
+          <Container maxWidth="md">
+            <div className={inputStyle.infoarea}>
+              <div className={inputStyle.inputarea}>
+                <TopicListButton listItems={skillsItems} />
+              </div>
             </div>
-          </div>
-        </Container>
-      )}
+          </Container>
+        )}
+      </Container>
     </Layout>
   );
 };

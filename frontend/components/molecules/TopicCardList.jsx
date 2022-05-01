@@ -11,7 +11,7 @@ export const TopicCardList = (props) => {
     <Grid container spacing={2}>
       {listItems.map((item, i) => (
         <Grid item xs={4} sm={2} key={i}>
-          <label className={styles.topic}>
+          <label className={styles.topicCard}>
             <TopicCard item={item} />
           </label>
         </Grid>

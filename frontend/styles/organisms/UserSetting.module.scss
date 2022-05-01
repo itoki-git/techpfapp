@@ -1,20 +1,23 @@
 $gray: #94a4c4;
 $black: #333;
 $red: #f20c36;
+$white: #fff;
 .paper {
+  background-color: $white;
   min-width: 300px;
   overflow: hidden;
   box-shadow: none;
-  border-radius: 8px;
+  border-radius: 1rem;
   padding: 1rem 1rem 2rem;
-  .pageTitle {
-    font-size: 1rem;
-    font-weight: 600;
-    line-height: 1.5;
-    text-transform: none;
-    white-space: normal;
-    margin-bottom: 1.5rem;
-  }
+}
+.pageTitle {
+  letter-spacing: 0.1rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.5;
+  text-transform: none;
+  white-space: normal;
+  margin-bottom: 1.5rem;
 }
 .divider {
   margin-top: 2rem;

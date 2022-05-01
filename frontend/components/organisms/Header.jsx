@@ -18,7 +18,7 @@ const Header = (props) => {
 
   return (
     <div className={styles.header}>
-      <div className={styles.logo}>TriPoon</div>
+      <div className={styles.logo}>Portfolio</div>
       <div>
         <Box
           sx={{
