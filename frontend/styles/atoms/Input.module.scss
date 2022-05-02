@@ -52,15 +52,12 @@ $black: #202221;
     height: 100%;
     outline: none;
     font-size: 17px;
-    padding-left: 20px;
-    border: 1px solid lightgrey;
+    padding-left: 10px;
+    border: 2.5px solid #e0f4fe;
     border-radius: 25px;
     transition: all 0.3s ease;
     &:focus {
-      border-color: #4158d0;
-    }
-    &:valid {
-      border-color: #4158d0;
+      border-color: #7edafb;
     }
   }
   &.searchBox {

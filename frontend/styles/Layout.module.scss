@@ -17,4 +17,16 @@
   min-height: 100%;
   padding-top: 10rem;
   padding-bottom: 80px;
+  .auth {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.load {
+  padding-bottom: 10rem;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

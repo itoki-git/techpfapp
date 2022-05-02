@@ -1,5 +1,5 @@
 .wrapper {
-  width: 25em;
+  max-width: 25em;
   background: #fff;
   border-radius: 15px;
   box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.1);
@@ -12,7 +12,7 @@
     color: #fff;
     user-select: none;
     border-radius: 0.5em 0.5em 0 0;
-    background: linear-gradient(-135deg, #c850c0, #4158d0);
+    background: #3ac7f6;
   }
 
   form {
@@ -34,15 +34,20 @@
         font-size: 20px;
         font-weight: 500;
         cursor: pointer;
-        background: linear-gradient(-135deg, #c850c0, #4158d0);
+        background: #3ac7f6;
         transition: all 0.3s ease;
 
-        &:focus {
-          border-color: #4158d0;
+        &:hover {
+          background: #049dd9;
         }
 
         &:active {
           transform: scale(0.95);
+        }
+        &:disabled {
+          cursor: default;
+          background: #f0faff;
+          transform: scale(1);
         }
       }
     }
