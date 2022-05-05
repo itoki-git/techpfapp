@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"os"
 	"testing"
 
@@ -11,7 +10,6 @@ import (
 func TestHashPassword(t *testing.T) {
 	var user User
 	user.Password = "secret"
-	fmt.Println(user)
 	err := user.HashPassword(user.Password)
 	assert.NoError(t, err)
 	os.Setenv("passwordHash", user.Password)

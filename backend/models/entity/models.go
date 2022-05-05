@@ -3,7 +3,6 @@ package entity
 import (
 	"app/models/db"
 	"context"
-	"fmt"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -114,11 +113,8 @@ func (user *User) HashPassword(password string) error {
 func (user *User) CheckPassword(providedPassword string) error {
 	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(providedPassword))
 	if err != nil {
-		fmt.Println("CheckPassword FAILS")
 		return err
 	}
-
-	fmt.Println("CheckPassword OK")
 
 	return nil
 }
@@ -139,7 +135,6 @@ func (user User) CreateUserRecord() error {
 		Like:       []primitive.ObjectID{},
 		WatchLater: []primitive.ObjectID{},
 	}
-	fmt.Println(register)
 	_, err := UserCollection.InsertOne(context.TODO(), register)
 	if err != nil {
 		return err

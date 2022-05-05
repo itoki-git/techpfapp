@@ -4,7 +4,6 @@ import (
 	"app/models/db"
 	"app/models/entity"
 	"context"
-	"fmt"
 	"net/http"
 	"time"
 
@@ -20,7 +19,6 @@ func UpdateLike(ctx *gin.Context) {
 	var result bool
 	getPostID := ctx.Params.ByName("id")
 	getUserID := ctx.GetString("userID")
-	fmt.Println(getPostID, getUserID)
 	id, _ := primitive.ObjectIDFromHex(getUserID)
 	postID, _ := primitive.ObjectIDFromHex(getPostID)
 	checkFilter := bson.M{"articleID": postID, "users._id": id}

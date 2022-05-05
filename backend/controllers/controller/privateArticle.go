@@ -5,7 +5,6 @@ import (
 	db "app/models/db"
 	"app/models/entity"
 	"context"
-	"fmt"
 	"net/http"
 	"path/filepath"
 	"time"
@@ -63,6 +62,7 @@ func CreatePost(ctx *gin.Context) {
 func GetPrivateUserPost(ctx *gin.Context) {
 	postList := []entity.Post{}
 	var post entity.Post
+	var user entity.PostUser
 	var response entity.PostResponse
 
 	userID := ctx.GetString("userID")
@@ -80,13 +80,18 @@ func GetPrivateUserPost(ctx *gin.Context) {
 			db.GetError(err, ctx)
 			return
 		}
+		filter := bson.M{"_id": post.AuthorID}
+		if err := UserCollection.FindOne(context.TODO(), filter).Decode(&user); err != nil {
+			db.GetError(err, ctx)
+			return
+		}
 		post.Like = GetCountLike(post.ArticleID)
+		post.User = user
 		postList = append(postList, post)
 	}
 
 	response.PostList = postList
 	response.PostCount = int(count)
-	fmt.Println(response)
 	ctx.JSON(http.StatusOK, response)
 }
 
@@ -116,7 +121,6 @@ func GetUserLikePost(ctx *gin.Context) {
 	}
 	response.PostList = postList
 	response.PostCount = len(postList)
-	fmt.Println(response)
 	ctx.JSON(http.StatusOK, response)
 }
 
@@ -131,7 +135,6 @@ func UploadImage(ctx *gin.Context) {
 		return
 	}
 	fileName += ext
-	fmt.Println(fileName)
 	preID, err := common.S3("/test/", fileName)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"message": "error S3 upload failed. "})

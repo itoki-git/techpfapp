@@ -4,7 +4,6 @@ import (
 	db "app/models/db"
 	"app/models/entity"
 	"context"
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -26,7 +25,6 @@ func GetPost(ctx *gin.Context) {
 		return
 	}
 	filter = bson.M{"_id": post.AuthorID}
-	fmt.Println(post.AuthorID)
 	if err := UserCollection.FindOne(context.TODO(), filter).Decode(&user); err != nil {
 		db.GetError(err, ctx)
 		return
@@ -79,7 +77,6 @@ func GetUserPost(ctx *gin.Context) {
 
 	response.PostList = postList
 	response.PostCount = int(count)
-	fmt.Println(response)
 	ctx.JSON(http.StatusOK, response)
 }
 
@@ -91,7 +88,6 @@ func GetPostList(ctx *gin.Context) {
 	var response entity.PostResponse
 	articleCount := 12
 	pageCount, err := strconv.Atoi(ctx.Query("page"))
-	fmt.Println(pageCount)
 	if err != nil {
 		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "error get page failed. "})
 		return
@@ -109,10 +105,8 @@ func GetPostList(ctx *gin.Context) {
 		return
 	}
 
-	if pageCount == 1 {
-		count, _ := PostCollection.CountDocuments(context.TODO(), bson.M{})
-		response.PostCount = int(count)
-	}
+	count, _ := PostCollection.CountDocuments(context.TODO(), bson.M{})
+	response.PostCount = int(count)
 
 	for cursor.Next(context.TODO()) {
 		if err := cursor.Decode(&post); err != nil {
@@ -120,16 +114,13 @@ func GetPostList(ctx *gin.Context) {
 			return
 		}
 		filter := bson.M{"_id": post.AuthorID}
-		fmt.Println(post.AuthorID)
 		if err := UserCollection.FindOne(context.TODO(), filter).Decode(&user); err != nil {
 			db.GetError(err, ctx)
 			return
 		}
 		post.Like = GetCountLike(post.ArticleID)
 		post.User = user
-		fmt.Println(user)
 		postList = append(postList, post)
-		fmt.Println(post)
 	}
 
 	response.PostList = postList
@@ -146,7 +137,6 @@ func GetPostTopicList(ctx *gin.Context) {
 	articleCount := 12
 	pageCount, err := strconv.Atoi(ctx.Query("page"))
 	topic := ctx.Params.ByName("topic")
-	fmt.Println(pageCount)
 
 	if err != nil {
 		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "error get page failed. "})
@@ -166,10 +156,9 @@ func GetPostTopicList(ctx *gin.Context) {
 		db.GetError(err, ctx)
 		return
 	}
-	if pageCount == 1 {
-		count, _ := PostCollection.CountDocuments(context.TODO(), bson.M{"topic.iconName": topic})
-		response.PostCount = int(count)
-	}
+
+	count, _ := PostCollection.CountDocuments(context.TODO(), bson.M{"topic.iconName": topic})
+	response.PostCount = int(count)
 
 	for cursor.Next(context.TODO()) {
 		if err := cursor.Decode(&post); err != nil {
@@ -183,7 +172,6 @@ func GetPostTopicList(ctx *gin.Context) {
 		post.Like = GetCountLike(post.ArticleID)
 		post.User = user
 		postList = append(postList, post)
-		fmt.Println(post)
 	}
 	response.PostList = postList
 
@@ -204,8 +192,6 @@ func GetSearchList(ctx *gin.Context) {
 		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "error get page failed. "})
 		return
 	}
-
-	fmt.Println(query)
 
 	skip := int64(pageCount*articleCount - articleCount)
 	limit := int64(pageCount * articleCount)
@@ -239,10 +225,8 @@ func GetSearchList(ctx *gin.Context) {
 		return
 	}
 
-	if pageCount == 1 {
-		count, _ := PostCollection.CountDocuments(context.TODO(), filter)
-		response.PostCount = int(count)
-	}
+	count, _ := PostCollection.CountDocuments(context.TODO(), filter)
+	response.PostCount = int(count)
 
 	for cursor.Next(context.TODO()) {
 		if err := cursor.Decode(&post); err != nil {
@@ -256,7 +240,6 @@ func GetSearchList(ctx *gin.Context) {
 		post.Like = GetCountLike(post.ArticleID)
 		post.User = user
 		postList = append(postList, post)
-		fmt.Println(post)
 	}
 	response.PostList = postList
 

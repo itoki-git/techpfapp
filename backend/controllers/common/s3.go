@@ -1,7 +1,6 @@
 package common
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"time"
@@ -45,7 +44,6 @@ func S3(folder, fileName string) (string, error) {
 	})
 	preID, err := req.Presign(3 * time.Minute) // 有効期限3分
 	if err != nil {
-		fmt.Println("error presigning request", err)
 		return "", err
 	}
 	return preID, nil

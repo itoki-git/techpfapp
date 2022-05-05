@@ -7,7 +7,6 @@ import (
 	db "app/models/db"
 	"app/models/entity"
 	"context"
-	"fmt"
 	"reflect"
 
 	"github.com/gin-gonic/gin"
@@ -52,8 +51,6 @@ func GetProfile(ctx *gin.Context) {
 	id, _ := primitive.ObjectIDFromHex(userID)
 	filter := bson.M{"_id": id}
 
-	fmt.Println(filter)
-
 	if err := UserCollection.FindOne(context.TODO(), filter).Decode(&profile); err != nil {
 		db.GetError(err, ctx)
 		return
@@ -76,11 +73,9 @@ func UpdateProfile(ctx *gin.Context) {
 	}
 	// プロフィール情報のアップデート
 	ctx.ShouldBindJSON(&updateUser)
-	fmt.Println(updateUser)
 	update := bson.M{"nickname": updateUser.NickName, "jobname": updateUser.JobName, "bio": updateUser.Bio, "image": updateUser.Image, "skill": updateUser.Skills}
 	result, err := UserCollection.UpdateMany(context.TODO(), filter, bson.M{"$set": update})
 	if err != nil {
-		fmt.Println(err)
 		db.GetError(err, ctx)
 		return
 	}

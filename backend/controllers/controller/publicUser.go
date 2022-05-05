@@ -8,7 +8,6 @@ import (
 	db "app/models/db"
 	"app/models/entity"
 	"context"
-	"fmt"
 	"log"
 	"os"
 
@@ -42,12 +41,14 @@ func CreateUser(ctx *gin.Context) {
 		ctx.Abort()
 		return
 	}
-	/*
-		if containsString := ContainsKey(checkKey, user.LoginUser, ignore); !containsString {
-			ctx.JSON(http.StatusBadRequest, gin.H{"message": "error Request does not have the required fields. "})
-			return
-		}
-	*/
+
+	if count, _ := UserCollection.CountDocuments(context.TODO(), bson.M{"username": user.UserName}); count > 0 {
+		ctx.JSON(http.StatusConflict, gin.H{
+			"msg": "username conflict",
+		})
+		ctx.Abort()
+		return
+	}
 
 	// パスワードを暗号化
 	err = user.HashPassword(user.Password)
@@ -105,8 +106,6 @@ func LoginUser(ctx *gin.Context) {
 	Issuer := os.Getenv("Issuer")
 
 	err := ctx.ShouldBindJSON(&login)
-
-	fmt.Println(login)
 
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"message": "invalid json"})

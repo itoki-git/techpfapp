@@ -2,7 +2,6 @@ package auth
 
 import (
 	"errors"
-	"fmt"
 	"time"
 
 	"github.com/form3tech-oss/jwt-go"
@@ -33,7 +32,6 @@ func (jwtWrapper *JwtWrapper) GenerateToken(userID string) (signedToken string, 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	signedToken, err = token.SignedString([]byte(jwtWrapper.SecretKey))
 	if err != nil {
-		fmt.Println(err)
 		return
 	}
 	return
