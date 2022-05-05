@@ -1,7 +1,6 @@
 import React from 'react';
 import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
-import { SelectTopicCard, TopicCard } from '../atoms/TopicCard';
+import { TopicCard } from '../atoms/TopicCard';
 import styles from '../../styles/atoms/TopicCard.module.scss';
 import Link from 'next/link';
 

@@ -1,19 +1,14 @@
-import React, { useContext, useMemo } from 'react';
+import React from 'react';
 import Container from '@mui/material/Container';
 import Menu from '../molecules/Menu';
 import Grid from '@mui/material/Grid';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { menuState, stateName, textStateFamily, topicListState } from '../state/createStore';
-import { AuthContext } from '../../components/state/AuthStore';
-import Typography from '@mui/material/Typography';
+import { useRecoilValue } from 'recoil';
+import { menuState } from '../state/createStore';
 import Mypage from './UserSetting/Profile';
-import styles from '../../styles/organisms/UserSetting.module.scss';
 import Skills from './UserSetting/Skills';
-import Password from './UserSetting/Password';
 import Articles from './UserSetting/Articles';
 import Likes from './UserSetting/Likes';
-import WatchLater from './UserSetting/WatchLater';
-import { getUserInfo, useGetLoginUserProfile } from '../../pages/api/userAPI';
+import { getUserInfo } from '../../pages/api/userAPI';
 
 const UserSeting = (props) => {
   const menuStateValue = useRecoilValue(menuState);
@@ -25,10 +20,8 @@ const UserSeting = (props) => {
       case 1:
         return <Skills />;
       case 2:
-        return <Password />;
-      case 3:
         return <Articles />;
-      case 4:
+      case 3:
         return <Likes />;
     }
   };

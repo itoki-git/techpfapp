@@ -6,7 +6,7 @@ import { skillsItems } from './api/icon';
 import Container from '@mui/material/Container';
 import inputStyle from '../styles/organisms/UserSetting/Profile.module.scss';
 import { useRecoilState } from 'recoil';
-import router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { textStateFamily } from '../components/state/createStore';
@@ -17,6 +17,7 @@ import PaginationItem from '@mui/material/PaginationItem';
 import contentStyles from '../styles/organisms/CardList.module.scss';
 import { getPageCount, getSearchList } from './api/articleAPI';
 import useSWR from 'swr';
+import { LinearLoad } from '../components/atoms/Loading';
 
 const SearchResult = ({ query }) => {
   const [pageIndex, setPageIndex] = useState(1);
@@ -28,7 +29,7 @@ const SearchResult = ({ query }) => {
     setPageIndex(v);
   };
   if (error) return <div>failed to load</div>;
-  if (!data) return <div>loading...</div>;
+  if (!data) return <LinearLoad />;
 
   console.log(data);
   return (
@@ -77,7 +78,6 @@ export const SearchPage = () => {
       setIsSearchResult(true);
     }
   }, [router.query.q]);
-  console.log(isSearchResult);
   const handleSubmit = (e) => {
     e.preventDefault();
     const href = `?q=${value}`;

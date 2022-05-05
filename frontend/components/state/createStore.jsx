@@ -22,6 +22,11 @@ export const stateName = {
   title: '_title',
 };
 
+export const loadingState = atom({
+  key: 'load',
+  default: true,
+});
+
 export const editState = atom({
   key: 'create/editState',
   default: true,

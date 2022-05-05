@@ -1,25 +1,20 @@
-import React, { useState } from 'react';
-import style from '../../../styles/organisms/UserSetting/Skills.module.scss';
-import Paper from '@mui/material/Paper';
+import React from 'react';
 import settingStyle from '../../../styles/organisms/UserSetting.module.scss';
 import styles from '../../../styles/organisms/CardList.module.scss';
 import CardList from '../CardList';
 import useSWR from 'swr';
 import { getUserLikePost } from '../../../pages/api/articleAPI';
+import router from 'next/router';
+import { url } from '../../../pages/api/utility';
+import { LinearLoad } from '../../atoms/Loading';
 
 const Likes = () => {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
   const { data, error } = useSWR(`api/private/posts/like`, getUserLikePost);
 
-  if (error) return <div>failed to load</div>;
-  if (!data) return <div>loading...</div>;
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  if (error) {
+    router.replace(url.notpage);
+  }
+  if (!data) return <LinearLoad />;
   return (
     <div>
       <h5 className={settingStyle.pageTitle}>Likes</h5>

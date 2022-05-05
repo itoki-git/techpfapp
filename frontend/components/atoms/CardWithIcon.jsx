@@ -48,7 +48,6 @@ export const CardwithIconEdit = (props) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
-    console.log(anchorEl);
     setAnchorEl(null);
   };
   return (

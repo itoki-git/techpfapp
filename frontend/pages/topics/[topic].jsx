@@ -15,6 +15,8 @@ import { TopicTitle } from '../../components/atoms/TopicCard';
 import { skillsItems } from '../api/icon';
 import topicStyles from '../../styles/atoms/TopicCard.module.scss';
 import contentStyles from '../../styles/organisms/CardList.module.scss';
+import { LinearLoad } from '../../components/atoms/Loading';
+import { url } from '../api/utility';
 
 const Topic = () => {
   const [pageIndex, setPageIndex] = useState(1);
@@ -22,7 +24,9 @@ const Topic = () => {
 
   // Grab our ID parameter
   const { topic } = router.query;
-  const { data, error } = useSWR(`/api/public/topics/${topic}?page=${pageIndex}`, getPostList);
+  const { data, error } = useSWR(`/api/public/topics/${topic}?page=${pageIndex}`, getPostList, {
+    revalidateOnFocus: false,
+  });
 
   const topics = skillsItems.find((item) => item.iconName === topic);
 
@@ -30,8 +34,10 @@ const Topic = () => {
     e.preventDefault();
     setPageIndex(v);
   };
-  if (error) return <div>failed to load</div>;
-  if (!data) return <div>loading...</div>;
+  if (error) {
+    router.replace(url.notpage);
+  }
+  if (!data) return <LinearLoad />;
 
   console.log(data);
 
@@ -44,7 +50,7 @@ const Topic = () => {
               <TopicTitle item={topics} />
             </div>
             <span className={contentStyles.contentSpacing} />
-            {data.PostCount === 0 ? (
+            {data.PostList.length === 0 ? (
               <div>
                 <div className={contentStyles.contentEmpty}>{topic}の記事は見つかりませんでした</div>
               </div>

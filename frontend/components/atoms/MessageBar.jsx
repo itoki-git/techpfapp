@@ -15,7 +15,7 @@ export const MessageSnackbar = (props) => {
       <Snackbar
         anchorOrigin={{ vertical, horizontal }}
         open={open}
-        autoHideDuration={4000}
+        autoHideDuration={6000}
         onClose={props.messageBarClose}
         key={vertical + horizontal}
       >

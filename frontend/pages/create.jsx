@@ -1,7 +1,5 @@
 import React, { useMemo } from 'react';
-import PrivateLayout from '../components/templates/PrivateLayout';
 import EditHeader from '../components/organisms/editHeader';
-import { createMenu } from '../pages/api/utility';
 import { createIDState } from '../components/state/createStore';
 import dynamic from 'next/dynamic';
 import { useSetRecoilState } from 'recoil';
@@ -17,14 +15,12 @@ const CreatePage = () => {
   Protected();
 
   useMemo(() => {
-    console.log('get create id');
-
     setCreateIDState(uuidv4());
   }, []);
 
   return (
     <div>
-      <EditHeader menus={createMenu} />
+      <EditHeader />
       <Layout title="create">
         <Container>
           <Create />

@@ -1,42 +1,64 @@
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { atom, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import useSWR, { mutate } from 'swr';
 import { stateName, textStateFamily, topicListState } from '../../components/state/createStore';
-import { userState } from '../../components/state/currentUser';
 import { skillsItems } from './icon';
 import { api, url } from './utility';
 
+export const useSignup = () => {
+  const [nickname, setNickname] = useRecoilState(textStateFamily(stateName.signupNickName));
+  const [username, setUsername] = useRecoilState(textStateFamily(stateName.signupUserName));
+  const [password, setPassword] = useRecoilState(textStateFamily(stateName.signupPassword));
+
+  const signup = useCallback(async () => {
+    const data = { nickname: nickname, username: username, password: password };
+    try {
+      const res = await axios.post(api.signup, data);
+      setNickname('');
+      setUsername('');
+      setPassword('');
+      return true;
+    } catch (error) {
+      return false;
+    }
+  });
+  return signup;
+};
+
 export const useLogin = () => {
-  const username = useRecoilValue(textStateFamily(stateName.loginUserName));
-  const password = useRecoilValue(textStateFamily(stateName.loginPassword));
-  const setCurrentUser = useSetRecoilState(userState);
+  const [username, setUsername] = useRecoilState(textStateFamily(stateName.loginUserName));
+  const [password, setPassword] = useRecoilState(textStateFamily(stateName.loginPassword));
 
   const login = useCallback(async () => {
     const data = { username: username, password: password };
     try {
       const res = await axios.post(api.login, data);
-      setCurrentUser(res.data);
+      setUsername('');
+      setPassword('');
+      return true;
     } catch (error) {
-      setCurrentUser(null);
-      console.log(error);
+      return false;
     }
   });
   return login;
 };
 
+// ログアウト処理
 export const useLogout = () => {
   const logout = useCallback(async () => {
     try {
       await axios.post(api.logout, { withCredentials: true });
+      return true;
     } catch (error) {
-      console.log(error);
+      return false;
     }
   });
   return logout;
 };
 
+// ログインユーザーのプロフィール取得
 export const getUserInfo = async () => {
   const setUserName = useSetRecoilState(textStateFamily(stateName.nickName));
   const setJobName = useSetRecoilState(textStateFamily(stateName.jobName));
@@ -52,7 +74,6 @@ export const getUserInfo = async () => {
       return item;
     }
   });
-  console.log(skillIcon);
   if (res.data) {
     setUserName(res.data.nickname ? res.data.nickname : '');
     setJobName(res.data.jobname ? res.data.jobname : '');
@@ -75,6 +96,8 @@ export const useUpdataProfile = () => {
     const skillID = skill.map((item) => item.id);
 
     const data = { nickname: nickname, jobname: jobName, bio: bio, image: image, skill: skillID };
+
+    console.log(data);
 
     let isSuccess = false;
     await axios
@@ -119,7 +142,6 @@ export async function getServerUser(cookie) {
 }
 
 export function useUser() {
-  //const setCurrentUser = useSetRecoilState(userState);
   const { data, mutate, error } = useSWR('api_user', getUser);
 
   const loading = !data && !error;
@@ -162,7 +184,13 @@ export const Protected = () => {
   const router = useRouter();
   useEffect(() => {
     if (loggedOut) {
-      router.replace(url.login);
+      router.replace(url.forbidden);
     }
   }, [loggedOut]);
 };
+
+// ユーザーがログインしているか
+export const userState = atom({
+  key: 'user/userState',
+  default: false,
+});

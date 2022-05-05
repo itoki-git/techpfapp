@@ -22,7 +22,6 @@ export const usePublishArticle = (createID) => {
         isSuccess = false;
       });
 
-    console.log(isSuccess);
     return isSuccess;
   });
   return publishArticle;
@@ -52,7 +51,6 @@ export const getPostList = async (...args) => {
 
 // トピックごとに記事を取得
 export const getTopicList = async (...args) => {
-  console.log(...args);
   try {
     let res = await axios.get(...args);
     return res.data;
@@ -79,7 +77,6 @@ export const getPageCount = (count) => {
   if (count % 12 !== 0) {
     pageCount++;
   }
-  console.log(count);
   return pageCount;
 };
 

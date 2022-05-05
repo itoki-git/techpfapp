@@ -4,11 +4,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-
 import styles from '../../styles/organisms/Header.module.scss';
 import { useState } from 'react';
-import { Avatar, Menu, MenuItem } from '@mui/material';
 
 // ヘッダー
 const Header = (props) => {

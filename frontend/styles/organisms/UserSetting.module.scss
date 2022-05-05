@@ -32,7 +32,8 @@ $white: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  a {
+  a,
+  button {
     border-radius: 4px;
     display: block;
     position: relative;
@@ -42,6 +43,7 @@ $white: #fff;
     text-decoration: none;
     color: #fff;
     background: #2499ef;
+    transition: 0.5s;
     &:hover {
       cursor: pointer;
       text-decoration: none;

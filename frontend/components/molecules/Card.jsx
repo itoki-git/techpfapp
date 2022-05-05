@@ -1,12 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import ShareIcon from '@mui/icons-material/Share';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import BookmarkAddOutlinedIcon from '@mui/icons-material/BookmarkAddOutlined';
 import Paper from '@mui/material/Paper';
-import IconButton from '@mui/material/IconButton';
 import Link from 'next/link';
 import Avatar from '@mui/material/Avatar';
 
@@ -17,7 +14,6 @@ import profileStyle from '../../styles/organisms/UserSetting/Profile.module.scss
 const Cards = (props) => {
   const { articleID, title, like, timestamp, user } = props.item;
   const date = timestamp.substr(0, timestamp.indexOf('T'));
-  console.log(props.item);
   return (
     <Paper elevation={0} className={styles.cardroot}>
       <Card className={styles.cardContent}>

@@ -92,7 +92,6 @@ export const DialogFullScreen = (props) => {
 
     // なければ追加、あれば選択されたものを削除
     if (arrayExists === undefined) {
-      console.log(item);
       setSelectList([...selectList, item]);
     } else {
       const deleteTopic = selectList.filter((listItem) => listItem.id !== item.id);

@@ -15,13 +15,13 @@ const Login = () => {
   const username = useRecoilValue(textStateFamily(stateName.loginUserName));
   const password = useRecoilValue(textStateFamily(stateName.loginPassword));
   const [isLoading, setIsLoading] = useState(false);
-  const { mutate, loggedOut, user } = useUser();
+  const { loggedOut, user } = useUser();
   const login = useLogin();
   const [barState, setBarState] = useState({
     open: false,
     vertical: 'top',
     horizontal: 'center',
-    message: '更新できませんでした',
+    message: 'error',
     severity: 'error',
   });
 
@@ -41,7 +41,6 @@ const Login = () => {
     let isLogin = false;
     if (username && password) {
       isLogin = await login();
-      mutate();
       if (!isLogin) {
         setBarState({
           ...barState,

@@ -1,10 +1,8 @@
-import { Grid } from '@mui/material';
 import React, { useState } from 'react';
 import 'zenn-content-css';
 import style from '../styles/organisms/UserSetting/Profile.module.scss';
 import Avatar from '@mui/material/Avatar';
 import { skillsItems } from './api/icon';
-import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import settingStyle from '../styles/organisms/UserSetting.module.scss';
 import Layout from '../components/templates/Layout';
@@ -18,19 +16,8 @@ import { getUserProfile } from './api/userAPI';
 import { getArticle } from './api/articleAPI';
 import CardList from '../components/organisms/CardList';
 import styles from '../styles/organisms/CardList.module.scss';
-
-const menuItems = [
-  {
-    id: 'menu1',
-    iconName: 'user',
-    name: 'Skills',
-  },
-  {
-    id: 'menu2',
-    iconName: 'diamond',
-    name: 'Article',
-  },
-];
+import { LinearLoad } from '../components/atoms/Loading';
+import { url } from './api/utility';
 
 const User = () => {
   const router = useRouter();
@@ -39,16 +26,24 @@ const User = () => {
 
   const { data: profile, error: err } = useSWR(
     username != undefined ? `/api/public/users/${username}` : '',
-    getUserProfile
+    getUserProfile,
+    {
+      revalidateOnFocus: false,
+    }
   );
 
   const { data: article, error: articleError } = useSWR(
     profile != undefined ? `/api/public/users/posts/${profile._id}` : null,
-    getArticle
+    getArticle,
+    {
+      revalidateOnFocus: false,
+    }
   );
 
-  if (err || articleError) return <div>failed to load</div>;
-  if (!profile) return <div>loading...</div>;
+  if (err || articleError) {
+    router.replace(url.notpage);
+  }
+  if (!profile) return <LinearLoad />;
 
   const topic = skillsItems.filter((item) => {
     if (profile.skill && profile.skill.includes(item.id)) {
@@ -70,7 +65,6 @@ const User = () => {
           </div>
         );
       case 1:
-        console.log(article);
         return (
           <div className={styles.cardlist}>
             <h5 className={settingStyle.pageTitle}>Articles</h5>

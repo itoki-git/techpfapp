@@ -1,21 +1,13 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import Stack from '@mui/material/Stack';
 import ImageIcon from '@mui/icons-material/Image';
-import AddLinkIcon from '@mui/icons-material/AddLink';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
-import Box from '@mui/material/Box';
 import EditIcon from '@mui/icons-material/Edit';
 import Fab from '@mui/material/Fab';
 import Tooltip from '@mui/material/Tooltip';
-import { Input } from '@mui/material';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { textStateFamily, editState, stateName, createIDState } from '../state/createStore';
+import { useRecoilState } from 'recoil';
+import { editState } from '../state/createStore';
 import { FabButton } from '../atoms/FabButton';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLink } from '@fortawesome/free-solid-svg-icons';
-import IconButton from '@mui/material/IconButton';
-import { useInsertTextarea, useUploadFIle } from '../../pages/api/utility';
 
 const fabColorStyle = {
   color: 'common.black',
@@ -27,9 +19,6 @@ const fabColorStyle = {
 
 export const SideButton = (props) => {
   const [isEdit, setEditState] = useRecoilState(editState);
-  useEffect(() => {
-    alert('Finished loading');
-  }, []);
 
   // 編集とプレビューの切り替え
   const changeEditState = () => setEditState(!isEdit);

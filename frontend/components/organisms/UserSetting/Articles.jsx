@@ -1,24 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from '../../../styles/organisms/CardList.module.scss';
-import Paper from '@mui/material/Paper';
 import settingStyle from '../../../styles/organisms/UserSetting.module.scss';
 import CardList from '../CardList';
 import useSWR from 'swr';
 import { getPrivatePostList } from '../../../pages/api/articleAPI';
+import { LinearLoad } from '../../atoms/Loading';
+import router from 'next/router';
+import { url } from '../../../pages/api/utility';
 
 const Articles = () => {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
   const { data, error } = useSWR(`api/private/posts`, getPrivatePostList);
 
-  if (error) return <div>failed to load</div>;
-  if (!data) return <div>loading...</div>;
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  if (error) {
+    router.replace(url.notpage);
+  }
+  if (!data) return <LinearLoad />;
+
+  console.log(data);
   return (
     <div>
       <h5 className={settingStyle.pageTitle}>Articles</h5>
