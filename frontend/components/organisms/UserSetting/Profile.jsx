@@ -140,12 +140,6 @@ const Mypage = () => {
               />
             </div>
           </div>
-          <div>
-            <Divider variant="middle" className={settingStyle.divider} />
-          </div>
-          <div className={settingStyle.deleteButton}>
-            <a href="">Delete your account</a>
-          </div>
         </Stack>
       </div>
       {barState.open ? <MessageSnackbar barState={barState} messageBarClose={messageBarClose} /> : ''}
