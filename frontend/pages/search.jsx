@@ -19,7 +19,7 @@ import { getPageCount, getSearchList } from './api/articleAPI';
 import useSWR from 'swr';
 import { LinearLoad } from '../components/atoms/Loading';
 
-const SearchResult = ({ query }) => {
+const SearchResult = () => {
   const [pageIndex, setPageIndex] = useState(1);
   const router = useRouter();
   const { data, error } = useSWR(`api/public/search?q=${router.query.q}&page=${pageIndex}`, getSearchList);
