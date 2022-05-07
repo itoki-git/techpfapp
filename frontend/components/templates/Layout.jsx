@@ -1,20 +1,16 @@
 import React from 'react';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import styles from '../../styles/Layout.module.scss';
 import Header from '../organisms/Header';
-import { privateMenu, publicMenu, url } from '../../pages/api/utility';
+import { privateMenu, publicMenu } from '../../pages/api/utility';
 import { userState, useUser } from '../../pages/api/userAPI';
 import { LinearLoad } from '../atoms/Loading';
-import { loadingState } from '../state/createStore';
 
-const Layout = (props, context) => {
+const Layout = (props) => {
   const { title, children } = props;
   const siteTile = 'PORTFOLIO';
-  const router = useRouter();
-  const pathName = router.pathname;
-  const { user, loading, loggedOut, mutate } = useUser();
+  const { user, loading, loggedOut } = useUser();
   let menuList = loggedOut ? publicMenu : privateMenu;
   const setIsLogin = useSetRecoilState(userState);
 
@@ -31,7 +27,7 @@ const Layout = (props, context) => {
         <LinearLoad />
       ) : (
         <>
-          {pathName !== url.create ? <Header className={styles.header} menus={menuList} /> : ''}
+          <Header className={styles.header} menus={menuList} />
           <div className={styles.children}>{children}</div>
         </>
       )}

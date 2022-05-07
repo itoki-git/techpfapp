@@ -1,17 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Nav from '../molecules/Nav';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
 import styles from '../../styles/organisms/Header.module.scss';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { url } from '../../pages/api/utility';
+import { usePublishArticle } from '../../pages/api/articleAPI';
+import { useRecoilValue } from 'recoil';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
+import { createIDState, stateName, textStateFamily } from '../state/createStore';
+import { MessageSnackbar } from '../atoms/MessageBar';
+import { DialogSlide } from '../molecules/Dialog';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
 
-// ヘッダー
-const Header = (props) => {
+// 通常のヘッダー
+const NormalHeader = (props) => {
   const [click, setClick] = useState(false); // closeボタン制御
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
 
   return (
     <div className={styles.header}>
@@ -57,6 +65,80 @@ const Header = (props) => {
         </Box>
       </div>
     </div>
+  );
+};
+
+const EditHeader = () => {
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const createID = useRecoilValue(createIDState);
+  const titleValue = useRecoilValue(textStateFamily(createID + stateName.title));
+  const submit = usePublishArticle(createID);
+  const [barState, setBarState] = useState({
+    open: false,
+    vertical: 'top',
+    horizontal: 'center',
+    message: '',
+    severity: 'error',
+  });
+
+  const messageBarClose = () => {
+    setBarState({ ...barState, open: false });
+  };
+
+  const dialogAction = () => {
+    setOpen(!open);
+  };
+
+  const publishArticle = async (e) => {
+    e.preventDefault();
+    const result = await submit();
+    if (result) {
+      setBarState({ ...barState, open: true, message: '記事を投稿しました', severity: 'success' });
+      router.push(url.setting);
+    } else {
+      setBarState({ ...barState, open: true, message: '記事の投稿が失敗しました', severity: 'error' });
+    }
+  };
+  return (
+    <div className={styles.header}>
+      <IconButton onClick={() => router.push(url.setting)}>
+        <ArrowBackIosOutlinedIcon />
+      </IconButton>
+      <div>
+        <Box
+          sx={{
+            display: {
+              xs: 'block',
+              sm: 'block',
+              md: 'block',
+              lg: 'block',
+              xl: 'block',
+            },
+          }}
+        >
+          <Stack direction="row" justifyContent="center" alignItems="center" spacing={2}>
+            <IconButton onClick={() => setOpen(!open)}>
+              <SettingsOutlinedIcon />
+            </IconButton>
+
+            <Button className={styles.saveButton} disabled={!titleValue} onClick={(e) => publishArticle(e)}>
+              公開する
+            </Button>
+          </Stack>
+        </Box>
+        <DialogSlide createID={createID} click={open} dialogAction={dialogAction} />
+      </div>
+      {barState.open ? <MessageSnackbar barState={barState} messageBarClose={messageBarClose} /> : ''}
+    </div>
+  );
+};
+
+const Header = (props) => {
+  const router = useRouter();
+  const pathName = router.pathname;
+  return (
+    <>{pathName === url.create ? <EditHeader /> : <NormalHeader className={styles.header} menus={props.menus} />}</>
   );
 };
 export default Header;

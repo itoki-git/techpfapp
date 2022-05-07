@@ -1,15 +1,7 @@
 import React from 'react';
-import Layout from '../components/templates/Layout';
-import Login from '../components/organisms/Login';
-import styles from '../styles/Layout.module.scss';
+import LoginTemplate from '../components/templates/login';
 
 const LoginPage = () => {
-  return (
-    <Layout title="login">
-      <div className={styles.center}>
-        <Login />
-      </div>
-    </Layout>
-  );
+  return <LoginTemplate />;
 };
 export default LoginPage;

@@ -1,18 +1,7 @@
 import React from 'react';
-import UserSeting from '../components/organisms/UserSetting';
-import Layout from '../components/templates/Layout';
-import Container from '@mui/material/Container';
-import { Protected } from './api/userAPI';
+import SettingTemplate from '../components/templates/setting';
 
-const CreatePage = () => {
-  Protected();
-
-  return (
-    <Layout title="setting">
-      <Container>
-        <UserSeting />
-      </Container>
-    </Layout>
-  );
+const SettingPage = () => {
+  return <SettingTemplate />;
 };
-export default CreatePage;
+export default SettingPage;
