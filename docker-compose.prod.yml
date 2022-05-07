@@ -3,7 +3,7 @@ services:
   backend:
     build:
       context: .
-      dockerfile: ./docker/backend/Dockerfile
+      dockerfile: ./docker/backend/Dockerfile.prod
     tty: true # ②コンテナの永続化
     links:
       - mongo
@@ -18,7 +18,7 @@ services:
   frontend:
     build:
       context: .
-      dockerfile: ./docker/frontend/Dockerfile
+      dockerfile: ./docker/frontend/Dockerfile.prod
     ports:
       - 3000:3000
     volumes:

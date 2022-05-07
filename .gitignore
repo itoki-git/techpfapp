@@ -38,3 +38,7 @@ frontend/public/
 
 backend/data
 backend/.env*
+
+docker/backend/.env
+docker/mongo/*
+docker/mongo_express/*

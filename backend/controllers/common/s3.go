@@ -1,7 +1,6 @@
 package common
 
 import (
-	"log"
 	"os"
 	"time"
 
@@ -10,7 +9,6 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/google/uuid"
-	"github.com/joho/godotenv"
 )
 
 func GetUUID() (string, error) {
@@ -23,9 +21,6 @@ func GetUUID() (string, error) {
 }
 
 func S3(folder, fileName string) (string, error) {
-	if err := godotenv.Load(".env"); err != nil {
-		log.Fatalf("Error loading .env file")
-	}
 	accessKey := os.Getenv("S3_ACCESS_KEY")
 	privateKey := os.Getenv("S3_SECRET_KEY")
 	region := os.Getenv("S3_REGION")

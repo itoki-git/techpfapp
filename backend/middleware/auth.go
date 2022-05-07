@@ -1,20 +1,15 @@
 package middleware
 
 import (
-	"log"
 	"net/http"
 	"os"
 
 	"app/auth"
 
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 )
 
 func Auth() gin.HandlerFunc {
-	if err := godotenv.Load(".env"); err != nil {
-		log.Fatalf("Error loadingas .env file")
-	}
 	secretKey := os.Getenv("SECRET_KEY")
 	Issuer := os.Getenv("Issuer")
 

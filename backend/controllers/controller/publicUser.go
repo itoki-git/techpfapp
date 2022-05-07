@@ -8,11 +8,9 @@ import (
 	db "app/models/db"
 	"app/models/entity"
 	"context"
-	"log"
 	"os"
 
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/bson"
 
 	"net/http"
@@ -99,9 +97,6 @@ func LoginUser(ctx *gin.Context) {
 	var user entity.User
 
 	// Secret Keyの取得
-	if err := godotenv.Load(".env"); err != nil {
-		log.Fatalf("Error loadinga .env file")
-	}
 	secretKey := os.Getenv("SECRET_KEY")
 	Issuer := os.Getenv("Issuer")
 

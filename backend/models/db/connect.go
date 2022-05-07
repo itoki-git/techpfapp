@@ -9,7 +9,6 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -27,9 +26,6 @@ type ErrorResponse struct {
 }
 
 func ConnectUsersDB() *mongo.Collection {
-	if err := godotenv.Load(".env"); err != nil {
-		log.Fatalf("Error loading .env file")
-	}
 	// 指定したURIに接続する
 	clientOptions := options.Client().ApplyURI(os.Getenv("MONGO_URI"))
 	client, err := mongo.Connect(context.TODO(), clientOptions)
@@ -44,9 +40,6 @@ func ConnectUsersDB() *mongo.Collection {
 }
 
 func ConnectPostsDB() *mongo.Collection {
-	if err := godotenv.Load(".env"); err != nil {
-		log.Fatalf("Error loading .env file")
-	}
 	// 指定したURIに接続する
 	clientOptions := options.Client().ApplyURI(os.Getenv("MONGO_URI"))
 	client, err := mongo.Connect(context.TODO(), clientOptions)
@@ -61,9 +54,6 @@ func ConnectPostsDB() *mongo.Collection {
 }
 
 func ConnectLikesDB() *mongo.Collection {
-	if err := godotenv.Load(".env"); err != nil {
-		log.Fatalf("Error loading .env file")
-	}
 	// 指定したURIに接続する
 	clientOptions := options.Client().ApplyURI(os.Getenv("MONGO_URI"))
 	client, err := mongo.Connect(context.TODO(), clientOptions)
