@@ -41,7 +41,7 @@ func ContainsKey(check []string, elem interface{}, ignore []string) bool {
 }
 
 func Logout(ctx *gin.Context) {
-	ctx.SetCookie("jwt", "", -60*60*24, "/", "localhost", false, true)
+	ctx.SetCookie("jwt", "", -60*60*24, "/", "techpfapp.com", false, true)
 	ctx.JSON(http.StatusOK, gin.H{"message": "success"})
 }
 

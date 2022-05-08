@@ -131,7 +131,7 @@ func LoginUser(ctx *gin.Context) {
 		ctx.Abort()
 		return
 	}
-	ctx.SetCookie("jwt", signedToken, 60*60*24, "/", "localhost", false, true)
+	ctx.SetCookie("jwt", signedToken, 60*60*24, "/", "techpfapp.com", false, true)
 	ctx.JSON(http.StatusOK, user)
 	return
 }
