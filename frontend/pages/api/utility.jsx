@@ -43,13 +43,6 @@ export const publicMenu = [
   { id: '2', displayName: 'LOGIN', to: url.login },
 ];
 
-export const config = {
-  bucketName: process.env.NEXT_PUBLIC_S3_BUCKET,
-  region: process.env.NEXT_PUBLIC_REGION,
-  accessKeyId: process.env.NEXT_PUBLIC_ACCESS_KEY,
-  secretAccessKey: process.env.NEXT_PUBLIC_SECRET_ACCESS_KEY,
-};
-
 // S3にアップロード
 export const useUploadFile = () => {
   const getS3URL = useCallback(async (e) => {
