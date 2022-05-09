@@ -16,6 +16,8 @@ import { MessageSnackbar } from '../atoms/MessageBar';
 import { DialogSlide } from '../molecules/Dialog';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
+import Link from 'next/link';
+import Image from 'next/image';
 
 // 通常のヘッダー
 const NormalHeader = (props) => {
@@ -23,7 +25,13 @@ const NormalHeader = (props) => {
 
   return (
     <div className={styles.header}>
-      <div className={styles.logo}>Portfolio</div>
+      <Link href="/" as={`/`}>
+        <a className={styles.logo}>
+          <Image src="/logo_transparent.png" width={100} height={100} objectFit="contain" />
+          <h4>techpfapp</h4>
+        </a>
+      </Link>
+
       <div>
         <Box
           sx={{

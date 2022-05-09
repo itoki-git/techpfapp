@@ -15,7 +15,7 @@ export const useSignup = () => {
   const signup = useCallback(async () => {
     const data = { nickname: nickname, username: username, password: password };
     try {
-      const res = await axios.post(api.signup, data);
+      await axios.post(api.signup, data);
       setNickname('');
       setUsername('');
       setPassword('');
@@ -34,7 +34,7 @@ export const useLogin = () => {
   const login = useCallback(async () => {
     const data = { username: username, password: password };
     try {
-      const res = await axios.post(api.login, data);
+      await axios.post(api.login, data);
       setUsername('');
       setPassword('');
       return true;

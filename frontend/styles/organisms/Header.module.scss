@@ -1,7 +1,7 @@
 .header {
   justify-content: space-between;
   top: 0;
-  padding: 2rem 3rem 2rem 2rem;
+  padding: 0 3rem 0 2rem;
   width: 100%;
   background-image: none;
   display: flex;
@@ -16,7 +16,11 @@
   min-height: 64px;
 }
 .logo {
-  margin: 0;
+  color: #000;
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center; /*水平方向中央寄せ*/
+  align-items: center;
   padding: 0;
 }
 

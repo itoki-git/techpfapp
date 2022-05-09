@@ -16,7 +16,7 @@ import { menuIconItems } from '../../pages/api/icon';
 import { useRouter } from 'next/router';
 import { url } from '../../pages/api/utility';
 
-const Menu = (props) => {
+const Menu = () => {
   const menuItems = menuIconItems;
   const [selectedIndex, setSelectedIndex] = useRecoilState(menuState);
   const logout = useLogout();

@@ -9,7 +9,7 @@ import { LinearLoad } from '../atoms/Loading';
 
 const Layout = (props) => {
   const { title, children } = props;
-  const siteTile = 'PORTFOLIO';
+  const siteTile = 'techpfapp';
   const { loading, loggedOut } = useUser();
   const [isLogin, setIsLogin] = useRecoilState(userState);
   const [menuList, setMenuList] = useState([]);
