@@ -1,6 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import styles from '../../styles/Layout.module.scss';
 import Header from '../organisms/Header';
 import { privateMenu, publicMenu } from '../../pages/api/utility';
@@ -11,11 +11,11 @@ const Layout = (props) => {
   const { title, children } = props;
   const siteTile = 'PORTFOLIO';
   const { user, loading, loggedOut } = useUser();
-  let menuList = loggedOut ? publicMenu : privateMenu;
-  const setIsLogin = useSetRecoilState(userState);
+  const [isLogin, setIsLogin] = useRecoilState(userState);
+  let menuList = !loggedOut || isLogin ? privateMenu : publicMenu;
 
   // ログインの状態を保存
-  setIsLogin(user !== undefined);
+  setIsLogin(!loggedOut);
 
   return (
     <div className={styles.page}>

@@ -142,7 +142,10 @@ export async function getServerUser(cookie) {
 }
 
 export function useUser() {
-  const { data, mutate, error } = useSWR('api_user', getUser);
+  const { data, mutate, error } = useSWR('api_user', getUser, {
+    errorRetryInterval: 20000,
+    refreshInterval: 60000,
+  });
 
   const loading = !data && !error;
   const loggedOut = error && error.status === 403;

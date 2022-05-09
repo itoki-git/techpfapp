@@ -9,9 +9,9 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import styles from '../../styles/molecules/Menu.module.scss';
 import settingStyle from '../../styles/organisms/UserSetting.module.scss';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { menuState } from '../state/createStore';
-import { useLogout } from '../../pages/api/userAPI';
+import { useLogout, userState } from '../../pages/api/userAPI';
 import { menuIconItems } from '../../pages/api/icon';
 import { useRouter } from 'next/router';
 import { url } from '../../pages/api/utility';
@@ -21,11 +21,13 @@ const Menu = (props) => {
   const [selectedIndex, setSelectedIndex] = useRecoilState(menuState);
   const logout = useLogout();
   const router = useRouter();
+  const setIsLogin = useSetRecoilState(userState);
 
   const handleClickLogout = async (e) => {
     e.preventDefault();
     let isLogout = await logout();
     if (isLogout) {
+      setIsLogin(false);
       router.replace(url.login);
     }
   };

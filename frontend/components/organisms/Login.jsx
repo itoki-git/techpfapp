@@ -6,8 +6,8 @@ import { textStateFamily, stateName } from '../state/createStore';
 import styles from '../../styles/organisms/Login.module.scss';
 import layoutStyle from '../../styles/Layout.module.scss';
 import { url } from '../../pages/api/utility';
-import { useLogin, useUser } from '../../pages/api/userAPI';
-import { useRecoilValue } from 'recoil';
+import { useLogin, useUser, userState } from '../../pages/api/userAPI';
+import { useRecoilValue, useRecoilState } from 'recoil';
 import { CircularLoad } from '../atoms/Loading';
 import { MessageSnackbar } from '../atoms/MessageBar';
 
@@ -17,6 +17,7 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { loggedOut, user } = useUser();
   const login = useLogin();
+  const [isLoginState, setIsLogin] = useRecoilState(userState);
   const [barState, setBarState] = useState({
     open: false,
     vertical: 'top',
@@ -26,7 +27,7 @@ const Login = () => {
   });
 
   useEffect(() => {
-    if (user && !loggedOut) {
+    if ((user && !loggedOut) || isLoginState) {
       Router.replace(url.article);
     }
   }, [user, loggedOut]);
@@ -49,6 +50,8 @@ const Login = () => {
           severity: 'error',
         });
         setIsLoading(false);
+      } else {
+        setIsLogin(true);
       }
     }
   };
