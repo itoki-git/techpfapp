@@ -144,6 +144,7 @@ export async function getServerUser(cookie) {
 export function useUser() {
   const { data, mutate, error } = useSWR('api_user', getUser, {
     errorRetryInterval: 20000,
+    errorRetryCount: 3,
     refreshInterval: 60000,
   });
 

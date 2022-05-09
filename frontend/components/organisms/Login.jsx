@@ -30,7 +30,7 @@ const Login = () => {
     if ((user && !loggedOut) || isLoginState) {
       Router.replace(url.article);
     }
-  }, [user, loggedOut]);
+  }, [user, loggedOut, isLoginState]);
 
   const messageBarClose = () => {
     setBarState({ ...barState, open: false });
