@@ -13,7 +13,7 @@ services:
       - ./backend:/go/src/app
     ports:
       - 8080:8080
-    env_file: ./docker/backend/.env
+    env_file: ./docker/backend/.env.local
 
   frontend:
     build:

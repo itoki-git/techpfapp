@@ -7,6 +7,7 @@ import (
 	db "app/models/db"
 	"app/models/entity"
 	"context"
+	"os"
 	"reflect"
 
 	"github.com/gin-gonic/gin"
@@ -41,7 +42,8 @@ func ContainsKey(check []string, elem interface{}, ignore []string) bool {
 }
 
 func Logout(ctx *gin.Context) {
-	ctx.SetCookie("jwt", "", -60*60*24, "/", "techpfapp.com", false, true)
+	domain := os.Getenv("DOMEIN")
+	ctx.SetCookie("jwt", "", -60*60*24, "/", domain, false, true)
 	ctx.JSON(http.StatusOK, gin.H{"message": "success"})
 }
 

@@ -1,8 +1,16 @@
 FROM golang:1.15.2-alpine
 
+WORKDIR /go/src/app
+
+ENV GO111MODULE=on
+
 COPY ./backend /go/src/app
 
-RUN apk update && apk add git
+RUN apk add --no-cache \
+    alpine-sdk \
+    git \
+    && go get github.com/pilu/fresh
 
-WORKDIR /go/src/app
-ADD . /go/src/app
+EXPOSE 8080
+
+CMD ["fresh"]

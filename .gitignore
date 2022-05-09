@@ -37,7 +37,7 @@ frontend/public/
 backend/data
 backend/.env*
 
-docker/backend/.env
+docker/backend/.env*
 docker/mongo/Dockerfile
 docker/mongo_express/Dockerfile
 docker/mongo/init.js
