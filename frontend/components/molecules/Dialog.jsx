@@ -57,7 +57,7 @@ export const DialogSlide = (props) => {
         </Grid>
 
         <DialogActions>
-          <Button className={styles.saveButton} onClick={props.dialogAction}>
+          <Button className={styles.saveButton} onClick={props.dialogAction} style={{ cursor: 'pointer' }}>
             保存する
           </Button>
         </DialogActions>
@@ -122,7 +122,7 @@ export const DialogFullScreen = (props) => {
           <TopicSelectdList listItems={topicList} selectList={selectList} handleSelectTopic={handleSelectTopic} />
         </DialogContent>
         <DialogActions>
-          <Button className={styles.saveButton} onClick={saveTopic}>
+          <Button className={styles.saveButton} onClick={saveTopic} style={{ cursor: 'pointer' }}>
             保存する
           </Button>
         </DialogActions>

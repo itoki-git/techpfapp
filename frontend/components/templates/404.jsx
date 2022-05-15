@@ -17,7 +17,9 @@ const NotPageTemplate = () => {
           <h1 className={errorStyle.status}>Sorry, page not found!</h1>
           <p className={errorStyle.message}>このページはすでに削除されているか、URLが間違っている可能性があります</p>
           <div className={errorStyle.button}>
-            <a onClick={handleClickLogin}>トップへ戻る</a>
+            <a onClick={handleClickLogin} style={{ cursor: 'pointer' }}>
+              トップへ戻る
+            </a>
           </div>
         </Stack>
       </div>

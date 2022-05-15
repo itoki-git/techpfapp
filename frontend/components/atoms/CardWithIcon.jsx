@@ -66,6 +66,7 @@ export const CardwithIconEdit = (props) => {
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}
           onClick={handleClick}
+          style={{ cursor: 'pointer' }}
         >
           <MoreHorizIcon />
         </IconButton>
@@ -79,13 +80,13 @@ export const CardwithIconEdit = (props) => {
             'aria-labelledby': 'basic-button',
           }}
         >
-          <MenuItem onClick={handleClose}>
+          <MenuItem onClick={handleClose} style={{ cursor: 'pointer' }}>
             <ListItemIcon>
               <EditIcon fontSize="small" />
             </ListItemIcon>
             <ListItemText>Edit</ListItemText>
           </MenuItem>
-          <MenuItem onClick={handleClose}>
+          <MenuItem onClick={handleClose} style={{ cursor: 'pointer' }}>
             <ListItemIcon>
               <DeleteIcon fontSize="small" />
             </ListItemIcon>
@@ -103,7 +104,7 @@ export const CardWithAddIcon = (props) => {
       <div className={styles.boxMain}>
         <div className={styles.left}>
           <div className={styles.addicon}>
-            <IconButton aria-label="add" onClick={() => setisOpen(!isOpen)}>
+            <IconButton aria-label="add" onClick={() => setisOpen(!isOpen)} style={{ cursor: 'pointer' }}>
               <AddIcon fontSize="small" />
             </IconButton>
           </div>

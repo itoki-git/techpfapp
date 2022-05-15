@@ -19,7 +19,9 @@ const ForbiddenTemplate = () => {
           <p className={errorStyle.message}>セッションの有効期限が切れました</p>
           <p className={errorStyle.message}>もう一度ログインしてください</p>
           <div className={errorStyle.button}>
-            <a onClick={handleClickLogin}>ログインする</a>
+            <a onClick={handleClickLogin} style={{ cursor: 'pointer' }}>
+              ログインする
+            </a>
           </div>
         </Stack>
       </div>

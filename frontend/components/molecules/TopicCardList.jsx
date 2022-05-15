@@ -33,11 +33,11 @@ export const TopicSelectdList = (props) => {
     <Grid container spacing={2}>
       {listItems.map((item, i) => (
         <Grid item xs={4} sm={2} key={i}>
-          <input
+          <button
             type="checkbox"
             id={item.id}
             style={{ display: 'none' }}
-            onChange={() => props.handleSelectTopic(item)}
+            onClick={() => props.handleSelectTopic(item)}
             checked={arrayExists(item.id)}
           />
           <label htmlFor={item.id} className={`${styles['topic']} ${arrayExists(item.id) ? styles['selected'] : null}`}>

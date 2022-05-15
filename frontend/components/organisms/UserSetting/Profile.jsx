@@ -94,7 +94,7 @@ const Mypage = () => {
               </div>
               <div className={style.right}>
                 <div className={settingStyle.updateButton}>
-                  <a href="" onClick={(e) => handleSave(e)}>
+                  <a href="" onClick={(e) => handleSave(e)} style={{ cursor: 'pointer' }}>
                     Save
                   </a>
                 </div>

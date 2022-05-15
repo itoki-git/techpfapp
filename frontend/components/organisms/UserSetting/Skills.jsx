@@ -56,7 +56,7 @@ const Skills = () => {
       <DialogFullScreen createID={stateName.userSkill} click={isOpen} listItems={skillsItems} />
 
       <div className={settingStyle.updateButton}>
-        <a href="" onClick={(e) => handleSave(e)}>
+        <a href="" onClick={(e) => handleSave(e)} style={{ cursor: 'pointer' }}>
           Save
         </a>
       </div>

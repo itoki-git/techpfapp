@@ -57,7 +57,7 @@ const NormalHeader = (props) => {
             },
           }}
         >
-          <IconButton onClick={() => setClick(!click)}>
+          <IconButton onClick={() => setClick(!click)} style={{ cursor: 'pointer' }}>
             {click ? (
               <CloseIcon className={styles.close} fontSize="large" />
             ) : (
@@ -110,7 +110,7 @@ const EditHeader = () => {
   };
   return (
     <div className={styles.header}>
-      <IconButton onClick={() => router.push(url.setting)}>
+      <IconButton onClick={() => router.push(url.setting)} style={{ cursor: 'pointer' }}>
         <ArrowBackIosOutlinedIcon />
       </IconButton>
       <div>
@@ -126,11 +126,16 @@ const EditHeader = () => {
           }}
         >
           <Stack direction="row" justifyContent="center" alignItems="center" spacing={2}>
-            <IconButton onClick={() => setOpen(!open)}>
+            <IconButton onClick={() => setOpen(!open)} style={{ cursor: 'pointer' }}>
               <SettingsOutlinedIcon />
             </IconButton>
 
-            <Button className={styles.saveButton} disabled={!titleValue} onClick={(e) => publishArticle(e)}>
+            <Button
+              className={styles.saveButton}
+              disabled={!titleValue}
+              onClick={(e) => publishArticle(e)}
+              style={{ cursor: 'pointer' }}
+            >
               公開する
             </Button>
           </Stack>

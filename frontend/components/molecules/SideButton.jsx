@@ -35,7 +35,14 @@ export const SideButton = (props) => {
   return (
     <Stack direction={{ xs: 'row', sm: 'column' }} justifyContent="center" alignItems="center" spacing={4}>
       <Tooltip title={isEdit ? 'プレビュー' : '編集'} arrow>
-        <Fab sx={fabColorStyle} aria-label="Expand" color="inherit" component="span" onClick={changeEditState}>
+        <Fab
+          sx={fabColorStyle}
+          aria-label="Expand"
+          color="inherit"
+          component="span"
+          onClick={changeEditState}
+          style={{ cursor: 'pointer' }}
+        >
           {isEdit ? <PlayArrowIcon /> : <EditIcon />}
         </Fab>
       </Tooltip>

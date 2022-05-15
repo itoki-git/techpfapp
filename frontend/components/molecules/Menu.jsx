@@ -43,6 +43,7 @@ const Menu = () => {
               className={styles.menuButton}
               selected={selectedIndex === i}
               onClick={() => setSelectedIndex(i)}
+              style={{ cursor: 'pointer' }}
             >
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.name} />
@@ -52,7 +53,9 @@ const Menu = () => {
       </Stack>
       <Divider variant="middle" className={settingStyle.divider} />
       <div className={settingStyle.logoutButton}>
-        <a onClick={(e) => handleClickLogout(e)}>Logout</a>
+        <a onClick={(e) => handleClickLogout(e)} style={{ cursor: 'pointer' }}>
+          Logout
+        </a>
       </div>
     </Paper>
   );

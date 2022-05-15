@@ -12,6 +12,7 @@ export const FabButton = (props) => {
           component="span"
           color={props.color}
           onClick={() => props.action}
+          style={{ cursor: 'pointer' }}
         >
           {props.children}
         </Fab>
