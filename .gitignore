@@ -32,7 +32,6 @@ frontend/.env*
 frontend/.vercel
 .DS_Store
 
-frontend/public/
 
 backend/data
 backend/.env*
