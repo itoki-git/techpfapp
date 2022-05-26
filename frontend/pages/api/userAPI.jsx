@@ -97,8 +97,6 @@ export const useUpdataProfile = () => {
 
     const data = { nickname: nickname, jobname: jobName, bio: bio, image: image, skill: skillID };
 
-    console.log(data);
-
     let isSuccess = false;
     await axios
       .patch(api.updateUser, data, {

@@ -16,7 +16,6 @@ const Articles = () => {
   }
   if (!data) return <LinearLoad />;
 
-  console.log(data);
   return (
     <div>
       <h5 className={settingStyle.pageTitle}>Articles</h5>

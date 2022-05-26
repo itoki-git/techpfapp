@@ -38,8 +38,6 @@ const TopicTemplate = () => {
   }
   if (!data) return <LinearLoad />;
 
-  console.log(data);
-
   return (
     <Layout title="article">
       <Container>

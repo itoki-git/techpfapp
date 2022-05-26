@@ -36,7 +36,6 @@ const SlugTemplate = () => {
 
   // Grab our ID parameter
   const { slug } = router.query;
-  console.log(slug != undefined);
   const { data: article, error: articleError } = useSWR(
     slug != undefined ? `/api/public/posts/${slug}` : null,
     getArticle,
@@ -44,7 +43,6 @@ const SlugTemplate = () => {
       revalidateOnFocus: false,
       refreshInterval: refreshIntervalArticle,
       onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
-        console.log(retryCount);
         // 再試行は3回までしかできません。
         if (retryCount >= 3) return;
 
