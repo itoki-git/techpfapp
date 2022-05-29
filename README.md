@@ -2,27 +2,51 @@
 技術記事投稿サイトです  
 markdownで記事を書くことができます  
 レスポンシブにも対応しているので、スマホからでも確認できます  
+![techpfapp com](https://user-images.githubusercontent.com/68063967/170880112-9a8c8914-fb5a-4830-a862-3248490420aa.png)
 
 ## App URL
 [techpfapp](http://techpfapp.com)
 
-pic
-
+# なぜ作った
+新卒で入社した会社の仕事内容だけでは、社外に出たときに通用しないと感じたためです。  
+転職の際に応募してくるエンジニアと戦える、入社後でも素早く戦力になる実力をつけたほうがいいと思い、勉強を兼ねてサイトをデプロイするまでやろうと考えました。  
+そこでCRUDかつフロントも勉強できる制作物と考えたとき、記事投稿サービスですべての基礎は学べるのではないかと思い、作成しました。
 
 # 使用技術
-- Go
-- Gin
-- JavaScript
-- Next.js
-- Nginx
-- MongoDB
-- AWS
-  - EC2
-  - VPC
-  - Route53
-  - S3
-  
-- Docker/docker-compose
+## フロントエンド
+ - JavaScript
+ - Next.js
+ - React Hooks
+ - Recoil
+## バックエンド
+ - Go
+ - Gin
+## DB
+ - MongoDB
+## サーバー
+ - Nginx
+## AWS
+ - EC2
+ - VPC
+ - Route53
+ - S3
+ ## その他
+  - Docker/docker-compose
+
+# 技術選定の理由
+## フロントエンド
+フロントエンドはまったく未経験でした。  
+TypeScriptを採用したほうがいいとは思いましたが、基礎のJavaScriptを先に勉強してからTypeScriptを勉強したほうがいいと思ったので、  
+あえてTypeScriptは選びませんでした。  
+そしてライブラリ・フレームワークにはNext.jsを選びました。  
+TypeScriptと親和性が高いReactをベースにしたフレームワークで、SSR/SSGでフロントを作成しようと考えていたからです。
+## バックエンド
+気になっていたyappliやメルカリなどがGoを採用していたのがきっかけでした。  
+また、Goの習得時間の短さ、文法がシンプルでPythonやRubyよりも書きやすい印象を受けました。
+## DB
+JSONライクにデータを格納でき、Markdownのようなドキュメントを検索する際に適していると思ったからです。
+
+
 
 # 機能一覧
 - ユーザ登録・ログイン機能
