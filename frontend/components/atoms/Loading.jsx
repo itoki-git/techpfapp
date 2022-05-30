@@ -12,10 +12,21 @@ export const LinearLoad = () => {
 };
 
 export const CircularLoad = (props) => {
+  const [progress, setProgress] = React.useState(0);
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setProgress((prevProgress) => (prevProgress >= 100 ? 0 : prevProgress + 10));
+    }, 800);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <Box sx={{ height: 40 }}>
-        <CircularProgress />
+        <CircularProgress size={60} value={progress} />
       </Box>
       <Box sx={{ m: 2 }}>
         <h3>{props.message}</h3>

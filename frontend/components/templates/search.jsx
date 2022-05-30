@@ -16,7 +16,8 @@ import PaginationItem from '@mui/material/PaginationItem';
 import contentStyles from '../../styles/organisms/CardList.module.scss';
 import { getPageCount, getSearchList } from '../../pages/api/articleAPI';
 import useSWR from 'swr';
-import { LinearLoad } from '../atoms/Loading';
+import { CircularLoad, LinearLoad } from '../atoms/Loading';
+import layoutStyle from '../../styles/Layout.module.scss';
 import { useRecoilValue } from 'recoil';
 
 const SearchResult = () => {
@@ -29,7 +30,12 @@ const SearchResult = () => {
     setPageIndex(v);
   };
   if (error) return <div>failed to load</div>;
-  if (!data) return <LinearLoad />;
+  if (!data)
+    return (
+      <div className={layoutStyle.load}>
+        <CircularLoad message="loading..." />
+      </div>
+    );
 
   return (
     <div>
@@ -84,22 +90,24 @@ export const SearchTemplate = () => {
     router.push(`/search${href}`, undefined, { shallow: true });
   };
   return (
-    <Layout title="search">
-      <Container>
-        <SearchField handleSubmit={handleSubmit} />
-        {isSearchResult ? (
-          <SearchResult query={value} />
-        ) : (
-          <Container maxWidth="md">
-            <div className={inputStyle.infoarea}>
-              <div className={inputStyle.inputarea}>
-                <TopicListButton listItems={skillsItems} />
+    <div>
+      <Layout title="search">
+        <Container>
+          <SearchField handleSubmit={handleSubmit} />
+          {isSearchResult ? (
+            <SearchResult query={value} />
+          ) : (
+            <Container maxWidth="md">
+              <div className={inputStyle.infoarea}>
+                <div className={inputStyle.inputarea}>
+                  <TopicListButton listItems={skillsItems} />
+                </div>
               </div>
-            </div>
-          </Container>
-        )}
-      </Container>
-    </Layout>
+            </Container>
+          )}
+        </Container>
+      </Layout>
+    </div>
   );
 };
 export default SearchTemplate;

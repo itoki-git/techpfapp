@@ -9,6 +9,7 @@
   background-color: #fff;
 }
 .children {
+  position: relative;
   height: 100vh;
   background-color: #f1f5f8;
   -webkit-box-flex: 1;
@@ -24,9 +25,8 @@
   }
 }
 .load {
-  padding-bottom: 10rem;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
 }
