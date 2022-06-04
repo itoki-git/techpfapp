@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Stack from '@mui/material/Stack';
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
@@ -6,7 +6,6 @@ import Container from '@mui/material/Container';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Layout from './Layout';
-import CardList from '../organisms/CardList';
 import { useRouter } from 'next/router';
 import { getPageCount, getPostList } from '../../pages/api/articleAPI';
 import useSWR from 'swr';
@@ -16,13 +15,25 @@ import topicStyles from '../../styles/atoms/TopicCard.module.scss';
 import contentStyles from '../../styles/organisms/CardList.module.scss';
 import { LinearLoad } from '../atoms/Loading';
 import { url } from '../../pages/api/utility';
+import { CardList } from '../organisms/CardList';
 
 const TopicTemplate = () => {
   const [pageIndex, setPageIndex] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [isTopic, setisTopic] = useState(false);
+  const { query, isReady } = useRouter();
   const router = useRouter();
+  const { topic } = query;
+
+  useEffect(() => {
+    if (isReady) {
+      setLoading(true);
+      setisTopic(skillsItems.some((item) => item.iconName === topic));
+    }
+  }, [isReady, topic]);
 
   // Grab our ID parameter
-  const { topic } = router.query;
+
   const { data, error } = useSWR(`/api/public/topics/${topic}?page=${pageIndex}`, getPostList, {
     revalidateOnFocus: false,
   });
@@ -33,10 +44,10 @@ const TopicTemplate = () => {
     e.preventDefault();
     setPageIndex(v);
   };
-  if (error) {
+  if (!data || !loading) return <LinearLoad />;
+  if (error || !isTopic) {
     router.replace(url.notpage);
   }
-  if (!data) return <LinearLoad />;
 
   return (
     <Layout title="article">
