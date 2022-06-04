@@ -129,7 +129,7 @@ export const DialogFullScreen = (props) => {
           <DialogActions>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <div className={buttonStyle.buttonRoot}>
-                <button className={buttonStyle.update} onClick={saveTopic}>
+                <button className={buttonStyle.daialogUpdate} onClick={saveTopic}>
                   保存する
                 </button>
               </div>
