@@ -142,7 +142,6 @@ export const DialogFullScreen = (props) => {
 };
 
 export const AlertDialog = (props) => {
-  console.log(props.open);
   return (
     <Dialog open={props.open} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
       <DialogTitle id="alert-dialog-title">削除しますか？</DialogTitle>
