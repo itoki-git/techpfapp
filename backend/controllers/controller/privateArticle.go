@@ -5,7 +5,6 @@ import (
 	db "app/models/db"
 	"app/models/entity"
 	"context"
-	"fmt"
 	"net/http"
 	"path/filepath"
 	"time"
@@ -100,6 +99,7 @@ func GetPrivateUserPost(ctx *gin.Context) {
 func GetUserLikePost(ctx *gin.Context) {
 	postList := []entity.Post{}
 	var post entity.Post
+	var postUser entity.PostUser
 	var user entity.User
 	var response entity.PostResponse
 
@@ -117,8 +117,13 @@ func GetUserLikePost(ctx *gin.Context) {
 			db.GetError(err, ctx)
 			return
 		}
-		fmt.Println(post)
+		filter := bson.M{"userID": post.UserID}
+		if err := UserCollection.FindOne(context.TODO(), filter).Decode(&postUser); err != nil {
+			db.GetError(err, ctx)
+			return
+		}
 		post.Like = GetCountLike(post.ArticleID)
+		post.User = postUser
 		postList = append(postList, post)
 	}
 	response.PostList = postList
@@ -152,13 +157,11 @@ func RemoveArticle(ctx *gin.Context) {
 	userID := ctx.GetString("userID")
 	id, _ := primitive.ObjectIDFromHex(userID)
 	filter := bson.M{"userID": id, "articleID": articleID}
-	fmt.Println(filter)
 
 	result, err := PostCollection.DeleteOne(context.TODO(), filter)
 	if err != nil {
 		db.GetError(err, ctx)
 		return
 	}
-	fmt.Println(result.DeletedCount)
 	ctx.JSON(http.StatusOK, result.DeletedCount)
 }
