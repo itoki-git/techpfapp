@@ -102,61 +102,45 @@ const SlugTemplate = () => {
                 <span>{date}に公開</span>
               </div>
             </header>
-
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={12} md={9} lg={9} xl={9}>
-                <div className={styles.preview}>
-                  <ReactMarkdown className="znc" plugins={[gfm]} unwrapDisallowed={false}>
-                    {article.markdown}
-                  </ReactMarkdown>
-
-                  <Divider variant="middle" className={settingStyle.divider} />
-                  <div className={ProfileStyle.displayInfo}>
-                    <div className={ProfileStyle.left}>
-                      <Avatar alt="Remy Sharp" src={article.user.image} sx={{ width: 100, height: 100 }} />
-                      <Link href="/[profile.username]" as={`/${article.user.username}`}>
-                        <a style={{ marginLeft: '1rem' }}>
-                          <h5 className={cardStyle.titlelink}>{article.user.nickname}</h5>
-                          <small className={ProfileStyle.jobName}>{article.user.jobname}</small>
-                        </a>
-                      </Link>
-                    </div>
-                    <div>{isLogin ? <LikeButton isChecked={isLike} handleLikeButton={handleClick} /> : null}</div>
-                  </div>
-                </div>
-              </Grid>
-              <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
-                {list !== null ? (
-                  <Box className={settingStyle.paper}>
-                    <h5 className={settingStyle.pageTitle}>Topic</h5>
-                    <Grid container className={cardListStyle.cardList}>
-                      {topic.map((skill, i) => (
-                        <Grid item className={skillStyle.box} key={i}>
-                          <CardwithIconArticle skill={skill} />
-                        </Grid>
-                      ))}
-                    </Grid>
-                  </Box>
-                ) : (
-                  ''
-                )}
-
-                <div className={articleStyle.contentMargin} />
-                <Box className={settingStyle.paper} sx={{ display: { xs: 'none', sm: 'none', md: 'block' } }}>
-                  <div className={ProfileStyle.displayInfo}>
-                    <div className={ProfileStyle.left}>
-                      <Avatar alt="Remy Sharp" src={article.user.image} sx={{ width: 80, height: 80 }} />
-                      <Link href="/[profile.username]" as={`/${article.user.username}`}>
-                        <a style={{ marginLeft: '1rem' }}>
-                          <h5 className={cardStyle.titlelink}>{article.user.nickname}</h5>
-                          <small className={ProfileStyle.jobName}>{article.user.jobname}</small>
-                        </a>
-                      </Link>
-                    </div>
-                  </div>
+            <div>
+              {list !== null ? (
+                <Box className={settingStyle.paper}>
+                  <Grid container direction="row" justifyContent="flex-start" alignItems="flex-start">
+                    {topic.map((skill, i) => (
+                      <Grid item className={skillStyle.box} key={i}>
+                        <CardwithIconArticle skill={skill} />
+                      </Grid>
+                    ))}
+                  </Grid>
                 </Box>
-              </Grid>
-            </Grid>
+              ) : (
+                ''
+              )}
+
+              <div className={articleStyle.contentMargin} />
+            </div>
+
+            <div>
+              <div className={styles.preview}>
+                <ReactMarkdown className="znc" plugins={[gfm]} unwrapDisallowed={false}>
+                  {article.markdown}
+                </ReactMarkdown>
+
+                <Divider variant="middle" className={settingStyle.divider} />
+                <div className={ProfileStyle.displayInfo}>
+                  <div className={ProfileStyle.left}>
+                    <Avatar alt="Remy Sharp" src={article.user.image} sx={{ width: 100, height: 100 }} />
+                    <Link href="/[profile.username]" as={`/${article.user.username}`}>
+                      <a style={{ marginLeft: '1rem' }}>
+                        <h5 className={cardStyle.titlelink}>{article.user.nickname}</h5>
+                        <small className={ProfileStyle.jobName}>{article.user.jobname}</small>
+                      </a>
+                    </Link>
+                  </div>
+                  <div>{isLogin ? <LikeButton isChecked={isLike} handleLikeButton={handleClick} /> : null}</div>
+                </div>
+              </div>
+            </div>
           </div>
         </Grid>
       </Container>
