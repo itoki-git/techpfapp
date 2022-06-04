@@ -132,7 +132,7 @@ const SlugTemplate = () => {
                     <Avatar alt="Remy Sharp" src={article.user.image} sx={{ width: 100, height: 100 }} />
                     <Link href="/[profile.username]" as={`/${article.user.username}`}>
                       <a style={{ marginLeft: '1rem' }}>
-                        <h5 className={cardStyle.titlelink}>{article.user.nickname}</h5>
+                        <h3 className={cardStyle.titlelink}>{article.user.nickname}</h3>
                         <small className={ProfileStyle.jobName}>{article.user.jobname}</small>
                       </a>
                     </Link>
