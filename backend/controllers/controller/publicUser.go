@@ -28,9 +28,6 @@ type LoginResponse struct {
 // CreateUser ユーザーの新規登録
 func CreateUser(ctx *gin.Context) {
 	var user entity.User
-
-	//var checkKey = []string{"NickName", "UserName", "Password"}
-	//ignore := []string{"ID", "JobName", "Bio", "Image", "Skills", "Article", "Like", "WatchLater"}
 	err := ctx.ShouldBindJSON(&user)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
@@ -78,7 +75,7 @@ func GetUser(ctx *gin.Context) {
 	}
 	// レスポンス設定
 	response := entity.User{
-		ID:       user.ID,
+		UserID:   user.UserID,
 		NickName: user.NickName,
 		UserName: user.UserName,
 		JobName:  user.JobName,
@@ -125,7 +122,7 @@ func LoginUser(ctx *gin.Context) {
 		ExpirationHours: 24,
 	}
 
-	signedToken, err := jwtWrapper.GenerateToken(user.ID.Hex())
+	signedToken, err := jwtWrapper.GenerateToken(user.UserID.Hex())
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"message": "error signed token"})
 		ctx.Abort()

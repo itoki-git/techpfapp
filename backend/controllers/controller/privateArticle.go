@@ -24,14 +24,14 @@ func CreatePost(ctx *gin.Context) {
 
 	userID := ctx.GetString("userID")
 	id, _ := primitive.ObjectIDFromHex(userID)
-	filter := bson.M{"_id": id}
+	filter := bson.M{"userID": id}
 	if err := UserCollection.FindOne(context.TODO(), filter).Decode(&user); err != nil {
 		db.GetError(err, ctx)
 		return
 	}
 	_ = ctx.ShouldBindJSON(&post)
 	post.ArticleID = primitive.NewObjectID()
-	post.AuthorID = user.ID
+	post.UserID = user.UserID
 	post.Timestamp = time.Now()
 	result, err := PostCollection.InsertOne(context.TODO(), post)
 	if err != nil {
@@ -68,7 +68,7 @@ func GetPrivateUserPost(ctx *gin.Context) {
 
 	userID := ctx.GetString("userID")
 	id, _ := primitive.ObjectIDFromHex(userID)
-	filter := bson.M{"authorID": id}
+	filter := bson.M{"userID": id}
 
 	cursor, err := PostCollection.Find(context.TODO(), filter)
 	if err != nil {
@@ -81,7 +81,7 @@ func GetPrivateUserPost(ctx *gin.Context) {
 			db.GetError(err, ctx)
 			return
 		}
-		filter := bson.M{"_id": post.AuthorID}
+		filter := bson.M{"userID": post.UserID}
 		if err := UserCollection.FindOne(context.TODO(), filter).Decode(&user); err != nil {
 			db.GetError(err, ctx)
 			return
@@ -105,7 +105,7 @@ func GetUserLikePost(ctx *gin.Context) {
 
 	userID := ctx.GetString("userID")
 	id, _ := primitive.ObjectIDFromHex(userID)
-	filter := bson.M{"_id": id}
+	filter := bson.M{"userID": id}
 
 	if err := UserCollection.FindOne(context.TODO(), filter).Decode(&user); err != nil {
 		db.GetError(err, ctx)
@@ -117,6 +117,7 @@ func GetUserLikePost(ctx *gin.Context) {
 			db.GetError(err, ctx)
 			return
 		}
+		fmt.Println(post)
 		post.Like = GetCountLike(post.ArticleID)
 		postList = append(postList, post)
 	}
@@ -150,7 +151,7 @@ func RemoveArticle(ctx *gin.Context) {
 	articleID, _ := primitive.ObjectIDFromHex(postID)
 	userID := ctx.GetString("userID")
 	id, _ := primitive.ObjectIDFromHex(userID)
-	filter := bson.M{"authorID": id, "articleID": articleID}
+	filter := bson.M{"userID": id, "articleID": articleID}
 	fmt.Println(filter)
 
 	result, err := PostCollection.DeleteOne(context.TODO(), filter)

@@ -51,7 +51,7 @@ func GetProfile(ctx *gin.Context) {
 	var profile entity.User
 	userID := ctx.GetString("userID")
 	id, _ := primitive.ObjectIDFromHex(userID)
-	filter := bson.M{"_id": id}
+	filter := bson.M{"userID": id}
 
 	if err := UserCollection.FindOne(context.TODO(), filter).Decode(&profile); err != nil {
 		db.GetError(err, ctx)
@@ -68,7 +68,7 @@ func UpdateProfile(ctx *gin.Context) {
 	var updateUser entity.User
 	userID := ctx.GetString("userID")
 	id, _ := primitive.ObjectIDFromHex(userID)
-	filter := bson.M{"_id": id}
+	filter := bson.M{"userID": id}
 	if err := UserCollection.FindOne(context.TODO(), filter).Decode(&user); err != nil {
 		db.GetError(err, ctx)
 		return

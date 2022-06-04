@@ -15,8 +15,8 @@ import (
 
 // GetPost IDに紐づいた記事を１件取得する
 func GetPost(ctx *gin.Context) {
-	var post entity.Article
-	var user entity.User
+	var post entity.Post
+	var user entity.PostUser
 	postID := ctx.Params.ByName("id")
 	id, _ := primitive.ObjectIDFromHex(postID)
 	filter := bson.M{"articleID": id}
@@ -24,22 +24,12 @@ func GetPost(ctx *gin.Context) {
 		db.GetError(err, ctx)
 		return
 	}
-	filter = bson.M{"_id": post.AuthorID}
+	filter = bson.M{"userID": post.UserID}
 	if err := UserCollection.FindOne(context.TODO(), filter).Decode(&user); err != nil {
 		db.GetError(err, ctx)
 		return
 	}
-
-	// レスポンス設定
-	response := entity.User{
-		ID:       user.ID,
-		NickName: user.NickName,
-		UserName: user.UserName,
-		JobName:  user.JobName,
-		Bio:      user.Bio,
-		Image:    user.Image,
-	}
-	post.User = response
+	post.User = user
 
 	ctx.JSON(http.StatusOK, post)
 }
@@ -52,7 +42,7 @@ func GetUserPost(ctx *gin.Context) {
 	var response entity.PostResponse
 	userID := ctx.Params.ByName("id")
 	id, _ := primitive.ObjectIDFromHex(userID)
-	filter := bson.M{"authorID": id}
+	filter := bson.M{"userID": id}
 
 	cursor, err := PostCollection.Find(context.TODO(), filter)
 	if err != nil {
@@ -65,7 +55,7 @@ func GetUserPost(ctx *gin.Context) {
 			db.GetError(err, ctx)
 			return
 		}
-		filter := bson.M{"_id": post.AuthorID}
+		filter := bson.M{"userID": post.UserID}
 		if err := UserCollection.FindOne(context.TODO(), filter).Decode(&user); err != nil {
 			db.GetError(err, ctx)
 			return
@@ -113,7 +103,7 @@ func GetPostList(ctx *gin.Context) {
 			db.GetError(err, ctx)
 			return
 		}
-		filter := bson.M{"_id": post.AuthorID}
+		filter := bson.M{"userID": post.UserID}
 		if err := UserCollection.FindOne(context.TODO(), filter).Decode(&user); err != nil {
 			db.GetError(err, ctx)
 			return
@@ -165,7 +155,7 @@ func GetPostTopicList(ctx *gin.Context) {
 			db.GetError(err, ctx)
 			return
 		}
-		if err := UserCollection.FindOne(context.TODO(), bson.M{"_id": post.AuthorID}).Decode(&user); err != nil {
+		if err := UserCollection.FindOne(context.TODO(), bson.M{"userID": post.UserID}).Decode(&user); err != nil {
 			db.GetError(err, ctx)
 			return
 		}
@@ -233,7 +223,7 @@ func GetSearchList(ctx *gin.Context) {
 			db.GetError(err, ctx)
 			return
 		}
-		if err := UserCollection.FindOne(context.TODO(), bson.M{"_id": post.AuthorID}).Decode(&user); err != nil {
+		if err := UserCollection.FindOne(context.TODO(), bson.M{"userID": post.UserID}).Decode(&user); err != nil {
 			db.GetError(err, ctx)
 			return
 		}

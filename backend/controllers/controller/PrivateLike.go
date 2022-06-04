@@ -19,27 +19,27 @@ func UpdateLike(ctx *gin.Context) {
 	var result bool
 	getPostID := ctx.Params.ByName("id")
 	getUserID := ctx.GetString("userID")
-	id, _ := primitive.ObjectIDFromHex(getUserID)
+	userID, _ := primitive.ObjectIDFromHex(getUserID)
 	postID, _ := primitive.ObjectIDFromHex(getPostID)
-	checkFilter := bson.M{"articleID": postID, "users._id": id}
+	checkFilter := bson.M{"articleID": postID, "users.userID": userID}
 	filter := bson.M{"articleID": postID}
 
 	// LIKEテーブルに存在するかチェック
 	isErr := LikeCollection.FindOne(context.TODO(), checkFilter).Decode(&user)
 
-	like.UserID = id
+	like.UserID = userID
 	like.Timestamp = time.Now()
 
 	update := bson.M{"users": like}
 
 	if isErr == nil {
 		// 記事のいいねを削除する
-		if _, err := LikeCollection.UpdateOne(context.TODO(), filter, bson.M{"$pull": bson.M{"users": bson.M{"_id": id}}}); err != nil {
+		if _, err := LikeCollection.UpdateOne(context.TODO(), filter, bson.M{"$pull": bson.M{"users": bson.M{"userID": userID}}}); err != nil {
 			db.GetError(err, ctx)
 			return
 		}
 		// ユーザープロフィールのいいねを削除する
-		if _, err := UserCollection.UpdateOne(context.TODO(), bson.M{"_id": id}, bson.M{"$pull": bson.M{"like": postID}}); err != nil {
+		if _, err := UserCollection.UpdateOne(context.TODO(), bson.M{"userID": userID}, bson.M{"$pull": bson.M{"like": postID}}); err != nil {
 			db.GetError(err, ctx)
 			return
 		}
@@ -50,7 +50,7 @@ func UpdateLike(ctx *gin.Context) {
 			db.GetError(err, ctx)
 			return
 		}
-		if _, err := UserCollection.UpdateOne(context.TODO(), bson.M{"_id": id}, bson.M{"$push": bson.M{"like": postID}}); err != nil {
+		if _, err := UserCollection.UpdateOne(context.TODO(), bson.M{"userID": userID}, bson.M{"$push": bson.M{"like": postID}}); err != nil {
 			db.GetError(err, ctx)
 			return
 		}
@@ -63,9 +63,9 @@ func UpdateLike(ctx *gin.Context) {
 func GetPostIsLike(ctx *gin.Context) {
 	getPostID := ctx.Params.ByName("id")
 	getUserID := ctx.GetString("userID")
-	id, _ := primitive.ObjectIDFromHex(getUserID)
+	userID, _ := primitive.ObjectIDFromHex(getUserID)
 	postID, _ := primitive.ObjectIDFromHex(getPostID)
-	filter := bson.M{"articleID": postID, "users._id": id}
+	filter := bson.M{"articleID": postID, "users.userID": userID}
 
 	count, err := LikeCollection.CountDocuments(context.TODO(), filter)
 	if err != nil {

@@ -12,7 +12,7 @@ import (
 var UserCollection = db.ConnectUsersDB()
 
 type CreateUser struct {
-	ID         primitive.ObjectID   `json:"_id" bson:"_id"`
+	UserID     primitive.ObjectID   `json:"userID" bson:"userID"`
 	NickName   string               `json:"nickname" bson:"nickname"`
 	UserName   string               `json:"username" bson:"username"`
 	Password   string               `json:"password" bson:"password"`
@@ -25,7 +25,7 @@ type CreateUser struct {
 	WatchLater []primitive.ObjectID `json:"watchlater" bson:"watchlater"`
 }
 type User struct {
-	ID       primitive.ObjectID   `json:"_id,omitempty" bson:"_id,omitempty"`
+	UserID   primitive.ObjectID   `json:"userID" bson:"userID"`
 	NickName string               `json:"nickname,omitempty" bson:"nickname,omitempty"`
 	UserName string               `json:"username,omitempty" bson:"username,omitempty"`
 	Password string               `json:"password,omitempty" bson:"password,omitempty"`
@@ -37,7 +37,7 @@ type User struct {
 	Like     []primitive.ObjectID `json:"like,omitempty" bson:"like,omitempty"`
 }
 type LoginUser struct {
-	ID       primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
+	UserID   primitive.ObjectID `json:"userID" bson:"userID"`
 	NickName string             `json:"nickname,omitempty" bson:"nickname,omitempty"`
 	UserName string             `json:"username,omitempty" bson:"username,omitempty"`
 	Password string             `json:"password,omitempty" bson:"password,omitempty"`
@@ -48,16 +48,21 @@ type LoginPayload struct {
 	Password string `json:"password"`
 }
 
+// PostUser 作者情報(レスポンス用)
 type PostUser struct {
-	ID       primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
+	UserID   primitive.ObjectID `json:"userID" bson:"userID"`
 	UserName string             `json:"username,omitempty" bson:"username,omitempty"`
 	NickName string             `json:"nickname,omitempty" bson:"nickname,omitempty"`
+	JobName  string             `json:"jobname,omitempty" bson:"jobname,omitempty"`
+	Bio      string             `json:"bio,omitempty" bson:"bio,omitempty"`
+	Skills   []string           `json:"skill,omitempty" bson:"skill,omitempty"`
 	Image    string             `json:"image,omitempty" bson:"image,omitempty"`
 }
 
+// Post 記事のレスポンス用
 type Post struct {
 	ArticleID   primitive.ObjectID `json:"articleID,omitempty" bson:"articleID,omitempty"`
-	AuthorID    primitive.ObjectID `json:"authorID" bson:"authorID,omitempty"`
+	UserID      primitive.ObjectID `json:"userID" bson:"userID,omitempty"`
 	Title       string             `json:"title" bson:"title,omitempty"`
 	Topic       []TopicInfo        `json:"topic" bson:"topic,omitempty"`
 	Like        int                `json:"like" bson:"like,omitempty"`
@@ -65,14 +70,14 @@ type Post struct {
 	User        PostUser           `json:"user" bson:"user,omitempty"`
 }
 
+// Article 記事作成用
 type Article struct {
 	ArticleID primitive.ObjectID `json:"articleID,omitempty" bson:"articleID,omitempty"`
-	AuthorID  primitive.ObjectID `json:"authorID" bson:"authorID,omitempty"`
+	UserID    primitive.ObjectID `json:"userID" bson:"userID,omitempty"`
 	Title     string             `json:"title" bson:"title,omitempty"`
 	Markdown  string             `json:"markdown" bson:"markdown,omitempty"`
 	Topic     []TopicInfo        `json:"topic" bson:"topic,omitempty"`
 	Timestamp time.Time          `json:"timestamp" bson:"timestamp,omitempty"`
-	User      User               `json:"user" bson:"user,omitempty"`
 }
 
 type PostResponse struct {
@@ -123,7 +128,7 @@ func (user *User) CheckPassword(providedPassword string) error {
 func (user User) CreateUserRecord() error {
 	// 初期値を入力
 	register := CreateUser{
-		ID:         primitive.NewObjectID(),
+		UserID:     primitive.NewObjectID(),
 		NickName:   user.NickName,
 		UserName:   user.UserName,
 		Password:   user.Password,
