@@ -1,0 +1,60 @@
+.wrapper {
+  max-width: 25em;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.1);
+
+  .title {
+    font-size: 35px;
+    font-weight: 600;
+    text-align: center;
+    line-height: 3em;
+    color: #fff;
+    user-select: none;
+    border-radius: 0.5em 0.5em 0 0;
+    background: #3ac7f6;
+  }
+
+  form {
+    padding: 0.5em 1em 5em 3em;
+    .field {
+      height: 3em;
+      width: 100%;
+      margin-top: 3rem;
+      position: relative;
+      .submit {
+        height: 100%;
+        width: 100%;
+        outline: none;
+        border-radius: 25px;
+        color: #fff;
+        border: none;
+        padding-left: 0;
+        margin-top: -10px;
+        font-size: 20px;
+        font-weight: 500;
+        cursor: pointer;
+        background: #3ac7f6;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: #049dd9;
+        }
+
+        &:active {
+          transform: scale(0.95);
+        }
+        &:disabled {
+          cursor: default;
+          background: #f0faff;
+          transform: scale(1);
+        }
+      }
+    }
+    .signup {
+      color: #262626;
+      margin-top: 20px;
+      text-align: center;
+    }
+  }
+}

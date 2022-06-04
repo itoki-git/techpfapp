@@ -1,0 +1,45 @@
+.infoarea {
+  width: 100%;
+  .inputarea {
+    margin-top: 1rem;
+  }
+}
+.highlight {
+  color: red;
+}
+.displayInfo {
+  overflow: hidden;
+  display: flex;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+}
+.left {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  .userName {
+    font-weight: 700;
+    margin-top: 0.3rem;
+    font-size: 1.4rem;
+    line-height: 1.3;
+    flex: 1;
+  }
+  .jobName {
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: #949fa6;
+    text-transform: none;
+    white-space: normal;
+  }
+}
+.right {
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-evenly;
+  width: 360px;
+}

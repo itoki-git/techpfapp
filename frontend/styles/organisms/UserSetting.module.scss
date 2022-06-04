@@ -1,0 +1,29 @@
+$gray: #94a4c4;
+$black: #333;
+$red: #f20c36;
+$white: #fff;
+.paper {
+  background-color: $white;
+  width: 100%;
+  overflow: hidden;
+  box-shadow: none;
+  border-radius: 1rem;
+  padding: 1rem 1rem 2rem;
+}
+.pageTitle {
+  letter-spacing: 0.1rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.5;
+  text-transform: none;
+  white-space: normal;
+  margin-bottom: 1.5rem;
+}
+.divider {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+.labelName {
+  display: inline-block;
+  margin-bottom: 0.4rem;
+}

@@ -1,0 +1,56 @@
+// ナビバー
+.navActive {
+  font-size: 1.3em;
+  color: #fff;
+  display: block;
+  padding: 2rem 0;
+}
+.navInActive {
+  font-size: 1.3em;
+  color: #020202;
+}
+
+.buttonRoot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  a,
+  button {
+    border-radius: 4px;
+    display: block;
+    position: relative;
+    width: 8rem;
+    padding: 1rem;
+    text-align: center;
+    text-decoration: none;
+
+    transition: 0.5s;
+    &:hover {
+      cursor: pointer;
+      text-decoration: none;
+      opacity: 0.7;
+    }
+    &.update {
+      margin-top: 0.8rem;
+      border: none;
+      color: #fff;
+      background: #2499ef;
+    }
+    &.daialogUpdate {
+      border: none;
+      color: #fff;
+      background: #2499ef;
+    }
+    &.logout {
+      margin-top: 0.8rem;
+      color: #f20c36;
+      border: 2px solid #f20c36;
+      background: #fff;
+    }
+    &.cancel {
+      margin-top: 0.8rem;
+      border: 2px solid rgb(148, 164, 196);
+      color: #94a4c4;
+    }
+  }
+}

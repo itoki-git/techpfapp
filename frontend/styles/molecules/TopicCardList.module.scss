@@ -1,0 +1,8 @@
+.cardList {
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: row wrap;
+  margin-top: -32px;
+  width: calc(100%);
+  margin-left: -32px;
+}

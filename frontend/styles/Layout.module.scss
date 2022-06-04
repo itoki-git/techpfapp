@@ -1,0 +1,32 @@
+.page {
+  overflow: hidden;
+  background-color: #fff;
+}
+.parent {
+}
+.header {
+  height: 4rem;
+  background-color: #fff;
+}
+.children {
+  position: relative;
+  height: 100vh;
+  background-color: #f1f5f8;
+  -webkit-box-flex: 1;
+  flex-grow: 1;
+  overflow: auto;
+  min-height: 100%;
+  padding-top: 10rem;
+  padding-bottom: 80px;
+  .center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.load {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+}

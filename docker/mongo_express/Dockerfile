@@ -1,0 +1,7 @@
+FROM  mongo-express
+
+ENV ME_CONFIG_MONGODB_ADMINUSERNAME root
+ENV ME_CONFIG_MONGODB_ADMINPASSWORD T2bvfiRz!!
+
+ENV TZ="Asia/Tokyo"
+RUN echo $TZ > /etc/timezone
