@@ -63,6 +63,7 @@ func server() *gin.Engine {
 			private.GET("/me", controller.GetProfile)
 			private.POST("/posts", controller.CreatePost)
 			private.GET("/posts", controller.GetPrivateUserPost)
+			private.DELETE("/posts/:id", controller.RemoveArticle)
 			private.POST("/posts/upload", controller.UploadImage)
 			private.PATCH("/users", controller.UpdateProfile)
 			private.GET("/posts/like", controller.GetUserLikePost)

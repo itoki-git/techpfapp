@@ -123,3 +123,15 @@ export const getUserLikePost = async (...args) => {
     throw error;
   }
 };
+
+// 記事を削除する
+export const removeArticle = async (id) => {
+  let param = api.removeArticle + id;
+  try {
+    const res = await axios.delete(param, { withCredentials: true });
+    return res.data;
+  } catch (error) {
+    error.status = 403;
+    throw error;
+  }
+};

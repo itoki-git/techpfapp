@@ -123,21 +123,6 @@ export const getUser = async () => {
     throw error;
   }
 };
-export async function getServerUser(cookie) {
-  const jwt = 'jwt=' + cookie.jwt;
-  try {
-    let res = await axios.get(api.serverMe, {
-      headers: {
-        Cookie: jwt,
-      },
-      withCredentials: true,
-    });
-    return res.data;
-  } catch (error) {
-    error.status = 403;
-    throw error;
-  }
-}
 
 export function useUser() {
   const { data, mutate, error } = useSWR('api_user', getUser, {
@@ -145,20 +130,6 @@ export function useUser() {
     errorRetryCount: 3,
     refreshInterval: 60000,
   });
-
-  const loading = !data && !error;
-  const loggedOut = error && error.status === 403;
-
-  return {
-    loading,
-    loggedOut,
-    user: data,
-    mutate,
-  };
-}
-
-export function useServerUser(cookie) {
-  const { data, mutate, error } = useSWR('api_serveruser', getServerUser(cookie));
 
   const loading = !data && !error;
   const loggedOut = error && error.status === 403;

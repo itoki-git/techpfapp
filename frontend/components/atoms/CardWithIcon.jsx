@@ -12,7 +12,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import styles from '../../styles/atoms/CardWithIcon.module.scss';
 import { dialogState } from '../state/createStore';
 import { useRecoilState } from 'recoil';
+import topicStyles from '../../styles/atoms/TopicCard.module.scss';
 import Link from 'next/link';
+import { TopicTitle } from './TopicCard';
 
 export const CardwithIcon = (props) => {
   return (

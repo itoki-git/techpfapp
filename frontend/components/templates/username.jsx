@@ -14,10 +14,10 @@ import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import { getUserProfile } from '../../pages/api/userAPI';
 import { getArticle } from '../../pages/api/articleAPI';
-import CardList from '../organisms/CardList';
 import styles from '../../styles/organisms/CardList.module.scss';
 import { LinearLoad } from '../atoms/Loading';
 import { url } from '../../pages/api/utility';
+import { CardList } from '../organisms/CardList';
 
 const UserNameTemplate = () => {
   const router = useRouter();

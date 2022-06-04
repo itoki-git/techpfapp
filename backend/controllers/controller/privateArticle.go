@@ -5,6 +5,7 @@ import (
 	db "app/models/db"
 	"app/models/entity"
 	"context"
+	"fmt"
 	"net/http"
 	"path/filepath"
 	"time"
@@ -40,7 +41,7 @@ func CreatePost(ctx *gin.Context) {
 
 	// User情報に記事のIDを追加(アップデート)
 	update := bson.D{primitive.E{Key: "$push", Value: bson.D{
-		primitive.E{Key: "article", Value: result.InsertedID},
+		primitive.E{Key: "article", Value: post.ArticleID},
 	}}}
 	opts := options.Update().SetUpsert(true)
 	_, updateErr := UserCollection.UpdateOne(context.TODO(), filter, update, opts)
@@ -58,7 +59,7 @@ func CreatePost(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, result)
 }
 
-// GetUserPost MyPageの記事を取得する
+// GetPrivateUserPost MyPageの記事を取得する
 func GetPrivateUserPost(ctx *gin.Context) {
 	postList := []entity.Post{}
 	var post entity.Post
@@ -95,7 +96,7 @@ func GetPrivateUserPost(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, response)
 }
 
-// GetUserPost 登録ユーザーのいいねした記事を取得する
+// GetUserLikePost 登録ユーザーのいいねした記事を取得する
 func GetUserLikePost(ctx *gin.Context) {
 	postList := []entity.Post{}
 	var post entity.Post
@@ -141,4 +142,22 @@ func UploadImage(ctx *gin.Context) {
 		return
 	}
 	ctx.JSON(http.StatusOK, gin.H{"s3url": preID})
+}
+
+// RemoveArticle 記事を削除する
+func RemoveArticle(ctx *gin.Context) {
+	postID := ctx.Params.ByName("id")
+	articleID, _ := primitive.ObjectIDFromHex(postID)
+	userID := ctx.GetString("userID")
+	id, _ := primitive.ObjectIDFromHex(userID)
+	filter := bson.M{"authorID": id, "articleID": articleID}
+	fmt.Println(filter)
+
+	result, err := PostCollection.DeleteOne(context.TODO(), filter)
+	if err != nil {
+		db.GetError(err, ctx)
+		return
+	}
+	fmt.Println(result.DeletedCount)
+	ctx.JSON(http.StatusOK, result.DeletedCount)
 }
