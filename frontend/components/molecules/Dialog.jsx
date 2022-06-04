@@ -13,10 +13,12 @@ import inputStyle from '../../styles/organisms/UserSetting/Profile.module.scss';
 import settingStyle from '../../styles/organisms/UserSetting.module.scss';
 import skillStyle from '../../styles/atoms/CardWithIcon.module.scss';
 import cardListStyle from '../../styles/molecules/TopicCardList.module.scss';
+import buttonStyle from '../../styles/atoms/Button.module.scss';
 import { CardWithAddIcon, CardwithIcon } from '../atoms/CardWithIcon';
 import { skillsItems } from '../../pages/api/icon';
 import { TopicSelectdList } from './TopicCardList';
 import Container from '@mui/material/Container';
+import DialogContentText from '@mui/material/DialogContentText';
 import { dialogState, stateName, textStateFamily, topicListState } from '../state/createStore';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
@@ -56,10 +58,12 @@ export const DialogSlide = (props) => {
           <CardWithAddIcon title="Edit Item" description="Edit topic item" id={createID + stateName.editTopic} />
         </Grid>
 
-        <DialogActions>
-          <Button className={styles.saveButton} onClick={props.dialogAction} style={{ cursor: 'pointer' }}>
-            保存する
-          </Button>
+        <DialogActions style={{ display: 'flex', justifyContent: 'center' }}>
+          <div className={buttonStyle.buttonRoot}>
+            <button className={buttonStyle.update} onClick={props.dialogAction}>
+              保存する
+            </button>
+          </div>
         </DialogActions>
       </Stack>
       <DialogFullScreen createID={createID} click={isOpen} listItems={listItems} />
@@ -106,27 +110,51 @@ export const DialogFullScreen = (props) => {
   return (
     <Dialog fullScreen open={props.click} onClose={props.click === false} TransitionComponent={Transition}>
       <Container maxWidth="md">
-        <DialogContent className={inputStyle.infoarea}>
-          <div className={inputStyle.inputarea}>
-            <Input
-              id={createID + stateName.topicSearchID}
-              stateId={createID + stateName.topicSearchID}
-              component="searchBox"
-              type="text"
-              placeholder="トピックスを入力..."
-              row={1}
-            />
-          </div>
-        </DialogContent>
-        <DialogContent className={inputStyle.infoarea}>
-          <TopicSelectdList listItems={topicList} selectList={selectList} handleSelectTopic={handleSelectTopic} />
-        </DialogContent>
-        <DialogActions>
-          <Button className={styles.saveButton} onClick={saveTopic} style={{ cursor: 'pointer' }}>
-            保存する
-          </Button>
-        </DialogActions>
+        <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
+          <DialogContent className={inputStyle.infoarea}>
+            <div className={inputStyle.inputarea}>
+              <Input
+                id={createID + stateName.topicSearchID}
+                stateId={createID + stateName.topicSearchID}
+                component="searchBox"
+                type="text"
+                placeholder="トピックスを入力..."
+                row={1}
+              />
+            </div>
+          </DialogContent>
+          <DialogContent className={inputStyle.infoarea}>
+            <TopicSelectdList listItems={topicList} selectList={selectList} handleSelectTopic={handleSelectTopic} />
+          </DialogContent>
+          <DialogActions>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <div className={buttonStyle.buttonRoot}>
+                <button className={buttonStyle.update} onClick={saveTopic}>
+                  保存する
+                </button>
+              </div>
+            </div>
+          </DialogActions>
+        </Stack>
       </Container>
+    </Dialog>
+  );
+};
+
+export const AlertDialog = (props) => {
+  console.log(props.open);
+  return (
+    <Dialog open={props.open} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
+      <DialogTitle id="alert-dialog-title">削除しますか？</DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+          削除しようとしています。削除された記事は戻すことができません。
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={() => props.handleAlertClose()}>キャンセル</Button>
+        <Button onClick={(e) => props.remove(e)}>削除する</Button>
+      </DialogActions>
     </Dialog>
   );
 };
