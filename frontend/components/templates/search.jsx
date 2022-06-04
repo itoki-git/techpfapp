@@ -9,16 +9,16 @@ import { useRouter } from 'next/router';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { textStateFamily } from '../state/createStore';
-import CardList from '../organisms/CardList';
 import Stack from '@mui/material/Stack';
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
 import contentStyles from '../../styles/organisms/CardList.module.scss';
 import { getPageCount, getSearchList } from '../../pages/api/articleAPI';
 import useSWR from 'swr';
-import { CircularLoad, LinearLoad } from '../atoms/Loading';
+import { CircularLoad } from '../atoms/Loading';
 import layoutStyle from '../../styles/Layout.module.scss';
 import { useRecoilValue } from 'recoil';
+import { CardList } from '../organisms/CardList';
 
 const SearchResult = () => {
   const [pageIndex, setPageIndex] = useState(1);

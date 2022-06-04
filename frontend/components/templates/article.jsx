@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import CardList from '../organisms/CardList';
+import { CardList } from '../organisms/CardList';
 import Layout from './Layout';
 import { getPageCount, getPostList } from '../../pages/api/articleAPI';
 import Stack from '@mui/material/Stack';

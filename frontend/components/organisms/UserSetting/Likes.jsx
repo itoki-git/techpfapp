@@ -1,12 +1,12 @@
 import React from 'react';
 import settingStyle from '../../../styles/organisms/UserSetting.module.scss';
 import styles from '../../../styles/organisms/CardList.module.scss';
-import CardList from '../CardList';
 import useSWR from 'swr';
 import { getUserLikePost } from '../../../pages/api/articleAPI';
 import router from 'next/router';
 import { url } from '../../../pages/api/utility';
 import { LinearLoad } from '../../atoms/Loading';
+import { CardList } from '../CardList';
 
 const Likes = () => {
   const { data, error } = useSWR(`api/private/posts/like`, getUserLikePost);

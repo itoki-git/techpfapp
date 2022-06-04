@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import style from '../../../styles/organisms/UserSetting/Skills.module.scss';
 import Paper from '@mui/material/Paper';
 import settingStyle from '../../../styles/organisms/UserSetting.module.scss';
-import CardList from '../CardList';
+import { CardList } from '../CardList';
 
 const WatchLater = () => {
   const [anchorEl, setAnchorEl] = useState(null);
