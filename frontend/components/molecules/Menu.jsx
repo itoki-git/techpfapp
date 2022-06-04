@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import styles from '../../styles/molecules/Menu.module.scss';
 import settingStyle from '../../styles/organisms/UserSetting.module.scss';
+import buttonStyle from '../../styles/atoms/Button.module.scss';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { menuState } from '../state/createStore';
 import { useLogout, userState } from '../../pages/api/userAPI';
@@ -52,10 +53,10 @@ const Menu = () => {
         ))}
       </Stack>
       <Divider variant="middle" className={settingStyle.divider} />
-      <div className={settingStyle.logoutButton}>
-        <a onClick={(e) => handleClickLogout(e)} style={{ cursor: 'pointer' }}>
+      <div className={buttonStyle.buttonRoot}>
+        <button className={buttonStyle.logout} onClick={(e) => handleClickLogout(e)} style={{ cursor: 'pointer' }}>
           Logout
-        </a>
+        </button>
       </div>
     </Paper>
   );

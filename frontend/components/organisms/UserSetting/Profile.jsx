@@ -10,6 +10,7 @@ import { Textarea } from '../../atoms/Textarea';
 import Badge from '@mui/material/Badge';
 import AddPhotoAlternateRoundedIcon from '@mui/icons-material/AddPhotoAlternateRounded';
 import settingStyle from '../../../styles/organisms/UserSetting.module.scss';
+import buttonStyle from '../../../styles/atoms/Button.module.scss';
 import { stateName, textStateFamily } from '../../state/createStore';
 import { MessageSnackbar } from '../../atoms/MessageBar';
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -93,10 +94,10 @@ const Mypage = () => {
                 </div>
               </div>
               <div className={style.right}>
-                <div className={settingStyle.updateButton}>
-                  <a href="" onClick={(e) => handleSave(e)} style={{ cursor: 'pointer' }}>
+                <div className={buttonStyle.buttonRoot}>
+                  <button className={buttonStyle.update} onClick={(e) => handleSave(e)}>
                     Save
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>

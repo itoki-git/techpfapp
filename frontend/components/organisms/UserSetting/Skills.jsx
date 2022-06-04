@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import settingStyle from '../../../styles/organisms/UserSetting.module.scss';
+import buttonStyle from '../../../styles/atoms/Button.module.scss';
 import { CardWithAddIcon, CardwithIcon } from '../../atoms/CardWithIcon';
 import { skillsItems } from '../../../pages/api/icon';
 import { DialogFullScreen } from '../../molecules/Dialog';
@@ -55,10 +56,10 @@ const Skills = () => {
       </Grid>
       <DialogFullScreen createID={stateName.userSkill} click={isOpen} listItems={skillsItems} />
 
-      <div className={settingStyle.updateButton}>
-        <a href="" onClick={(e) => handleSave(e)} style={{ cursor: 'pointer' }}>
+      <div className={buttonStyle.buttonRoot}>
+        <button className={buttonStyle.update} onClick={(e) => handleSave(e)}>
           Save
-        </a>
+        </button>
       </div>
       {barState.open ? <MessageSnackbar barState={barState} messageBarClose={messageBarClose} /> : ''}
     </Paper>

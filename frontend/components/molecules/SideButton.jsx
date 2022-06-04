@@ -11,9 +11,9 @@ import { FabButton } from '../atoms/FabButton';
 
 const fabColorStyle = {
   color: 'common.black',
-  bgcolor: '#F2F2F2',
+  bgcolor: '#fff',
   '&:hover': {
-    bgcolor: '#F2F2F2',
+    bgcolor: '#f2f2f2',
   },
 };
 
