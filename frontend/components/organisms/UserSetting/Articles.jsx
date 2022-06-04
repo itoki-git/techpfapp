@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from '../../../styles/organisms/CardList.module.scss';
 import settingStyle from '../../../styles/organisms/UserSetting.module.scss';
-import useSWR from 'swr';
+import useSWR, { useSWRConfig } from 'swr';
 import { getPrivatePostList, removeArticle } from '../../../pages/api/articleAPI';
 import { LinearLoad } from '../../atoms/Loading';
 import router from 'next/router';
@@ -11,6 +11,7 @@ import { AlertDialog } from '../../molecules/Dialog';
 import { MessageSnackbar } from '../../atoms/MessageBar';
 
 const Articles = () => {
+  const { mutate } = useSWRConfig();
   const { data, error } = useSWR(`api/private/posts`, getPrivatePostList);
   const [open, setOpen] = useState(false);
   const [id, setId] = useState(null);
@@ -37,6 +38,7 @@ const Articles = () => {
     const result = await removeArticle(id);
     setOpen(false);
     setBarState({ ...barState, open: result === 1, message: '記事を削除しました', severity: 'success' });
+    mutate(`api/private/posts`);
   };
 
   const handleAlertClose = () => {

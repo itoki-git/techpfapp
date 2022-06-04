@@ -153,7 +153,9 @@ export const AlertDialog = (props) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={() => props.handleAlertClose()}>キャンセル</Button>
-        <Button onClick={(e) => props.remove(e)}>削除する</Button>
+        <Button variant="contained" color="error" onClick={(e) => props.remove(e)}>
+          削除する
+        </Button>
       </DialogActions>
     </Dialog>
   );
