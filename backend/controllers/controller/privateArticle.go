@@ -112,19 +112,16 @@ func GetUserLikePost(ctx *gin.Context) {
 		return
 	}
 
+	// いいねした記事がある&&作者が存在しているものを返却対象にする
 	for _, value := range user.Like {
-		if err := PostCollection.FindOne(context.TODO(), bson.M{"articleID": value}).Decode(&post); err != nil {
-			db.GetError(err, ctx)
-			return
+		if err := PostCollection.FindOne(context.TODO(), bson.M{"articleID": value}).Decode(&post); err == nil {
+			filter := bson.M{"userID": post.UserID}
+			if err := UserCollection.FindOne(context.TODO(), filter).Decode(&postUser); err == nil {
+				post.Like = GetCountLike(post.ArticleID)
+				post.User = postUser
+				postList = append(postList, post)
+			}
 		}
-		filter := bson.M{"userID": post.UserID}
-		if err := UserCollection.FindOne(context.TODO(), filter).Decode(&postUser); err != nil {
-			db.GetError(err, ctx)
-			return
-		}
-		post.Like = GetCountLike(post.ArticleID)
-		post.User = postUser
-		postList = append(postList, post)
 	}
 	response.PostList = postList
 	response.PostCount = len(postList)
