@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import MuiAlert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
@@ -8,9 +8,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 export const MessageSnackbar = (props) => {
-  const [state] = useState(props.barState);
-
-  const { vertical, horizontal, open, message, severity } = state;
+  const { vertical, horizontal, open, message, severity } = props.barState;
   return (
     <div>
       <Snackbar

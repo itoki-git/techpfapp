@@ -16,7 +16,6 @@ import { stateName, textStateFamily } from '../state/createStore';
 const Signup = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [setIsFail] = useState(false);
   const username = useRecoilValue(textStateFamily(stateName.signupUserName));
   const nickname = useRecoilValue(textStateFamily(stateName.signupNickName));
   const password = useRecoilValue(textStateFamily(stateName.signupPassword));
@@ -41,12 +40,10 @@ const Signup = () => {
         .post(api.signup, data)
         .then(() => {
           setIsLoading(false);
-          setIsFail(false);
           setBarState({ ...barState, open: true, message: 'ユーザーを登録しました', severity: 'success' });
           router.push(url.login);
         })
         .catch(() => {
-          setIsFail(true);
           setBarState({
             ...barState,
             open: true,
