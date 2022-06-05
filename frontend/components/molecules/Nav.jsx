@@ -1,7 +1,9 @@
 import React from 'react';
+
 import Link from 'next/link';
-import styles from '../../styles/molecules/Nav.module.scss';
+
 import { url } from '../../pages/api/utility';
+import styles from '../../styles/molecules/Nav.module.scss';
 
 // ナビメニュー
 const Nav = (props) => {

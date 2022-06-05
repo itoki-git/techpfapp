@@ -1,13 +1,11 @@
 import React from 'react';
-import Grid from '@mui/material/Grid';
-import Container from '@mui/material/Container';
-import Stack from '@mui/material/Stack';
-import Avatar from '@mui/material/Avatar';
-import { Input } from '../../atoms/Input';
-import style from '../../../styles/organisms/UserSetting/Profile.module.scss';
-import Button from '@mui/material/Button';
+
 import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
+
 import settingStyle from '../../../styles/organisms/UserSetting.module.scss';
+import style from '../../../styles/organisms/UserSetting/Profile.module.scss';
+import { Input } from '../../atoms/Input';
 const Password = () => {
   return (
     <Paper elevation={0} className={settingStyle.paper}>

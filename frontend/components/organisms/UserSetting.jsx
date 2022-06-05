@@ -1,16 +1,18 @@
 import React from 'react';
+
 import Container from '@mui/material/Container';
-import Menu from '../molecules/Menu';
 import Grid from '@mui/material/Grid';
 import { useRecoilValue } from 'recoil';
+
+import { getUserInfo } from '../../pages/api/userAPI';
+import Menu from '../molecules/Menu';
 import { menuState } from '../state/createStore';
-import Mypage from './UserSetting/Profile';
-import Skills from './UserSetting/Skills';
 import Articles from './UserSetting/Articles';
 import Likes from './UserSetting/Likes';
-import { getUserInfo } from '../../pages/api/userAPI';
+import Mypage from './UserSetting/Profile';
+import Skills from './UserSetting/Skills';
 
-const UserSeting = (props) => {
+const UserSeting = () => {
   const menuStateValue = useRecoilValue(menuState);
   getUserInfo();
   const changePage = () => {

@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import Stack from '@mui/material/Stack';
-import Pagination from '@mui/material/Pagination';
-import PaginationItem from '@mui/material/PaginationItem';
-import Container from '@mui/material/Container';
+
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import Layout from './Layout';
+import Container from '@mui/material/Container';
+import Pagination from '@mui/material/Pagination';
+import PaginationItem from '@mui/material/PaginationItem';
+import Stack from '@mui/material/Stack';
 import { useRouter } from 'next/router';
-import { getPageCount, getPostList } from '../../pages/api/articleAPI';
 import useSWR from 'swr';
-import { TopicTitle } from '../atoms/TopicCard';
+
+import { getPageCount, getPostList } from '../../pages/api/articleAPI';
 import { skillsItems } from '../../pages/api/icon';
+import { url } from '../../pages/api/utility';
 import topicStyles from '../../styles/atoms/TopicCard.module.scss';
 import contentStyles from '../../styles/organisms/CardList.module.scss';
 import { LinearLoad } from '../atoms/Loading';
-import { url } from '../../pages/api/utility';
+import { TopicTitle } from '../atoms/TopicCard';
 import { CardList } from '../organisms/CardList';
+import Layout from './Layout';
 
 const TopicTemplate = () => {
   const [pageIndex, setPageIndex] = useState(1);

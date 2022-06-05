@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
-import IconButton from '@mui/material/IconButton';
+
 import AddIcon from '@mui/icons-material/Add';
-import Grid from '@mui/material/Grid';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+import Link from 'next/link';
+import { useRecoilState } from 'recoil';
+
 import styles from '../../styles/atoms/CardWithIcon.module.scss';
 import { dialogState } from '../state/createStore';
-import { useRecoilState } from 'recoil';
-import topicStyles from '../../styles/atoms/TopicCard.module.scss';
-import Link from 'next/link';
-import { TopicTitle } from './TopicCard';
 
 export const CardwithIcon = (props) => {
   return (

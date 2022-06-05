@@ -1,11 +1,13 @@
 import React, { useMemo } from 'react';
-import { createIDState } from '../state/createStore';
+
+import Container from '@mui/material/Container';
 import dynamic from 'next/dynamic';
 import { useSetRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
-import Container from '@mui/material/Container';
-import Layout from './Layout';
+
 import { Protected } from '../../pages/api/userAPI';
+import { createIDState } from '../state/createStore';
+import Layout from './Layout';
 
 const CreateTemplate = () => {
   const Create = dynamic(() => import('../organisms/Create'), { ssr: false });

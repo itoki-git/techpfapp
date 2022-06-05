@@ -1,23 +1,25 @@
 import React, { useState } from 'react';
-import Nav from '../molecules/Nav';
-import MenuIcon from '@mui/icons-material/Menu';
-import CloseIcon from '@mui/icons-material/Close';
-import IconButton from '@mui/material/IconButton';
-import Box from '@mui/material/Box';
-import styles from '../../styles/organisms/Header.module.scss';
-import { useRouter } from 'next/router';
-import { url } from '../../pages/api/utility';
-import { usePublishArticle } from '../../pages/api/articleAPI';
-import { useRecoilValue } from 'recoil';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+
 import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
-import { createIDState, stateName, textStateFamily } from '../state/createStore';
+import CloseIcon from '@mui/icons-material/Close';
+import MenuIcon from '@mui/icons-material/Menu';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useRecoilValue } from 'recoil';
+
+import { usePublishArticle } from '../../pages/api/articleAPI';
+import { url } from '../../pages/api/utility';
+import styles from '../../styles/organisms/Header.module.scss';
 import { MessageSnackbar } from '../atoms/MessageBar';
 import { DialogSlide } from '../molecules/Dialog';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-import Link from 'next/link';
-import Image from 'next/image';
+import Nav from '../molecules/Nav';
+import { createIDState, stateName, textStateFamily } from '../state/createStore';
 
 // 通常のヘッダー
 const NormalHeader = (props) => {

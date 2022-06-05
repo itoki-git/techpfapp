@@ -1,8 +1,10 @@
 import React from 'react';
+
 import Grid from '@mui/material/Grid';
-import { TopicCard } from '../atoms/TopicCard';
-import styles from '../../styles/atoms/TopicCard.module.scss';
 import Link from 'next/link';
+
+import styles from '../../styles/atoms/TopicCard.module.scss';
+import { TopicCard } from '../atoms/TopicCard';
 
 export const TopicCardList = (props) => {
   const listItems = props.listItems;
@@ -50,7 +52,7 @@ export const TopicSelectdList = (props) => {
 };
 
 export const TopicListButton = (props) => {
-  const { listItems, selectList } = props;
+  const { listItems } = props;
   return (
     <Grid container spacing={2}>
       {listItems.map((item, i) => (

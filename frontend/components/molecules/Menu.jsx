@@ -1,21 +1,23 @@
 import React from 'react';
-import Stack from '@mui/material/Stack';
-import Paper from '@mui/material/Paper';
+
+import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
+import { useRouter } from 'next/router';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+
+import { menuIconItems } from '../../pages/api/icon';
+import { useLogout, userState } from '../../pages/api/userAPI';
+import { url } from '../../pages/api/utility';
+import buttonStyle from '../../styles/atoms/Button.module.scss';
 import styles from '../../styles/molecules/Menu.module.scss';
 import settingStyle from '../../styles/organisms/UserSetting.module.scss';
-import buttonStyle from '../../styles/atoms/Button.module.scss';
-import { useRecoilState, useSetRecoilState } from 'recoil';
 import { menuState } from '../state/createStore';
-import { useLogout, userState } from '../../pages/api/userAPI';
-import { menuIconItems } from '../../pages/api/icon';
-import { useRouter } from 'next/router';
-import { url } from '../../pages/api/utility';
 
 const Menu = () => {
   const menuItems = menuIconItems;
@@ -29,7 +31,7 @@ const Menu = () => {
     let isLogout = await logout();
     if (isLogout) {
       setIsLogin(false);
-      router.replace(url.login);
+      router.push(url.login);
     }
   };
   return (

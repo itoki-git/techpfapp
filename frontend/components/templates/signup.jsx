@@ -1,7 +1,8 @@
 import React from 'react';
-import Layout from './Layout';
-import Signup from '../organisms/Signup';
+
 import styles from '../../styles/Layout.module.scss';
+import Signup from '../organisms/Signup';
+import Layout from './Layout';
 const SignupTemplate = () => {
   return (
     <Layout title="signup">

@@ -1,8 +1,10 @@
+import { useCallback, useEffect } from 'react';
+
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { useCallback, useEffect } from 'react';
 import { atom, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import useSWR, { mutate } from 'swr';
+
 import { stateName, textStateFamily, topicListState } from '../../components/state/createStore';
 import { skillsItems } from './icon';
 import { api, url } from './utility';

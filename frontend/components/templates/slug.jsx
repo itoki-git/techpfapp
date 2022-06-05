@@ -1,31 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
+
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Divider from '@mui/material/Divider';
+import Grid from '@mui/material/Grid';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useRecoilValue } from 'recoil';
 import gfm from 'remark-gfm';
 import 'zenn-content-css';
-import styles from '../../styles/organisms/Preview.module.scss';
-import articleStyle from '../../styles/organisms/ArticlePage.module.scss';
-import settingStyle from '../../styles/organisms/UserSetting.module.scss';
-import skillStyle from '../../styles/atoms/CardWithIcon.module.scss';
-import ProfileStyle from '../../styles/organisms/UserSetting/Profile.module.scss';
-import cardListStyle from '../../styles/molecules/TopicCardList.module.scss';
-import cardStyle from '../../styles/molecules/Card.module.scss';
+import useSWR from 'swr';
+
 import { getArticle, getArticleLike, handleLikeButton } from '../../pages/api/articleAPI';
-import Avatar from '@mui/material/Avatar';
-import Divider from '@mui/material/Divider';
-import { CardwithIconArticle } from '../atoms/CardWithIcon';
 import { skillsItems } from '../../pages/api/icon';
 import { userState } from '../../pages/api/userAPI';
-import Layout from './Layout';
-import { LikeButton } from '../atoms/LikeButton';
-import useSWR from 'swr';
-import Link from 'next/link';
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
-import { useRouter } from 'next/router';
-import { LinearLoad } from '../atoms/Loading';
 import { url } from '../../pages/api/utility';
-import { useRecoilValue } from 'recoil';
-import Grid from '@mui/material/Grid';
+import skillStyle from '../../styles/atoms/CardWithIcon.module.scss';
+import cardStyle from '../../styles/molecules/Card.module.scss';
+import articleStyle from '../../styles/organisms/ArticlePage.module.scss';
+import styles from '../../styles/organisms/Preview.module.scss';
+import settingStyle from '../../styles/organisms/UserSetting.module.scss';
+import ProfileStyle from '../../styles/organisms/UserSetting/Profile.module.scss';
+import { CardwithIconArticle } from '../atoms/CardWithIcon';
+import { LikeButton } from '../atoms/LikeButton';
+import { LinearLoad } from '../atoms/Loading';
+import Layout from './Layout';
 
 const SlugTemplate = () => {
   const isLogin = useRecoilValue(userState);

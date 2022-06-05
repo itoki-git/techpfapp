@@ -1,7 +1,9 @@
 import React from 'react';
-import { Input } from '../atoms/Input';
+
 import Container from '@mui/material/Container';
+
 import inputStyle from '../../styles/organisms/UserSetting/Profile.module.scss';
+import { Input } from '../atoms/Input';
 
 export const SearchField = (props) => {
   return (

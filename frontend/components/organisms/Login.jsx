@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
+
 import Link from 'next/link';
 import Router from 'next/router';
-import { Input } from '../atoms/Input';
-import { textStateFamily, stateName } from '../state/createStore';
-import styles from '../../styles/organisms/Login.module.scss';
-import layoutStyle from '../../styles/Layout.module.scss';
-import { url } from '../../pages/api/utility';
-import { useLogin, useUser, userState } from '../../pages/api/userAPI';
 import { useRecoilValue, useRecoilState } from 'recoil';
+
+import { useLogin, useUser, userState } from '../../pages/api/userAPI';
+import { url } from '../../pages/api/utility';
+import layoutStyle from '../../styles/Layout.module.scss';
+import styles from '../../styles/organisms/Login.module.scss';
+import { Input } from '../atoms/Input';
 import { CircularLoad } from '../atoms/Loading';
 import { MessageSnackbar } from '../atoms/MessageBar';
+import { textStateFamily, stateName } from '../state/createStore';
 
 const Login = () => {
   const username = useRecoilValue(textStateFamily(stateName.loginUserName));

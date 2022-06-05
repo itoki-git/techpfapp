@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
+
 import { useRecoilState } from 'recoil';
+
 import styles from '../../styles/molecules/Editor.module.scss';
 import { Textarea } from '../atoms/Textarea';
 import { editorHeight } from '../state/createStore';

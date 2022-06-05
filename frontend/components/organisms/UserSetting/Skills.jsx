@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
-import Paper from '@mui/material/Paper';
+
 import Grid from '@mui/material/Grid';
-import settingStyle from '../../../styles/organisms/UserSetting.module.scss';
-import buttonStyle from '../../../styles/atoms/Button.module.scss';
-import { CardWithAddIcon, CardwithIcon } from '../../atoms/CardWithIcon';
+import Paper from '@mui/material/Paper';
+import { useRecoilValue } from 'recoil';
+
 import { skillsItems } from '../../../pages/api/icon';
-import { DialogFullScreen } from '../../molecules/Dialog';
-import cardListStyle from '../../../styles/molecules/TopicCardList.module.scss';
-import skillStyle from '../../../styles/atoms/CardWithIcon.module.scss';
-import { dialogState, stateName, topicListState } from '../../state/createStore';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { MessageSnackbar } from '../../atoms/MessageBar';
 import { useUpdataProfile } from '../../../pages/api/userAPI';
+import buttonStyle from '../../../styles/atoms/Button.module.scss';
+import skillStyle from '../../../styles/atoms/CardWithIcon.module.scss';
+import cardListStyle from '../../../styles/molecules/TopicCardList.module.scss';
+import settingStyle from '../../../styles/organisms/UserSetting.module.scss';
+import { CardWithAddIcon, CardwithIcon } from '../../atoms/CardWithIcon';
+import { MessageSnackbar } from '../../atoms/MessageBar';
+import { DialogFullScreen } from '../../molecules/Dialog';
+import { dialogState, stateName, topicListState } from '../../state/createStore';
 
 const Skills = () => {
-  const [selectTopics, setSelectTopics] = useRecoilState(
-    topicListState(stateName.userSkill + stateName.selectedTopicsID)
-  );
+  const selectTopics = useRecoilValue(topicListState(stateName.userSkill + stateName.selectedTopicsID));
   const isOpen = useRecoilValue(dialogState(stateName.userSkill + stateName.editTopic));
   const updateProfile = useUpdataProfile();
   const [barState, setBarState] = useState({

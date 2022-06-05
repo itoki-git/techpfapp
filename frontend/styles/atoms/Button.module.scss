@@ -23,8 +23,9 @@
     padding: 1rem;
     text-align: center;
     text-decoration: none;
-
     transition: 0.5s;
+    outline: none;
+    font-weight: 600;
     &:hover {
       cursor: pointer;
       text-decoration: none;
@@ -51,6 +52,12 @@
       margin-top: 0.8rem;
       border: 2px solid rgb(148, 164, 196);
       color: #94a4c4;
+    }
+    &.errorback {
+      border: none;
+      margin-top: 6em;
+      background: #2499ef;
+      color: #fff;
     }
   }
 }
