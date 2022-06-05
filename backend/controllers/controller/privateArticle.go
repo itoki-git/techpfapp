@@ -31,7 +31,7 @@ func CreatePost(ctx *gin.Context) {
 	_ = ctx.ShouldBindJSON(&post)
 	post.ArticleID = primitive.NewObjectID()
 	post.UserID = user.UserID
-	post.Timestamp = time.Now()
+	post.PublishedAt = time.Now()
 	result, err := PostCollection.InsertOne(context.TODO(), post)
 	if err != nil {
 		db.GetError(err, ctx)

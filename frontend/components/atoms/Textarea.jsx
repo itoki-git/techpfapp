@@ -17,6 +17,7 @@ export const Textarea = (props) => {
   return (
     <textarea
       className={`${styles['textarea']} ${styles[props.component]}`}
+      style={{ minHeight: props.minHeight }}
       defaultValue={text}
       id={props.id}
       placeholder={props.placeholder}

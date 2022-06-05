@@ -13,11 +13,18 @@ export const Editor = (props) => {
     editorArea = document.getElementById(props.id);
     previewHeight = editorArea.scrollHeight;
     setHeight(previewHeight);
-  }, []);
+  }, editorArea);
 
   return (
-    <div className={styles.editor} style={{ minHeight: height }}>
-      <Textarea stateId={props.id} id={props.id} component="inputarea" placeholder="Markdownで記述しよう!" row={15} />
+    <div className={styles.editor}>
+      <Textarea
+        stateId={props.id}
+        id={props.id}
+        component="inputarea"
+        placeholder="Markdownで記述しよう!"
+        row={15}
+        minHeight={height}
+      />
     </div>
   );
 };
