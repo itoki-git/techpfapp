@@ -35,7 +35,7 @@ const UserNameTemplate = () => {
   );
 
   const { data: article, error: articleError } = useSWR(
-    profile != undefined ? `/api/public/users/posts/${profile._id}` : null,
+    profile != undefined ? `/api/public/users/posts/${profile.userID}` : null,
     getArticle,
     {
       revalidateOnFocus: false,
