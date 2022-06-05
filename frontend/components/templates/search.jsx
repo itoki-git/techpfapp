@@ -1,24 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { SearchField } from '../molecules/Search';
-import Layout from './Layout';
-import { TopicListButton } from '../molecules/TopicCardList';
-import { skillsItems } from '../../pages/api/icon';
-import Container from '@mui/material/Container';
-import inputStyle from '../../styles/organisms/UserSetting/Profile.module.scss';
-import { useRouter } from 'next/router';
+
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { textStateFamily } from '../state/createStore';
-import Stack from '@mui/material/Stack';
+import Container from '@mui/material/Container';
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
-import contentStyles from '../../styles/organisms/CardList.module.scss';
-import { getPageCount, getSearchList } from '../../pages/api/articleAPI';
-import useSWR from 'swr';
-import { CircularLoad } from '../atoms/Loading';
-import layoutStyle from '../../styles/Layout.module.scss';
+import Stack from '@mui/material/Stack';
+import { useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';
+import useSWR from 'swr';
+
+import { getPageCount, getSearchList } from '../../pages/api/articleAPI';
+import { skillsItems } from '../../pages/api/icon';
+import layoutStyle from '../../styles/Layout.module.scss';
+import contentStyles from '../../styles/organisms/CardList.module.scss';
+import inputStyle from '../../styles/organisms/UserSetting/Profile.module.scss';
+import { CircularLoad } from '../atoms/Loading';
+import { SearchField } from '../molecules/Search';
+import { TopicListButton } from '../molecules/TopicCardList';
 import { CardList } from '../organisms/CardList';
+import { textStateFamily } from '../state/createStore';
+import Layout from './Layout';
 
 const SearchResult = () => {
   const [pageIndex, setPageIndex] = useState(1);

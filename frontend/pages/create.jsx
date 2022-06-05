@@ -1,4 +1,5 @@
 import React from 'react';
+
 import CreateTemplate from '../components/templates/create';
 
 const CreatePage = () => {

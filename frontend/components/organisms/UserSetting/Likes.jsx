@@ -1,10 +1,12 @@
 import React from 'react';
-import settingStyle from '../../../styles/organisms/UserSetting.module.scss';
-import styles from '../../../styles/organisms/CardList.module.scss';
-import useSWR from 'swr';
-import { getUserLikePost } from '../../../pages/api/articleAPI';
+
 import router from 'next/router';
+import useSWR from 'swr';
+
+import { getUserLikePost } from '../../../pages/api/articleAPI';
 import { url } from '../../../pages/api/utility';
+import styles from '../../../styles/organisms/CardList.module.scss';
+import settingStyle from '../../../styles/organisms/UserSetting.module.scss';
 import { LinearLoad } from '../../atoms/Loading';
 import { CardList } from '../CardList';
 

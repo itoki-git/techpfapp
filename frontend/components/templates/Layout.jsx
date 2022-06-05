@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
+
 import Head from 'next/head';
 import { useRecoilState } from 'recoil';
-import styles from '../../styles/Layout.module.scss';
-import Header from '../organisms/Header';
-import { privateMenu, publicMenu } from '../../pages/api/utility';
+
 import { userState, useUser } from '../../pages/api/userAPI';
+import { privateMenu, publicMenu } from '../../pages/api/utility';
+import styles from '../../styles/Layout.module.scss';
 import { LinearLoad } from '../atoms/Loading';
+import Header from '../organisms/Header';
 
 const Layout = (props) => {
   const { title, children } = props;

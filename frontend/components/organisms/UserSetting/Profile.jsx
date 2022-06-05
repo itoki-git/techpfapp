@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
-import Stack from '@mui/material/Stack';
-import Avatar from '@mui/material/Avatar';
-import { Input } from '../../atoms/Input';
-import style from '../../../styles/organisms/UserSetting/Profile.module.scss';
-import Paper from '@mui/material/Paper';
-import IconButton from '@mui/material/IconButton';
-import { Textarea } from '../../atoms/Textarea';
-import Badge from '@mui/material/Badge';
+
 import AddPhotoAlternateRoundedIcon from '@mui/icons-material/AddPhotoAlternateRounded';
-import settingStyle from '../../../styles/organisms/UserSetting.module.scss';
-import buttonStyle from '../../../styles/atoms/Button.module.scss';
-import { stateName, textStateFamily } from '../../state/createStore';
-import { MessageSnackbar } from '../../atoms/MessageBar';
+import Avatar from '@mui/material/Avatar';
+import Badge from '@mui/material/Badge';
+import IconButton from '@mui/material/IconButton';
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
 import { useRecoilState, useRecoilValue } from 'recoil';
+
 import { useUpdataProfile } from '../../../pages/api/userAPI';
 import { useUploadFile } from '../../../pages/api/utility';
+import buttonStyle from '../../../styles/atoms/Button.module.scss';
+import settingStyle from '../../../styles/organisms/UserSetting.module.scss';
+import style from '../../../styles/organisms/UserSetting/Profile.module.scss';
+import { Input } from '../../atoms/Input';
+import { MessageSnackbar } from '../../atoms/MessageBar';
+import { Textarea } from '../../atoms/Textarea';
+import { stateName, textStateFamily } from '../../state/createStore';
 const Mypage = () => {
   const nickName = useRecoilValue(textStateFamily(stateName.nickName));
   const jobName = useRecoilValue(textStateFamily(stateName.jobName));

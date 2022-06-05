@@ -1,13 +1,15 @@
 import React from 'react';
-import Stack from '@mui/material/Stack';
+
+import EditIcon from '@mui/icons-material/Edit';
 import ImageIcon from '@mui/icons-material/Image';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import EditIcon from '@mui/icons-material/Edit';
 import Fab from '@mui/material/Fab';
+import Stack from '@mui/material/Stack';
 import Tooltip from '@mui/material/Tooltip';
 import { useRecoilState } from 'recoil';
-import { editState } from '../state/createStore';
+
 import { FabButton } from '../atoms/FabButton';
+import { editState } from '../state/createStore';
 
 const fabColorStyle = {
   color: 'common.black',
@@ -17,7 +19,7 @@ const fabColorStyle = {
   },
 };
 
-export const SideButton = (props) => {
+export const SideButton = () => {
   const [isEdit, setEditState] = useRecoilState(editState);
 
   // 編集とプレビューの切り替え

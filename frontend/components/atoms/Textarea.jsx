@@ -1,6 +1,8 @@
 import React from 'react';
-import styles from '../../styles/atoms/Textarea.module.scss';
+
 import { useRecoilState } from 'recoil';
+
+import styles from '../../styles/atoms/Textarea.module.scss';
 import { textStateFamily } from '../state/createStore';
 
 // テキストエリア

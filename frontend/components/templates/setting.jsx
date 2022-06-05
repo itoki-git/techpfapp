@@ -1,8 +1,10 @@
 import React from 'react';
+
+import Container from '@mui/material/Container';
+
+import { Protected } from '../../pages/api/userAPI';
 import UserSeting from '../organisms/UserSetting';
 import Layout from './Layout';
-import Container from '@mui/material/Container';
-import { Protected } from '../../pages/api/userAPI';
 
 const SettingTemplate = () => {
   Protected();

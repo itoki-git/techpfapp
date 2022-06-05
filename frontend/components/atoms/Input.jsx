@@ -1,6 +1,8 @@
 import React from 'react';
-import styles from '../../styles/atoms/Input.module.scss';
+
 import { useRecoilState } from 'recoil';
+
+import styles from '../../styles/atoms/Input.module.scss';
 import { textStateFamily } from '../state/createStore';
 
 // 入力ボックス

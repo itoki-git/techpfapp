@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
+
+import router from 'next/router';
+import useSWR, { useSWRConfig } from 'swr';
+
+import { getPrivatePostList, removeArticle } from '../../../pages/api/articleAPI';
+import { url } from '../../../pages/api/utility';
 import styles from '../../../styles/organisms/CardList.module.scss';
 import settingStyle from '../../../styles/organisms/UserSetting.module.scss';
-import useSWR, { useSWRConfig } from 'swr';
-import { getPrivatePostList, removeArticle } from '../../../pages/api/articleAPI';
 import { LinearLoad } from '../../atoms/Loading';
-import router from 'next/router';
-import { url } from '../../../pages/api/utility';
-import { EditCardList } from '../CardList';
-import { AlertDialog } from '../../molecules/Dialog';
 import { MessageSnackbar } from '../../atoms/MessageBar';
+import { AlertDialog } from '../../molecules/Dialog';
+import { EditCardList } from '../CardList';
 
 const Articles = () => {
   const { mutate } = useSWRConfig();

@@ -1,5 +1,7 @@
 import React from 'react';
+
 import Skeleton from '@mui/material/Skeleton';
+
 import styles from '../../styles/atoms/TopicCard.module.scss';
 
 export const TopicCard = (props) => {

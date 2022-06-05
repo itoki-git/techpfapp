@@ -1,26 +1,27 @@
 import React, { useEffect, useState } from 'react';
+
 import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import Grid from '@mui/material/Grid';
+import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import Stack from '@mui/material/Stack';
-import { Input } from '../atoms/Input';
+import Grid from '@mui/material/Grid';
 import Slide from '@mui/material/Slide';
-import styles from '../../styles/organisms/Header.module.scss';
-import inputStyle from '../../styles/organisms/UserSetting/Profile.module.scss';
-import settingStyle from '../../styles/organisms/UserSetting.module.scss';
+import Stack from '@mui/material/Stack';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+
+import { skillsItems } from '../../pages/api/icon';
+import buttonStyle from '../../styles/atoms/Button.module.scss';
 import skillStyle from '../../styles/atoms/CardWithIcon.module.scss';
 import cardListStyle from '../../styles/molecules/TopicCardList.module.scss';
-import buttonStyle from '../../styles/atoms/Button.module.scss';
+import settingStyle from '../../styles/organisms/UserSetting.module.scss';
+import inputStyle from '../../styles/organisms/UserSetting/Profile.module.scss';
 import { CardWithAddIcon, CardwithIcon } from '../atoms/CardWithIcon';
-import { skillsItems } from '../../pages/api/icon';
-import { TopicSelectdList } from './TopicCardList';
-import Container from '@mui/material/Container';
-import DialogContentText from '@mui/material/DialogContentText';
+import { Input } from '../atoms/Input';
 import { dialogState, stateName, textStateFamily, topicListState } from '../state/createStore';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { TopicSelectdList } from './TopicCardList';
 
 export const DialogSlide = (props) => {
   const { createID } = props;

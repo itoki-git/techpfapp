@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
-import { CardList } from '../organisms/CardList';
-import Layout from './Layout';
-import { getPageCount, getPostList } from '../../pages/api/articleAPI';
-import Stack from '@mui/material/Stack';
-import Pagination from '@mui/material/Pagination';
-import PaginationItem from '@mui/material/PaginationItem';
-import styles from '../../styles/organisms/CardList.module.scss';
+
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Container from '@mui/material/Container';
+import Pagination from '@mui/material/Pagination';
+import PaginationItem from '@mui/material/PaginationItem';
+import Stack from '@mui/material/Stack';
 import useSWR from 'swr';
+
+import { getPageCount, getPostList } from '../../pages/api/articleAPI';
+import styles from '../../styles/organisms/CardList.module.scss';
 import { LinearLoad } from '../atoms/Loading';
+import { CardList } from '../organisms/CardList';
+import Layout from './Layout';
 
 const ArticleTemplate = () => {
   const [pageIndex, setPageIndex] = useState(1);

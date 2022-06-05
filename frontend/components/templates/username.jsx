@@ -1,23 +1,25 @@
 import React, { useState } from 'react';
+
 import 'zenn-content-css';
-import style from '../../styles/organisms/UserSetting/Profile.module.scss';
 import Avatar from '@mui/material/Avatar';
-import { skillsItems } from '../../pages/api/icon';
-import Stack from '@mui/material/Stack';
-import settingStyle from '../../styles/organisms/UserSetting.module.scss';
-import Layout from './Layout';
 import Container from '@mui/material/Container';
-import { TopicCardList } from '../molecules/TopicCardList';
-import Tabs from '@mui/material/Tabs';
+import Stack from '@mui/material/Stack';
 import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
-import { getUserProfile } from '../../pages/api/userAPI';
+
 import { getArticle } from '../../pages/api/articleAPI';
-import styles from '../../styles/organisms/CardList.module.scss';
-import { LinearLoad } from '../atoms/Loading';
+import { skillsItems } from '../../pages/api/icon';
+import { getUserProfile } from '../../pages/api/userAPI';
 import { url } from '../../pages/api/utility';
+import styles from '../../styles/organisms/CardList.module.scss';
+import settingStyle from '../../styles/organisms/UserSetting.module.scss';
+import style from '../../styles/organisms/UserSetting/Profile.module.scss';
+import { LinearLoad } from '../atoms/Loading';
+import { TopicCardList } from '../molecules/TopicCardList';
 import { CardList } from '../organisms/CardList';
+import Layout from './Layout';
 
 const UserNameTemplate = () => {
   const router = useRouter();
@@ -33,7 +35,7 @@ const UserNameTemplate = () => {
   );
 
   const { data: article, error: articleError } = useSWR(
-    profile != undefined ? `/api/public/users/posts/${profile._id}` : null,
+    profile != undefined ? `/api/public/users/posts/${profile.userID}` : null,
     getArticle,
     {
       revalidateOnFocus: false,
