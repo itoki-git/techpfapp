@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 // eslint-disable-next-line no-unused-vars
+const withSass = require('@zeit/next-sass');
 module.exports = {
   cssModules: true,
   eslint: {
