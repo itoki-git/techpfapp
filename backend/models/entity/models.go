@@ -64,6 +64,7 @@ type Post struct {
 	ArticleID   primitive.ObjectID `json:"articleID,omitempty" bson:"articleID,omitempty"`
 	UserID      primitive.ObjectID `json:"userID" bson:"userID,omitempty"`
 	Title       string             `json:"title" bson:"title,omitempty"`
+	Markdown    string             `json:"markdown" bson:"markdown,omitempty"`
 	Topic       []TopicInfo        `json:"topic" bson:"topic,omitempty"`
 	Like        int                `json:"like" bson:"like,omitempty"`
 	PublishedAt time.Time          `json:"timestamp" bson:"timestamp,omitempty"`
@@ -72,12 +73,12 @@ type Post struct {
 
 // Article 記事作成用
 type Article struct {
-	ArticleID primitive.ObjectID `json:"articleID,omitempty" bson:"articleID,omitempty"`
-	UserID    primitive.ObjectID `json:"userID" bson:"userID,omitempty"`
-	Title     string             `json:"title" bson:"title,omitempty"`
-	Markdown  string             `json:"markdown" bson:"markdown,omitempty"`
-	Topic     []TopicInfo        `json:"topic" bson:"topic,omitempty"`
-	Timestamp time.Time          `json:"timestamp" bson:"timestamp,omitempty"`
+	ArticleID   primitive.ObjectID `json:"articleID,omitempty" bson:"articleID,omitempty"`
+	UserID      primitive.ObjectID `json:"userID" bson:"userID,omitempty"`
+	Title       string             `json:"title" bson:"title,omitempty"`
+	Markdown    string             `json:"markdown" bson:"markdown,omitempty"`
+	Topic       []TopicInfo        `json:"topic" bson:"topic,omitempty"`
+	PublishedAt time.Time          `json:"timestamp" bson:"timestamp,omitempty"`
 }
 
 type PostResponse struct {
