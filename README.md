@@ -5,7 +5,11 @@ markdownで記事を書くことができます
 ![techpfapp com](https://user-images.githubusercontent.com/68063967/170880112-9a8c8914-fb5a-4830-a862-3248490420aa.png)
 
 ## App URL
-[techpfapp](http://techpfapp.com)
+[techpfapp](http://techpfapp.com)  
+試したい人のためにユーザーを用意しました  
+ログイン画面にて  
+ユーザーネーム: test  
+パスワード: test_user  
 
 # なぜ作った
 新卒で入社した会社の仕事内容だけでは、社外に出たときに通用しないと感じたためです。  
